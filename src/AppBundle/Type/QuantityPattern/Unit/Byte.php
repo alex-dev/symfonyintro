@@ -1,7 +1,14 @@
 <?php
 namespace AppBundle\Type\QuantityPattern\Unit;
 
+use Service\QuantityPattern\DimensionFactory;
+use Service\QuantityPattern\BinaryUnitPrefixCalculator;
+
 final class Byte extends InformationUnit {
+  public function __construct(DimensionFactory $factory, BinaryUnitPrefixcalculator $prefix) {
+    parent::__construct($factory, $prefix);
+  } 
+
   /**
    * @return string
    */

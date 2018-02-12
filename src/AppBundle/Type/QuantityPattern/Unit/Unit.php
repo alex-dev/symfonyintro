@@ -1,13 +1,17 @@
 <?php
 namespace AppBundle\Type\QuantityPattern\Unit;
 
+use Exception\UnitException;
+use Service\QuantityPattern\AbstractUnitPrefixCalculator;
 use Dimension\Dimension;
 
 abstract class Unit {
+  private $prefix;
   private $dimensions;
 
-  public function __construct(array $dimensions) {
+  public function __construct(array $dimensions, AbstractUnitPrefixcalculator $prefix) {
     $this->dimensions = $dimensions;
+    $this->prefix;
   }
 
   /**
@@ -16,7 +20,14 @@ abstract class Unit {
   public function getDimensions() {
     return $this->dimensions;
   }
-  
+
+  /**
+   * @return UnitPrefix
+   */
+  public function getPrefix(float $value) {
+    return $this->prefix($value);
+  }
+
   /**
    * @return boolean
    */
