@@ -3,7 +3,7 @@ namespace AppBundle\Database\Type;
 
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use App\Type\UUID;
+use AppBundle\Type\UUID;
 
 final class UUIDType extends Type {
   const NAME = "uuid_binary";
@@ -13,7 +13,7 @@ final class UUIDType extends Type {
   }
 
   public function getSqlDeclaration(array $fieldDeclaration, AbstractPlatform $platform) {
-    return sprintf('BINARY(%d)', $fieldDeclaration['length']);
+    return 'BINARY(16)';
   }
 
   public function convertToPhpValue($value, AbstractPlatform $platform) {

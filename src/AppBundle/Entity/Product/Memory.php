@@ -12,7 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Memory extends Product {
   /**
-   * @Column(name="size", type="bigint", options={ "unsigned":true })
    * @Assert\NotNull()
    */
   protected $size;

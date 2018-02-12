@@ -1,7 +1,7 @@
 <?php
-namespace AppBundle\Type\QuantityPattern\Unit;
+namespace AppBundle\Type\QuantityPattern\UnitPrefix;
 
-final class UnitPrefix {
+abstract class UnitPrefix {
   private $prefix;
   private $symbol;
   private $factor;
