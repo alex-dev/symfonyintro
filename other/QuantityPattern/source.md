@@ -1,0 +1,1 @@
+The Quantity pattern implemented here is inspired from https://www.codeproject.com/Articles/216191/Quantities-Units-and-Values-an-Object-Oriented-Imp and https://www.codeproject.com/Articles/1066008/Using-physical-quantities-and-units-of-measurement.
