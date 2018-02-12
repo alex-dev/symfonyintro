@@ -4,7 +4,7 @@ namespace AppBundle\Type\QuantityPattern;
 use Unit\Unit;
 use Unit\Prefix;
 
-final class Scalar {
+final class Scalar extends Value {
   private $value;
   private $prefix;
 
