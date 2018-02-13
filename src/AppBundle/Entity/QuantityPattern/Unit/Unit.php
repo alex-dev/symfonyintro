@@ -1,11 +1,13 @@
 <?php
 namespace AppBundle\Entity\QuantityPattern\Unit;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\Table;
@@ -48,8 +50,11 @@ final class Unit {
   private $symbol;
 
   /**
-   * @OneToMany(targetEntity="UnitDimension", cascade={ "persist", "refresh" })
-   * @JoinColumn(name="idUnitDimension", referencedColumnName="idUnitDimension")
+   * @ManyToMany(targetEntity="UnitDimension", cascade={ "persist", "refresh" })
+   * @JoinTable(
+   *   name="Units_UnitDimensions",
+   *   joinColumns={ @JoinColumn(name="idUnit", referencedColumnName="idUnit") },
+   *   inverseJoinColumns={ @JoinColumn(name="idUnitDimension", referencedColumnName="idUnitDimension") },
    */
   private $dimensions;
 
@@ -122,7 +127,7 @@ final class Unit {
     }, $value))) !== array_count($value)) {
       throw new UnitException("$value is not sufficiently reduced.");
     } else {
-      $this->dimensions = $value;
+      $this->dimensions = new ArrayCollection($value);
     }
   }
 
