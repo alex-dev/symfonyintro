@@ -1,31 +1,22 @@
 <?php
 namespace AppBundle\Entity\Product;
 
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\DiscriminatorColumn;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\InheritanceType;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
+use \Symfony\Component\PropertyAccess\PropertyAccess;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 
 /**
- * @Entity
- * @InheritanceType("JOINED")
- * @DiscriminatorColumn(name="discriminator", type="string", length=20)
- * @DiscriminatorMap({
+ * @ORM\Entity
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=20)
+ * @ORM\DiscriminatorMap({
  *   "memory" = "Memory"
  * })
- * @Table(
+ * @ORM\Table(
  *   name="Products",
  *   uniqueConstraints={
- *     @UniqueConstraint(name="UK_Products_key", columns={ "`key`" })
+ *     @ORM\UniqueConstraint(name="UK_Products_key", columns={ "`key`" })
  *   })
  * @UniqueEntity("`key`")
  */
@@ -33,26 +24,38 @@ class Product extends UrlKey {
   use Translatable;
 
   /**
-   * @Id
-   * @Column(name="idProduct", type="bigint", options={ "unsigned":true })
-   * @GeneratedValue
+   * @ORM\Id
+   * @ORM\Column(name="idProduct", type="bigint", options={ "unsigned":true })
+   * @ORM\GeneratedValue
    */
   protected $id;
 
   /**
-   * @ManyToOne(targetEntity="Manufacturer", cascade={ "persist", "refresh" })
-   * @JoinColumn(name="idManufacturer", referencedColumnName="idManufacturer")
-   * @Assert\NotNull()
-   * @Assert\Valid()
+   * @ORM\ManyToOne(targetEntity="Manufacturer", cascade={ "persist", "refresh" })
+   * @ORM\JoinColumn(name="idManufacturer", referencedColumnName="idManufacturer")
    */
   protected $manufacturer;
 
-  public function __construct() {
-    parent::__construct();    
+  public function __construct(array $names, Manufacturer $manufacturer) {
+    parent::__construct();
+    $this-­­­­>setManufacturer($manufacturer);
+    
+    foreach ($names as $locale=>$name) {
+      $this->translate($locale)->setName($name);
+    }
+  }
+
+  public function __call($method, $arguments)
+  {
+    if (count($arguments) > 0 || !in_array($method, ['getName', 'setName'])) {
+      throw new BadMethodCallException("$method is not supported by $this.");
+    } else {
+      return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), $method);
+    }
   }
 
   /**
-   * @return AppBundle\Entity\Manufacturer
+   * @return Manufacturer
    */
   public function getManufacturer() {
     return $this->manufacturer;

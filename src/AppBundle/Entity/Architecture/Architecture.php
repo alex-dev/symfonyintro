@@ -1,30 +1,23 @@
 <?php
 namespace AppBundle\Entity\Architecture;
 
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\DiscriminatorColumn;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\InheritanceType;
-use Doctrine\ORM\Mapping\Table;
+use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 
 /**
- * @Entity
- * @InheritanceType("JOINED")
- * @DiscriminatorColumn(name="discriminator", type="string", length=20)
- * @DiscriminatorMap({
+ * @ORM\Entity
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=20)
+ * @ORM\DiscriminatorMap({
  *   "graphic" = "GraphicAcceleratorArchitecture",
  *   "hard" = "HardDriveArchitecture",
  *   "memory" = "MemoryArchitecture",
  *   "processor" = "ProcessorArchitecture"
  * })
- * @Table(
+ * @ORM\Table(
  *   name="Architectures",
  *   uniqueConstraints={
- *     @UniqueConstraint(name="UK_Manufacturers_key", columns={ "`key`" })
+ *     @ORM\UniqueConstraint(name="UK_Manufacturers_key", columns={ "`key`" })
  *   })
  * @UniqueEntity("`key`")
  */
@@ -32,9 +25,9 @@ class Architecture extends UrlKey {
   use Translatable;
 
   /**
-   * @Id
-   * @Column(name="idArchitecture", type="bigint", options={ "unsigned":true })
-   * @GeneratedValue
+   * @ORM\Id
+   * @ORM\Column(name="idArchitecture", type="bigint", options={ "unsigned":true })
+   * @ORM\GeneratedValue
    */
   protected $id;
   

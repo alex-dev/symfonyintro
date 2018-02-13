@@ -1,20 +1,17 @@
 <?php
-namespace AppBundle\Type\QuantityPattern;
+namespace \AppBundle\Type\QuantityPattern;
 
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\MappedSuperclass;
-use Symfony\Component\Validator\Constraints as Assert;
-use Exception\UnitException;
-use Type\QuantityPattern\Unit\Unit;
-use Type\QuantityPattern\Unit\Prefix;
+use \Doctrine\ORM\Mapping as ORM;
+use \AppBundle\Exception\UnitException;
+use \AppBundle\Type\QuantityPattern\Unit\Unit;
 
 /**
- * @MappedSuperclass
+ * @ORM\MappedSuperclass
  */
 abstract class Value {
   /**
-   * @Column(name="unit", type="unit")
-   * @Assert\NotNull()
+   * @ORM\ManyToOne(targetEntity="Unit", cascade={ "persist", "refresh" })
+   * @ORM\JoinColumn(name="idDimension", referencedColumnName="idDimension")
    */
   protected $unit;
   
@@ -40,11 +37,6 @@ abstract class Value {
       return $this->convert_($to);
     }
   }
-
-  /**
-   * @return Prefix
-   */
-  abstract public function getPrefix();
 
   /**
    * @return Value

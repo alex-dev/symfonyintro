@@ -1,22 +1,16 @@
 <?php
-namespace AppBundle\Entity\QuantityPattern\Unit;
+namespace \AppBundle\Entity\QuantityPattern\Unit;
 
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\UniqueConstraint;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use \Doctrine\ORM\Mapping as ORM;
+use \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use \AppBundle\Entity\QuantityPattern\Dimension;
 
 /**
- * @Entity
- * @Table(
+ * @ORM\Entity
+ * @ORM\Table(
  *   name="QuantityUnitDimensions",
  *   uniqueConstraints={
- *     @UniqueConstraint(name="UK_QuantityUnitDimensions_idDimension_exponant", columns={ "idDimension", "exponant" })
+ *     @ORM\UniqueConstraint(name="UK_QuantityUnitDimensions_idDimension_exponant", columns={ "idDimension", "exponant" })
  *   })
  * @UniqueEntity(fields={ "dimension", "exponent" })
  */
@@ -25,20 +19,20 @@ final class UnitDimension {
   const symbol_length = 5;
 
   /**
-   * @Id
-   * @Column(name="idUnitDimension", type="bigint", options={ "unsigned":true })
-   * @GeneratedValue
+   * @ORM\Id
+   * @ORM\Column(name="idUnitDimension", type="bigint", options={ "unsigned":true })
+   * @ORM\GeneratedValue
    */
   private $id;
 
   /**
-   * @ManyToOne(targetEntity="Dimension", cascade={ "persist", "refresh" })
-   * @JoinColumn(name="idDimension", referencedColumnName="idDimension")
+   * @ORM\ManyToOne(targetEntity="Dimension", cascade={ "persist", "refresh" })
+   * @ORM\JoinColumn(name="idDimension", referencedColumnName="idDimension")
    */
   private $dimension;
 
   /**
-   * @Column(name="exponent", type="integer")
+   * @ORM\Column(name="exponent", type="integer")
    */
   private $exponant;
 

@@ -1,18 +1,15 @@
 <?php
-namespace AppBundle\Entity\QuantityPattern\Unit\Converter;
+namespace \AppBundle\Entity\QuantityPattern\Unit\Converter;
 
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
+use \Doctrine\ORM\Mapping as ORM;
+use \AppBundle\Entity\QuantityPattern\Unit\Converter\Converter;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class ZeroBasedLinearConverter extends Converter {
   /**
-   * @Column(name="factor", type="float")
+   * @ORM\Column(name="factor", type="float")
    */
   protected $factor;
 
@@ -28,11 +25,11 @@ class ZeroBasedLinearConverter extends Converter {
     }
   }
 
-  public function convertToBase(float $value) {
+  protected function convertToBase(float $value) {
     return $value * $this->factor;
   }
 
-  public function convertFromBase(float $value) {
+  protected function convertFromBase(float $value) {
     return $value / $this->factor;
   }
 }

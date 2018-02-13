@@ -1,10 +1,8 @@
 <?php
 namespace AppBundle\Entity\Product;
 
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\ORM\Mapping as ORM;
+use 
 
 /**
  * @Entity
@@ -12,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Memory extends Product {
   /**
-   * @Assert\NotNull()
+   * @ORM\Column
    */
   protected $size;
 

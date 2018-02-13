@@ -1,16 +1,16 @@
 <?php
-namespace AppBundle\Entity;
+namespace \AppBundle\Entity;
 
-use Doctrine\ORM\Mapping\MappedSuperclass;
-use App\Database\Type\UUIDType;
-use App\Type\UUID;
+use \Doctrine\ORM\Mapping as ORM;
+use \AppBundle\Database\Type\UUIDType;
+use \AppBundle\Type\UUID;
 
 /**
- * @MappedSuperclass
+ * @ORM\MappedSuperclass
  */
 abstract class UrlKey {
   /**
-   * @Column(name="`key`", type="uuid_binary")
+   * @ORM\Column(name="`key`", type="uuid_binary")
    */
   protected $key;
   

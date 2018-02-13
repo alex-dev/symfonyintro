@@ -1,20 +1,15 @@
 <?php
-namespace AppBundle\Entity;
+namespace \AppBundle\Entity;
 
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\UniqueConstraint;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @Entity
- * @Table(
+ * @ORM\Entity
+ * @ORM\Table(
  *   name="Images",
  *   uniqueConstraints={
- *     @UniqueConstraint(name="UK_Images_filename", columns={ "filename" })
+ *     @ORM\UniqueConstraint(name="UK_Images_filename", columns={ "filename" })
  *   })
  * @UniqueEntity("filename")
  */
@@ -22,14 +17,14 @@ class Image {
   const filename_length = 25;
 
   /**
-   * @Id
-   * @GeneratedValue
-   * @Column(name="idImage", type="bigint", options={ "unsigned": true })
+   * @ORM\Id
+   * @ORM\GeneratedValue
+   * @ORM\Column(name="idImage", type="bigint", options={ "unsigned": true })
    */
   protected $id;
 
   /**
-   * @Column(name="filename", type="string", length=Image::filename_length)
+   * @ORM\Column(name="filename", type="string", length=Image::filename_length)
    */
   protected $filename;
 

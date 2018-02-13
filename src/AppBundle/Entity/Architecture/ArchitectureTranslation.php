@@ -1,21 +1,17 @@
 <?php
 namespace AppBundle\Entity\Architecture;
 
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\UniqueConstraint;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 use Knp\DoctrineBehaviors\Model\Translatable\Translation;
 
 /**
- * @Entity
- * @Table(
+ * @ORM\Entity
+ * @ORM\Table(
  *   name="ArchitectureTranslations"
  *   uniqueConstraints={
- *     @UniqueConstraint(name="UK_ArchitectureTranslations_name_locale", columns={ "name", "locale" }),
- *     @UniqueConstraint(name="UK_ArchitectureTranslations_abbreviation_locale", columns={ "abbreviation", "locale" })
+ *     @ORM\UniqueConstraint(name="UK_ArchitectureTranslations_name_locale", columns={ "name", "locale" }),
+ *     @ORM\UniqueConstraint(name="UK_ArchitectureTranslations_abbreviation_locale", columns={ "abbreviation", "locale" })
  *   })
  * @UniqueEntity(fields={ "name", "locale" })
  * @UniqueEntity(fields={ "abbreviation", "locale" })
@@ -27,16 +23,12 @@ class ArchitectureTranslation {
   const abbreviation_length = 10;  
 
   /**
-   * @Column(name="name", type="string", length=ArchitectureTranslation::name_length)
-   * @Assert\Length(max=ArchitectureTranslation::name_length)
-   * @Assert\NotBlank()
+   * @ORM\Column(name="name", type="string", length=ArchitectureTranslation::name_length)
    */
   protected $name;
 
   /**
-   * @Column(name="abbreviation", type="string", length=Architecture::abbreviation_length)
-   * @Assert\Length(max=Architecture::abbreviation_length)
-   * @Assert\NotBlank()
+   * @ORM\Column(name="abbreviation", type="string", length=Architecture::abbreviation_length)
    */
   protected $abbreviation;  
 

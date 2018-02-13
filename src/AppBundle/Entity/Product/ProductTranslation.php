@@ -1,20 +1,16 @@
 <?php
 namespace AppBundle\Entity\Architecture;
 
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\UniqueConstraint;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 use Knp\DoctrineBehaviors\Model\Translatable\Translation;
 
 /**
- * @Entity
- * @Table(
+ * @ORM\Entity
+ * @ORM\Table(
  *   name="ProductTranslations"
  *   uniqueConstraints={
- *     @UniqueConstraint(name="UK_ProductTranslations_name_locale", columns={ "name", "locale" })
+ *     @ORM\UniqueConstraint(name="UK_ProductTranslations_name_locale", columns={ "name", "locale" })
  *   })
  * @UniqueEntity(fields={ "name", "locale" })
  */
@@ -24,9 +20,7 @@ class ProductTranslation {
   const name_length = 255;
 
   /**
-   * @Column(name="name", type="string", length=ProductTranslation::name_length)
-   * @Assert\Length(max=ProductTranslation::name_length)
-   * @Assert\NotBlank()
+   * @ORM\Column(name="name", type="string", length=ProductTranslation::name_length)
    */
   protected $name;
 

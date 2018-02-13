@@ -1,12 +1,12 @@
 <?php
-namespace AppBundle\Entity\Architecture;
+namespace \AppBundle\Entity\Architecture;
 
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
+use \Doctrine\ORM\Mapping as ORM;
+use \AppBundle\Entity\Architecture\Architecture;
 
 /**
- * @Entity
- * @Table(name="GraphicAcceleratorArchitectures")
+ * @ORM\Entity
+ * @ORM\Table(name="GraphicAcceleratorArchitectures")
  */
 class GraphicAcceleratorArchitecture extends Architecture {
   public function __construct() {

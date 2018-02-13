@@ -1,34 +1,27 @@
 <?php
-namespace AppBundle\Entity\QuantityPattern\Unit\Converter;
+namespace \AppBundle\Entity\QuantityPattern\Unit\Converter;
 
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\DiscriminatorColumn;
-use Doctrine\ORM\Mapping\DiscriminatorMap;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\InheritanceType;
-use Doctrine\ORM\Mapping\Table;
+use \Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @InheritanceType("SINGLE_TABLE")
- * @DiscriminatorColumn(name="discriminator", type="string", length=20)
- * @DiscriminatorMap({
+ * @ORM\Entity
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=20)
+ * @ORM\DiscriminatorMap({
  *   "zerobased" = "ZeroBasedConverter",
  *   "offsetlinear" = "OffsetLinearConverter"
  * })
- * @Table(name="Converters")
+ * @ORM\Table(name="Converters")
  */
 abstract class Converter {
   /**
-   * @Id
-   * @Column(name="idProduct", type="bigint", options={ "unsigned":true })
-   * @GeneratedValue
+   * @ORM\Id
+   * @ORM\Column(name="idProduct", type="bigint", options={ "unsigned":true })
+   * @ORM\GeneratedValue
    */
   protected $id;
 
   abstract public function __invoke(IConverter $other);
-  abstract public function convertToBase(float $value);
-  abstract public function convertFromBase(float $value);
+  abstract protected function convertToBase(float $value);
+  abstract protected function convertFromBase(float $value);
 }

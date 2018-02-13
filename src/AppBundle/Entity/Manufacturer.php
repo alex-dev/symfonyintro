@@ -1,21 +1,17 @@
 <?php
-namespace AppBundle\Entity;
+namespace \AppBundle\Entity;
 
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\UniqueConstraint;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use \Doctrine\ORM\Mapping as ORM;
+use \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use \AppBundle\Entity\UrlKey;
 
 /**
- * @Entity
- * @Table(
+ * @ORM\Entity
+ * @ORM\Table(
  *   name="Manufacturers",
  *   uniqueConstraints={
- *     @UniqueConstraint(name="UK_Manufacturers_name", columns={ "name" }),
- *     @UniqueConstraint(name="UK_Manufacturers_key", columns={ "`key`" })
+ *     @ORM\UniqueConstraint(name="UK_Manufacturers_name", columns={ "name" }),
+ *     @ORM\UniqueConstraint(name="UK_Manufacturers_key", columns={ "`key`" })
  *   })
  * @UniqueEntity("key")
  * @UniqueEntity("name")
@@ -24,14 +20,14 @@ class Manufacturer extends UrlKey {
   const name_length = 25;
 
   /**
-   * @Id
-   * @Column(name="idManufacturer", type="bigint", options={ "unsigned":true })
-   * @GeneratedValue
+   * @ORM\Id
+   * @ORM\Column(name="idManufacturer", type="bigint", options={ "unsigned":true })
+   * @ORM\GeneratedValue
    */
   protected $id;
 
   /**
-   * @Column(name="name", type="string", length=Manufacturer::name_length)
+   * @ORM\Column(name="name", type="string", length=Manufacturer::name_length)
    */
   protected $name;
   

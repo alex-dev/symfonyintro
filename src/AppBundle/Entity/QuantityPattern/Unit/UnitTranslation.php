@@ -3,28 +3,24 @@ namespace \AppBundle\Entity\QuantityPattern\Unit;
 
 use \Doctrine\ORM\Mapping as ORM;
 use \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use \Knp\DoctrineBehaviors\Model\Translatable\Translation;
 
 /**
  * @ORM\Entity
  * @ORM\Table(
- *   name="QuantityDimensions",
+ *   name="QuantityUnitTranslations",
  *   uniqueConstraints={
- *     @ORM\UniqueConstraint(name="UK_QuantityDimensions_name", columns={ "name" })
- *     @ORM\UniqueConstraint(name="UK_QuantityDimensions_symbol", columns={ "symbol" })
+ *     @ORM\UniqueConstraint(name="UK_QuantityUnitTranslations_name_locale", columns={ "name", "locale" })
+ *     @ORM\UniqueConstraint(name="UK_QuantityUnitTranslations_symbol_locale", columns={ "symbol" })
  *   })
- * @UniqueEntity("name")
- * @UniqueEntity("symbol")
+ * @UniqueEntity("name", "locale")
+ * @UniqueEntity("symbol", "locale")
  */
-final class Dimension {
+final class UnitTranslation {
+  use Translation;
+
   const name_length = 50;
   const symbol_length = 5;
-
-  /**
-   * @ORM\Id
-   * @ORM\Column(name="idDimension", type="bigint", options={ "unsigned":true })
-   * @ORM\GeneratedValue
-   */
-  private $id;
 
   /**
    * @ORM\Column(name="name", type="string", length=Dimension::name_length)
@@ -36,12 +32,11 @@ final class Dimension {
    */
   private $symbol;
 
-  public function __construct(string $name, string $symbol) {
-    $this->setName($name);
-    $this->setSymbol($symbol);
+  public function getName() {
+    return $this->name;
   }
 
-  public function __toString() {
+  public function getSymbol() {
     return $this->symbol;
   }
 

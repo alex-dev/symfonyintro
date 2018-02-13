@@ -1,87 +1,82 @@
 <?php
-namespace AppBundle\Entity\QuantityPattern\Unit;
+namespace \AppBundle\Entity\QuantityPattern\Unit;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
-use Doctrine\ORM\Mapping\OneToOne;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\UniqueConstraint;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
-use Exception\UnitException;
-use Converter\Converter;
+use \Doctrine\Common\Collections\ArrayCollection;
+use \Doctrine\ORM\Mapping as ORM;
+use \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use \Symfony\Component\PropertyAccess\PropertyAccess;
+use \Knp\DoctrineBehaviors\Model\Translatable\Translatable;
+use \AppBundle\Exception\UnitException;
+use \AppBundle\Entity\QuantityPattern\Unit\UnitDimension;
+use \AppBundle\Entity\QuantityPattern\Unit\UnitTranslation;
+use \AppBundle\Entity\QuantityPattern\Unit\Converter\Converter;
 
 /**
- * @Entity
- * @Table(
- *   name="Units",
+ * @ORM\Entity
+ * @ORM\Table(
+ *   name="QuantityUnits",
  *   uniqueConstraints={
- *     @UniqueConstraint(name="UK_QuantityDimensions_name", columns={ "name" })
- *     @UniqueConstraint(name="UK_QuantityDimensions_symbol", columns={ "symbol" })
+ *     @ORM\UniqueConstraint(name="UK_QuantityDimensions_name", columns={ "name" })
+ *     @ORM\UniqueConstraint(name="UK_QuantityDimensions_symbol", columns={ "symbol" })
  *   })
  * @UniqueEntity("name")
  * @UniqueEntity("symbol")
  */
 final class Unit {
-  const name_length = 50;
-  const symbol_length = 5;
+  use Translatable;
 
   /**
-   * @Id
-   * @Column(name="idUnit", type="bigint", options={ "unsigned":true })
-   * @GeneratedValue
+   * @ORM\Id
+   * @ORM\Column(name="idUnit", type="bigint", options={ "unsigned":true })
+   * @ORM\GeneratedValue
    */
   private $id;
 
   /**
-   * @Column(name="name", type="string", length=Dimension::name_length)
-   */
-  private $name;
-
-  /**
-   * @Column(name="symbol", type="string", length=Dimension::symbol_length)
-   */
-  private $symbol;
-
-  /**
-   * @ManyToMany(targetEntity="UnitDimension", cascade={ "persist", "refresh" })
-   * @JoinTable(
-   *   name="Units_UnitDimensions",
-   *   joinColumns={ @JoinColumn(name="idUnit", referencedColumnName="idUnit") },
-   *   inverseJoinColumns={ @JoinColumn(name="idUnitDimension", referencedColumnName="idUnitDimension") },
+   * @ORM\ManyToMany(targetEntity="UnitDimension", cascade={ "persist", "refresh" })
+   * @ORM\JoinTable(
+   *   name="QuantityUnits_QuantityUnitDimensions",
+   *   joinColumns={ @ORM\JoinColumn(name="idUnit", referencedColumnName="idUnit") },
+   *   inverseJoinColumns={ @ORM\JoinColumn(name="idUnitDimension", referencedColumnName="idUnitDimension") },
    */
   private $dimensions;
 
   /**
-   * @OneToOne(targetEntity="Converter", cascade={ "persist", "refresh" })
-   * @JoinColumn(name="idConverter", referencedColumnName="idConverter")
+   * @ORM\OneToOne(targetEntity="Converter", cascade={ "persist", "refresh" })
+   * @ORM\JoinColumn(name="idConverter", referencedColumnName="idConverter")
    */
   private $converter;
 
-  public function __construct(string $name, string $symbol, array $dimensions, callable $converter) {
-    $this->setName($name);
-    $this->setSymbol($symbol);
+  public function __construct(array $names, array $symbols, array $dimensions, callable $converter) {
     $this->setDimensions($dimensions);
     $this->setConverter($converter);
+
+    foreach ($names as $locale=>$name) {
+      $this->translate($locale)->setName($name);
+    }
+    
+    foreach ($symbols as $locale=>$symbol) {
+      $this->translate($locale)->setSymbol($symbol);
+    }
+  }
+
+  public function __call($method, $arguments)
+  {
+    if (count($arguments) > 0 || !in_array($method, ['getName', 'getSymbol', 'setName', 'setSymbol'])) {
+      throw new BadMethodCallException("$method is not supported by $this.");
+    } else {
+      return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), $method);
+    }
   }
 
   public function __toString() {
-    return $this->symbol;
-  }
-
-  public function getName() {
-    return $this->name;
+    return $this->getSymbol();
   }
 
   public function getDimensions() {
-    // TODO: to string
-    return $this->dimensions;
+    return array_reduce($this->getDimensions_(), function ($carry, $item) {
+      return $carry.' '.$item;
+    }, '');
   }
 
   public function isConvertibleTo(Unit $to) {
@@ -103,22 +98,6 @@ final class Unit {
 
   private function getConverter_() {
     return $this->converter;
-  }
-
-  private function setName(string $value) {
-    if (mb_strlen($value) > self::name_length) {
-      throw new LengthException("$value must be less then ".self::name_length." characters long.");
-    } else {
-      $this->name = $value;
-    }
-  }
-
-  private function setSymbol(string $value) {
-    if (mb_strlen($value) > self::name_length) {
-      throw new LengthException("$value must be less then ".self::name_length." characters long.");
-    } else {
-      $this->name = $value;
-    }
   }
 
   private function setDimensions(array $value) {

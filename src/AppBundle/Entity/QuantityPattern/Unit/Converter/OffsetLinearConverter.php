@@ -1,21 +1,20 @@
 <?php
-namespace AppBundle\Entity\QuantityPattern\Unit\Converter;
+namespace \AppBundle\Entity\QuantityPattern\Unit\Converter;
 
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\Table;
+use \Doctrine\ORM\Mapping as ORM;
+use \AppBundle\Entity\QuantityPattern\Unit\Converter\Converter;
 
 /**
  * @Entity
  */
 class OffsetLinearConverter extends Converter {
   /**
-   * @Column(name="factor", type="float")
+   * @ORM\Column(name="factor", type="float")
    */
   protected $factor;
 
   /**
-   * @Column(name="offset", type="float")
+   * @ORM\Column(name="offset", type="float")
    */
   protected $offset;
 
@@ -26,11 +25,11 @@ class OffsetLinearConverter extends Converter {
     };
   }
 
-  public function convertToBase(float $value) {
+  protected function convertToBase(float $value) {
     return $value * $this->factor + $this->offset;
   }
 
-  public function convertFromBase(float $value) {
+  protected function convertFromBase(float $value) {
     return ($value - $this->offset) * $this->factor;
   }
 }

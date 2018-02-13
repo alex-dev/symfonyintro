@@ -1,64 +1,50 @@
 <?php
-namespace AppBundle\Type\QuantityPattern;
+namespace \AppBundle\Type\QuantityPattern;
 
-use Doctrine\ORM\Mapping\Column;
-use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\GeneratedValue;
-use Doctrine\ORM\Mapping\Id;
-use Doctrine\ORM\Mapping\Table;
-use Doctrine\ORM\Mapping\UniqueConstraint;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
-use Type\QuantityPattern\Unit\Unit;
-use Type\QuantityPattern\Unit\Prefix;
+use \Doctrine\ORM\Mapping as ORM;
+use \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use \AppBundle\Type\QuantityPattern\Value;
+use \AppBundle\Type\QuantityPattern\Unit\Unit;
 
 /**
- * @Entity
- * @Table(
+ * @ORM\Entity
+ * @ORM\Table(
  *   name="Scalars",
  *   uniqueConstraints={
- *     @UniqueConstraint(name="UK_Scalars_value_unit", columns={ "value", "unit" }),
+ *     @ORM\UniqueConstraint(name="UK_Scalars_value_unit", columns={ "value", "unit" }),
  *   })
- * @UniqueEntity(fields={ "value", "unit" })
+ * @ORM\UniqueEntity(fields={ "value", "unit" })
  */
 final class Scalar extends Value {
   /**
-   * @Id
-   * @Column(name="idManufacturer", type="bigint", options={ "unsigned":true })
-   * @GeneratedValue
+   * @ORM\Id
+   * @ORM\Column(name="idScalar", type="bigint", options={ "unsigned":true })
+   * @ORM\GeneratedValue
    */
   private $id;
 
   /**
-   * @Column(name="value", type="float")
-   * @Assert\NotNull()
+   * @ORM\Column(name="value", type="float")
    */
   private $value;
 
   public function __construct(Unit $unit, float $value) {
     parent::__construct($unit);
     $this->value = $value;
-    $this->prefix = $this->getUnit()->getPrefix($this->getValue());
   }
 
   /**
    * @return float
    */
   public function getValue() {
-    return $this->value / $this->getPrefix()->getFactor();
-  }
-
-  /**
-   * @return Prefix
-   */
-  public function getPrefix() {
-    return $this->prefix;
+    return $this->value;
   }
 
   /**
    * @return Value
    */
   protected function convert_(Unit $to) {
-    return new Scalar($to, $this->getUnit()->convert($to, $this->getValue()));
+    $converter = $this->getUnit()->getConverter($to);
+    return new Scalar($to, $converter($value));
   }
 }

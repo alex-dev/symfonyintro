@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Exception;
+namespace \AppBundle\Exception;
 
 class UnitException extends Exception {
   public function __construct($message = "", $code = 0, Throwable $previous = null) {
