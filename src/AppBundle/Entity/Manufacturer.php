@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @Entity
@@ -18,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     @UniqueConstraint(name="UK_Manufacturers_name", columns={ "name" }),
  *     @UniqueConstraint(name="UK_Manufacturers_key", columns={ "`key`" })
  *   })
- * @UniqueEntity("`key`")
+ * @UniqueEntity("key")
  * @UniqueEntity("name")
  */
 class Manufacturer extends UrlKey {
@@ -33,13 +32,12 @@ class Manufacturer extends UrlKey {
 
   /**
    * @Column(name="name", type="string", length=Manufacturer::name_length)
-   * @Assert\Length(max=Manufacturer::name_length)
-   * @Assert\NotBlank()
    */
   protected $name;
   
-  public function __construct() {
+  public function __construct(string $name) {
     parent::__construct();
+    $this->setName($name);
   }
 
   /**

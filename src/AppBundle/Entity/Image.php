@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @Entity
@@ -31,10 +30,12 @@ class Image {
 
   /**
    * @Column(name="filename", type="string", length=Image::filename_length)
-   * @Assert\Length(max=Image::filename_length)
-   * @Assert\NotBlank()
    */
   protected $filename;
+
+  public function __construct(string $filename) {
+    $this->setFilename($filename);
+  }
 
   /**
    * @return string
@@ -46,7 +47,7 @@ class Image {
   /**
    * @return void
    */
-  public function setFilename(string $value) {
+  protected function setFilename(string $value) {
     if (mb_strlen($value) > self::filename_length) {
       throw new LengthException("$value must be less then ".self::filename_length." characters long.");
     } else {

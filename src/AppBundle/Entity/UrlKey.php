@@ -2,8 +2,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping\MappedSuperclass;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Validator\Constraints as Assert;
 use App\Database\Type\UUIDType;
 use App\Type\UUID;
 
@@ -13,8 +11,6 @@ use App\Type\UUID;
 abstract class UrlKey {
   /**
    * @Column(name="`key`", type="uuid_binary")
-   * @Assert\UUID(strict=true)
-   * @Assert\NotNull()
    */
   protected $key;
   
