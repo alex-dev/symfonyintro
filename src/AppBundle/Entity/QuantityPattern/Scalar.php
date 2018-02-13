@@ -33,6 +33,11 @@ final class Scalar extends Value {
     $this->value = $value;
   }
 
+  public function __toString() {
+    $value = round($this->value, $precision=getenv('FLOAT_DEFAULT_PRECISION'));
+    return $value.$this->unit;
+  }
+
   /**
    * @return float
    */

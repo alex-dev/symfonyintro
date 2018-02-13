@@ -9,7 +9,7 @@ use \AppBundle\Entity\Architecture\Architecture;
  * @ORM\Table(name="MemoryArchitectures")
  */
 class MemoryArchitecture extends Architecture {
-  public function __construct() {
-    parent::__construct();
+  public function __construct(array $names, array $abbreviations) {
+    parent::__construct($names, $abbreviations);
   }
 }

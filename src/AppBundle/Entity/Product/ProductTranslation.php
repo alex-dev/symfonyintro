@@ -1,9 +1,9 @@
 <?php
-namespace AppBundle\Entity\Architecture;
+namespace \AppBundle\Entity\Architecture;
 
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Knp\DoctrineBehaviors\Model\Translatable\Translation;
+use \Doctrine\ORM\Mapping as ORM;
+use \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use \Knp\DoctrineBehaviors\Model\Translatable\Translation;
 
 /**
  * @ORM\Entity

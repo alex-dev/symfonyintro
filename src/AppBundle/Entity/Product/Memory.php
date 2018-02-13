@@ -1,8 +1,10 @@
 <?php
-namespace AppBundle\Entity\Product;
+namespace \AppBundle\Entity\Product;
 
-use Doctrine\ORM\Mapping as ORM;
-use 
+use \Doctrine\ORM\Mapping as ORM;
+use \AppBundle\Entity\Manufacturer;
+use \AppBundle\Entity\QuantityPattern\Scalar;
+use \AppBundle\Entity\Product\Product;
 
 /**
  * @Entity
@@ -10,25 +12,30 @@ use
  */
 class Memory extends Product {
   /**
-   * @ORM\Column
+   * @ORM\OneToOne(targetEntity="Scalar", orphanRemoval=true, cascade={ "persist", "refresh", "remove" })
+   * @ORM\JoinColumn(name="size", referencedColumnName="idScalar")
    */
   protected $size;
 
-  public function __construct() {
-    parent::__construct();
+  /**
+   * @ORM\OneToOne(targetEntity="Scalar", orphanRemoval=true, cascade={ "persist", "refresh", "remove" })
+   * @ORM\JoinColumn(name="frequency", referencedColumnName="idScalar")
+   */
+  protected $frequency;
+
+  public function __construct(array $names, Manufacturer $manufacturer, Scalar $size, Scalar $frequency) {
+    parent::__construct($names, $manufacturer);
+    $this->setSize($size);
   }
 
   /**
-   * @return number
+   * @return Scalar
    */
   public function getSize() {
     return $this->size;
   }
 
-  /**
-   * @return string
-   */
-  public function getSizeStringify() {
-    $this->size
+  public function setSize(Scalar $value) {
+    if ()
   }
 }

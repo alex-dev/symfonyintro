@@ -42,7 +42,7 @@ final class Unit {
   private $dimensions;
 
   /**
-   * @ORM\OneToOne(targetEntity="Converter", cascade={ "persist", "refresh" })
+   * @ORM\OneToOne(targetEntity="Converter", orphanRemoval=true, cascade={ "persist", "refresh", "remove" })
    * @ORM\JoinColumn(name="idConverter", referencedColumnName="idConverter")
    */
   private $converter;
@@ -60,8 +60,7 @@ final class Unit {
     }
   }
 
-  public function __call($method, $arguments)
-  {
+  public function __call($method, $arguments) {
     if (count($arguments) > 0 || !in_array($method, ['getName', 'getSymbol', 'setName', 'setSymbol'])) {
       throw new BadMethodCallException("$method is not supported by $this.");
     } else {

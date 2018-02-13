@@ -1,10 +1,12 @@
 <?php
-namespace AppBundle\Entity\Product;
+namespace \AppBundle\Entity\Product;
 
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use \Doctrine\ORM\Mapping as ORM;
+use \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use \Symfony\Component\PropertyAccess\PropertyAccess;
-use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
+use \Knp\DoctrineBehaviors\Model\Translatable\Translatable;
+use \AppBundle\Entity\UrlKey;
+use \AppBundle\Entity\Product\ProductTranslation;
 
 /**
  * @ORM\Entity
@@ -45,8 +47,7 @@ class Product extends UrlKey {
     }
   }
 
-  public function __call($method, $arguments)
-  {
+  public function __call($method, $arguments) {
     if (count($arguments) > 0 || !in_array($method, ['getName', 'setName'])) {
       throw new BadMethodCallException("$method is not supported by $this.");
     } else {

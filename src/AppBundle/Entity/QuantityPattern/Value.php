@@ -19,6 +19,8 @@ abstract class Value {
     $this->unit = $unit;
   }
 
+  abstract public function __toString();
+
   /**
    * @return Unit
    */
