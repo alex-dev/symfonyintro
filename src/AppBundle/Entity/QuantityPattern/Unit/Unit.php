@@ -39,8 +39,8 @@ final class Unit {
    * @ORM\ManyToMany(targetEntity="UnitDimension", cascade={ "persist", "refresh" })
    * @ORM\JoinTable(
    *   name="QuantityUnits_QuantityUnitDimensions",
-   *   joinColumns={ @ORM\JoinColumn(name="idUnit", referencedColumnName="idUnit") },
-   *   inverseJoinColumns={ @ORM\JoinColumn(name="idUnitDimension", referencedColumnName="idUnitDimension") })
+   *   joinColumns={ @ORM\JoinColumn(name="idUnit", referencedColumnName="idUnit", nullable=false) },
+   *   inverseJoinColumns={ @ORM\JoinColumn(name="idUnitDimension", referencedColumnName="idUnitDimension", nullable=false) })
    */
   private $dimensions;
 
@@ -49,7 +49,7 @@ final class Unit {
    *   targetEntity="AppBundle\Entity\QuantityPattern\Unit\Converter\Converter",
    *   orphanRemoval=true,
    *   cascade={ "persist", "refresh", "remove" })
-   * @ORM\JoinColumn(name="idConverter", referencedColumnName="idConverter")
+   * @ORM\JoinColumn(name="idConverter", referencedColumnName="idConverter", nullable=false)
    */
   private $converter;
 

@@ -3,6 +3,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use AppBundle\Entity\Product\Product;
 
 /**
  * @ORM\Entity
@@ -13,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *   })
  * @UniqueEntity("filename")
  */
-class Image {
+final class Image {
   const filename_length = 25;
 
   /**
@@ -23,6 +24,14 @@ class Image {
    */
   protected $id;
 
+  /**
+   * @ORM\ManyToOne(
+   *   targetEntity="AppBundle\Entity\Product\Product",
+   *   cascade={ "persist", "refresh" })
+   * @ORM\JoinColumn(name="idProduct", referencedColumnName="idProduct", nullable=false)
+   */
+  protected $product;
+  
   /**
    * @ORM\Column(name="filename", type="string", length=Image::filename_length)
    */

@@ -21,7 +21,7 @@ class Memory extends Product {
    *   targetEntity="AppBundle\Entity\QuantityPattern\Scalar",
    *   orphanRemoval=true,
    *   cascade={ "persist", "refresh", "remove" })
-   * @ORM\JoinColumn(name="size", referencedColumnName="idScalar")
+   * @ORM\JoinColumn(name="size", referencedColumnName="idScalar", nullable=false)
    */
   protected $size;
 
@@ -30,7 +30,7 @@ class Memory extends Product {
    *   targetEntity="AppBundle\Entity\QuantityPattern\Scalar",
    *   orphanRemoval=true,
    *   cascade={ "persist", "refresh", "remove" })
-   * @ORM\JoinColumn(name="frequency", referencedColumnName="idScalar")
+   * @ORM\JoinColumn(name="frequency", referencedColumnName="idScalar", nullable=false)
    */
   protected $frequency;
 

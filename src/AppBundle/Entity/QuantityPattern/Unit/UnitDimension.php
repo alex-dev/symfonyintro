@@ -24,7 +24,7 @@ final class UnitDimension {
 
   /**
    * @ORM\ManyToOne(targetEntity="Dimension", cascade={ "persist", "refresh" })
-   * @ORM\JoinColumn(name="idDimension", referencedColumnName="idDimension")
+   * @ORM\JoinColumn(name="idDimension", referencedColumnName="idDimension", nullable=false)
    */
   private $dimension;
 

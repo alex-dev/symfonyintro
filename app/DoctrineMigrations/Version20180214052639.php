@@ -34,7 +34,7 @@ class Version20180214052639 extends AbstractMigration
   }
 
   private function insertImages(Schema $schema) {
-    $this->connection->insert('Images', ['idImage'=>1, 'filename'=>'']);
+    $this->connection->insert('Images', ['idImage'=>1, 'idProduct'=>1, 'filename'=>'']);
   }
 
   private function insertProducts(Schema $schema, UUIDType $factory) {
@@ -45,7 +45,7 @@ class Version20180214052639 extends AbstractMigration
       $this->connection->insert('ProductTranslations', ['translatable_id'=>1, 'name'=>'', 'abbreviation'=>'', 'locale'=>'en_US']);
     }
     {
-      $this->connection->insert('Memories', ['idProduct'=>1, 'size'=>1, 'frequency'=>'1']);
+      $this->connection->insert('Memories', ['idProduct'=>1, 'size'=>1, 'frequency'=>1]);
     }
   }
 
@@ -254,18 +254,18 @@ class Version20180214052639 extends AbstractMigration
     $this->addSql('CREATE TABLE HardDriveArchitectures (idArchitecture BIGINT UNSIGNED NOT NULL, PRIMARY KEY(idArchitecture)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
     $this->addSql('CREATE TABLE MemoryArchitectures (idArchitecture BIGINT UNSIGNED NOT NULL, PRIMARY KEY(idArchitecture)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
     $this->addSql('CREATE TABLE ProcessorArchitectures (idArchitecture BIGINT UNSIGNED NOT NULL, PRIMARY KEY(idArchitecture)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
-    $this->addSql('CREATE TABLE Images (idImage BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, filename VARCHAR(25) NOT NULL, UNIQUE INDEX UK_Images_filename (filename), PRIMARY KEY(idImage)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
     $this->addSql('CREATE TABLE Manufacturers (idManufacturer BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, name VARCHAR(25) NOT NULL, `key` BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid_binary)\', UNIQUE INDEX UK_Manufacturers_name (name), UNIQUE INDEX UK_Manufacturers_key (`key`), PRIMARY KEY(idManufacturer)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
-    $this->addSql('CREATE TABLE Products (idProduct BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, `key` BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid_binary)\', idManufacturer BIGINT UNSIGNED DEFAULT NULL, discriminator VARCHAR(20) NOT NULL, INDEX IDX_4ACC380C6394422D (idManufacturer), UNIQUE INDEX UK_Products_key (`key`), PRIMARY KEY(idProduct)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
-    $this->addSql('CREATE TABLE Memories (size BIGINT UNSIGNED DEFAULT NULL, frequency BIGINT UNSIGNED DEFAULT NULL, idProduct BIGINT UNSIGNED NOT NULL, UNIQUE INDEX UNIQ_F68AB0D3F7C0246A (size), UNIQUE INDEX UNIQ_F68AB0D3267FB813 (frequency), PRIMARY KEY(idProduct)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
+    $this->addSql('CREATE TABLE Products (idProduct BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, `key` BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid_binary)\', idManufacturer BIGINT UNSIGNED NOT NULL, discriminator VARCHAR(20) NOT NULL, INDEX IDX_4ACC380C6394422D (idManufacturer), UNIQUE INDEX UK_Products_key (`key`), PRIMARY KEY(idProduct)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
+    $this->addSql('CREATE TABLE Memories (size BIGINT UNSIGNED NOT NULL, frequency BIGINT UNSIGNED NOT NULL, idProduct BIGINT UNSIGNED NOT NULL, UNIQUE INDEX UNIQ_F68AB0D3F7C0246A (size), UNIQUE INDEX UNIQ_F68AB0D3267FB813 (frequency), PRIMARY KEY(idProduct)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
     $this->addSql('CREATE TABLE ProductTranslations (id INT AUTO_INCREMENT NOT NULL, translatable_id BIGINT UNSIGNED DEFAULT NULL, name VARCHAR(255) NOT NULL, locale VARCHAR(255) NOT NULL, INDEX IDX_A905B8A2C2AC5D3 (translatable_id), UNIQUE INDEX UK_ProductTranslations_name_locale (name, locale), UNIQUE INDEX ProductTranslations_unique_translation (translatable_id, locale), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
-    $this->addSql('CREATE TABLE Scalars (idScalar BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, value DOUBLE PRECISION NOT NULL, idUnit BIGINT UNSIGNED DEFAULT NULL, INDEX IDX_4983DD03AF4652CD (idUnit), PRIMARY KEY(idScalar)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
+    $this->addSql('CREATE TABLE Scalars (idScalar BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, value DOUBLE PRECISION NOT NULL, idUnit BIGINT UNSIGNED NOT NULL, INDEX IDX_4983DD03AF4652CD (idUnit), PRIMARY KEY(idScalar)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
     $this->addSql('CREATE TABLE QuantityConverters (idConverter BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, discriminator VARCHAR(20) NOT NULL, factor DOUBLE PRECISION DEFAULT NULL, offset DOUBLE PRECISION DEFAULT NULL, PRIMARY KEY(idConverter)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
     $this->addSql('CREATE TABLE QuantityDimensions (idDimension BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, name VARCHAR(50) NOT NULL, symbol VARCHAR(5) NOT NULL, UNIQUE INDEX UK_QuantityDimensions_name (name), UNIQUE INDEX UK_QuantityDimensions_symbol (symbol), PRIMARY KEY(idDimension)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
-    $this->addSql('CREATE TABLE QuantityUnits (idUnit BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, `key` VARCHAR(20) NOT NULL, idConverter BIGINT UNSIGNED DEFAULT NULL, UNIQUE INDEX UNIQ_81470E8115A936BE (idConverter), UNIQUE INDEX UK_QuantityUnit_key (`key`), PRIMARY KEY(idUnit)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
+    $this->addSql('CREATE TABLE QuantityUnits (idUnit BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, `key` VARCHAR(20) NOT NULL, idConverter BIGINT UNSIGNED NOT NULL, UNIQUE INDEX UNIQ_81470E8115A936BE (idConverter), UNIQUE INDEX UK_QuantityUnit_key (`key`), PRIMARY KEY(idUnit)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
     $this->addSql('CREATE TABLE QuantityUnits_QuantityUnitDimensions (idUnit BIGINT UNSIGNED NOT NULL, idUnitDimension BIGINT UNSIGNED NOT NULL, INDEX IDX_E5CD8525AF4652CD (idUnit), INDEX IDX_E5CD8525D970B0E3 (idUnitDimension), PRIMARY KEY(idUnit, idUnitDimension)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
-    $this->addSql('CREATE TABLE QuantityUnitDimensions (idUnitDimension BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, exponent INT NOT NULL, idDimension BIGINT UNSIGNED DEFAULT NULL, INDEX IDX_853940823671EACA (idDimension), UNIQUE INDEX UK_QuantityUnitDimensions_idDimension_Exponent (idDimension, exponent), PRIMARY KEY(idUnitDimension)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
+    $this->addSql('CREATE TABLE QuantityUnitDimensions (idUnitDimension BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, exponent INT NOT NULL, idDimension BIGINT UNSIGNED NOT NULL, INDEX IDX_853940823671EACA (idDimension), UNIQUE INDEX UK_QuantityUnitDimensions_idDimension_Exponent (idDimension, exponent), PRIMARY KEY(idUnitDimension)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
     $this->addSql('CREATE TABLE QuantityUnitTranslations (id INT AUTO_INCREMENT NOT NULL, translatable_id BIGINT UNSIGNED DEFAULT NULL, name VARCHAR(50) NOT NULL, symbol VARCHAR(5) NOT NULL, locale VARCHAR(255) NOT NULL, INDEX IDX_10C4149E2C2AC5D3 (translatable_id), UNIQUE INDEX UK_QuantityUnitTranslations_name_locale (name, locale), UNIQUE INDEX UK_QuantityUnitTranslations_symbol_locale (symbol, locale), UNIQUE INDEX QuantityUnitTranslations_unique_translation (translatable_id, locale), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
+    $this->addSql('CREATE TABLE Images (idImage BIGINT UNSIGNED AUTO_INCREMENT NOT NULL, filename VARCHAR(25) NOT NULL, idProduct BIGINT UNSIGNED NOT NULL, INDEX IDX_E7B3BB5CC3F36F5F (idProduct), UNIQUE INDEX UK_Images_filename (filename), PRIMARY KEY(idImage)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
     $this->addSql('ALTER TABLE ArchitectureTranslations ADD CONSTRAINT FK_34D33EA82C2AC5D3 FOREIGN KEY (translatable_id) REFERENCES Architectures (id) ON DELETE CASCADE');
     $this->addSql('ALTER TABLE GraphicAcceleratorArchitectures ADD CONSTRAINT FK_19E517F92A07FA0B FOREIGN KEY (idArchitecture) REFERENCES Architectures (idArchitecture) ON DELETE CASCADE');
     $this->addSql('ALTER TABLE HardDriveArchitectures ADD CONSTRAINT FK_9368304B2A07FA0B FOREIGN KEY (idArchitecture) REFERENCES Architectures (idArchitecture) ON DELETE CASCADE');
@@ -277,11 +277,12 @@ class Version20180214052639 extends AbstractMigration
     $this->addSql('ALTER TABLE Memories ADD CONSTRAINT FK_F68AB0D3C3F36F5F FOREIGN KEY (idProduct) REFERENCES Products (idProduct) ON DELETE CASCADE');
     $this->addSql('ALTER TABLE ProductTranslations ADD CONSTRAINT FK_A905B8A2C2AC5D3 FOREIGN KEY (translatable_id) REFERENCES Products (id) ON DELETE CASCADE');
     $this->addSql('ALTER TABLE Scalars ADD CONSTRAINT FK_4983DD03AF4652CD FOREIGN KEY (idUnit) REFERENCES QuantityUnits (idUnit)');
-    $this->addSql('ALTER TABLE QuantityUnits ADD CONSTRAINT FK_81470E8115A936BE FOREIGN KEY (idConverter) REFERENCES Converters (idConverter)');
+    $this->addSql('ALTER TABLE QuantityUnits ADD CONSTRAINT FK_81470E8115A936BE FOREIGN KEY (idConverter) REFERENCES QuantityConverters (idConverter)');
     $this->addSql('ALTER TABLE QuantityUnits_QuantityUnitDimensions ADD CONSTRAINT FK_E5CD8525AF4652CD FOREIGN KEY (idUnit) REFERENCES QuantityUnits (idUnit)');
     $this->addSql('ALTER TABLE QuantityUnits_QuantityUnitDimensions ADD CONSTRAINT FK_E5CD8525D970B0E3 FOREIGN KEY (idUnitDimension) REFERENCES QuantityUnitDimensions (idUnitDimension)');
     $this->addSql('ALTER TABLE QuantityUnitDimensions ADD CONSTRAINT FK_853940823671EACA FOREIGN KEY (idDimension) REFERENCES QuantityDimensions (idDimension)');
     $this->addSql('ALTER TABLE QuantityUnitTranslations ADD CONSTRAINT FK_10C4149E2C2AC5D3 FOREIGN KEY (translatable_id) REFERENCES QuantityUnits (id) ON DELETE CASCADE');
+    $this->addSql('ALTER TABLE Images ADD CONSTRAINT FK_E7B3BB5CC3F36F5F FOREIGN KEY (idProduct) REFERENCES Products (idProduct)');
   }
 
   private function drop(Schema $shema) {
@@ -291,6 +292,7 @@ class Version20180214052639 extends AbstractMigration
     $this->addSql('ALTER TABLE MemoryArchitectures DROP FOREIGN KEY FK_651165762A07FA0B');
     $this->addSql('ALTER TABLE ProcessorArchitectures DROP FOREIGN KEY FK_B9C6B56A2A07FA0B');
     $this->addSql('ALTER TABLE Products DROP FOREIGN KEY FK_4ACC380C6394422D');
+    $this->addSql('ALTER TABLE Images DROP FOREIGN KEY FK_E7B3BB5CC3F36F5F');
     $this->addSql('ALTER TABLE Memories DROP FOREIGN KEY FK_F68AB0D3C3F36F5F');
     $this->addSql('ALTER TABLE ProductTranslations DROP FOREIGN KEY FK_A905B8A2C2AC5D3');
     $this->addSql('ALTER TABLE Memories DROP FOREIGN KEY FK_F68AB0D3F7C0246A');
@@ -313,7 +315,7 @@ class Version20180214052639 extends AbstractMigration
     $this->addSql('DROP TABLE Memories');
     $this->addSql('DROP TABLE ProductTranslations');
     $this->addSql('DROP TABLE Scalars');
-    $this->addSql('DROP TABLE Converters');
+    $this->addSql('DROP TABLE QuantityConverters');
     $this->addSql('DROP TABLE QuantityDimensions');
     $this->addSql('DROP TABLE QuantityUnits');
     $this->addSql('DROP TABLE QuantityUnits_QuantityUnitDimensions');

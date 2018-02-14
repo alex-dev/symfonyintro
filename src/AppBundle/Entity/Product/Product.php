@@ -37,7 +37,7 @@ abstract class Product extends UrlKey {
    * @ORM\ManyToOne(
    *   targetEntity="AppBundle\Entity\Manufacturer",
    *   cascade={ "persist", "refresh" })
-   * @ORM\JoinColumn(name="idManufacturer", referencedColumnName="idManufacturer")
+   * @ORM\JoinColumn(name="idManufacturer", referencedColumnName="idManufacturer", nullable=false)
    */
   protected $manufacturer;
 
