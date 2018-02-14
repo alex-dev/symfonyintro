@@ -7,14 +7,7 @@ use Knp\DoctrineBehaviors\Model\Translatable\Translation;
 
 /**
  * @ORM\Entity
- * @ORM\Table(
- *   name="ArchitectureTranslations",
- *   uniqueConstraints={
- *     @ORM\UniqueConstraint(name="UK_ArchitectureTranslations_name_locale", columns={ "name", "locale" }),
- *     @ORM\UniqueConstraint(name="UK_ArchitectureTranslations_abbreviation_locale", columns={ "abbreviation", "locale" })
- *   })
- * @UniqueEntity(fields={ "name", "locale" })
- * @UniqueEntity(fields={ "abbreviation", "locale" })
+ * @ORM\Table(name="ArchitectureTranslations")
  */
 class ArchitectureTranslation {
   use Translation;

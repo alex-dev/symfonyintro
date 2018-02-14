@@ -39,7 +39,7 @@ class Version20180214052639 extends AbstractMigration
 
   private function insertProducts(Schema $schema, UUIDType $factory) {
     {
-      $this->connection->insert('Products', ['idProduct'=>1, 'discriminator'=>'memory', 'idManufacturer'=>1, '`key`'=>$factory->convertToDatabaseValue(new UUID(), $this->connection->getDatabasePlatform)]);
+      $this->connection->insert('Products', ['idProduct'=>1, 'discriminator'=>'memory', 'idManufacturer'=>1, '`key`'=>$factory->convertToDatabaseValue(new UUID(), $this->connection->getDatabasePlatform())]);
     }
     {
       $this->connection->insert('ProductTranslations', ['translatable_id'=>1, 'name'=>'', 'abbreviation'=>'', 'locale'=>'en_US']);
@@ -59,27 +59,44 @@ class Version20180214052639 extends AbstractMigration
      *   "processor" = "ProcessorArchitecture"
      */
     {
-      $this->connection->insert($prefix.'s', ['idArchitecture'=>1, 'discriminator'=>'', '`key`'=>$factory->convertToDatabaseValue(new UUID(), $this->connection->getDatabasePlatform)]);
+      $this->connection->insert($prefix.'s', ['idArchitecture'=>1, 'discriminator'=>'memory', '`key`'=>$factory->convertToDatabaseValue(new UUID(), $this->connection->getDatabasePlatform())]);
+      $this->connection->insert($prefix.'s', ['idArchitecture'=>2, 'discriminator'=>'memory', '`key`'=>$factory->convertToDatabaseValue(new UUID(), $this->connection->getDatabasePlatform())]);
+      $this->connection->insert($prefix.'s', ['idArchitecture'=>3, 'discriminator'=>'memory', '`key`'=>$factory->convertToDatabaseValue(new UUID(), $this->connection->getDatabasePlatform())]);
+      $this->connection->insert($prefix.'s', ['idArchitecture'=>4, 'discriminator'=>'memory', '`key`'=>$factory->convertToDatabaseValue(new UUID(), $this->connection->getDatabasePlatform())]);
     }
     {
-      $this->connection->insert($prefix.'Translations', ['translatable_id'=>1, 'name'=>'', 'abbreviation'=>'', 'locale'=>'en_US']);
+      $this->connection->insert($prefix.'Translations', ['translatable_id'=>1, 'name'=>'DDR4', 'abbreviation'=>'DDR4', 'locale'=>'en_US']);
+      $this->connection->insert($prefix.'Translations', ['translatable_id'=>1, 'name'=>'DDR4', 'abbreviation'=>'DDR4', 'locale'=>'en_CA']);
+      $this->connection->insert($prefix.'Translations', ['translatable_id'=>1, 'name'=>'DDR4', 'abbreviation'=>'DDR4', 'locale'=>'fr_CA']);
+      $this->connection->insert($prefix.'Translations', ['translatable_id'=>2, 'name'=>'DDR3L', 'abbreviation'=>'DDR4', 'locale'=>'en_US']);
+      $this->connection->insert($prefix.'Translations', ['translatable_id'=>2, 'name'=>'DDR3L', 'abbreviation'=>'DDR4', 'locale'=>'en_CA']);
+      $this->connection->insert($prefix.'Translations', ['translatable_id'=>2, 'name'=>'DDR3L', 'abbreviation'=>'DDR4', 'locale'=>'fr_CA']);
+      $this->connection->insert($prefix.'Translations', ['translatable_id'=>3, 'name'=>'DDR3', 'abbreviation'=>'DDR4', 'locale'=>'en_US']);
+      $this->connection->insert($prefix.'Translations', ['translatable_id'=>3, 'name'=>'DDR3', 'abbreviation'=>'DDR4', 'locale'=>'en_CA']);
+      $this->connection->insert($prefix.'Translations', ['translatable_id'=>3, 'name'=>'DDR3', 'abbreviation'=>'DDR4', 'locale'=>'fr_CA']);
+      $this->connection->insert($prefix.'Translations', ['translatable_id'=>4, 'name'=>'DDR2', 'abbreviation'=>'DDR4', 'locale'=>'en_US']);
+      $this->connection->insert($prefix.'Translations', ['translatable_id'=>4, 'name'=>'DDR2', 'abbreviation'=>'DDR4', 'locale'=>'en_CA']);
+      $this->connection->insert($prefix.'Translations', ['translatable_id'=>4, 'name'=>'DDR2', 'abbreviation'=>'DDR4', 'locale'=>'fr_CA']);
     }
     {
-      $this->connection->insert('GraphicAccelerator'.$prefix.'s', ['idArchitecture'=>1]);
     }
     {
-      $this->connection->insert('HardDrive'.$prefix.'s', ['idArchitecture'=>1]);
     }
     {
-      $this->connection->insert('Memory'.$prefix.'s', ['idArchitecture'=>1]);
+      $this->connection->insert($prefix.'s', ['idArchitecture'=>1]);
+      $this->connection->insert($prefix.'s', ['idArchitecture'=>2]);
+      $this->connection->insert($prefix.'s', ['idArchitecture'=>3]);
+      $this->connection->insert($prefix.'s', ['idArchitecture'=>4]);
     }
     {
-      $this->connection->insert('Processor'.$prefix.'s', ['idArchitecture'=>1]);
     }
   }
 
   private function insertManufacturers(Schema $schema, UUIDType $factory) {
-    $this->connection->insert('Manufacturers', ['idManufacturer'=>1, 'name'=>'', '`key`'=>$factory->convertToDatabaseValue(new UUID(), $this->connection->getDatabasePlatform)]);
+    $this->connection->insert('Manufacturers', ['idManufacturer'=>1, 'name'=>'', '`key`'=>$factory->convertToDatabaseValue(new UUID(), $this->connection->getDatabasePlatform())]);
+    $this->connection->insert('Manufacturers', ['idManufacturer'=>1, 'name'=>'', '`key`'=>$factory->convertToDatabaseValue(new UUID(), $this->connection->getDatabasePlatform())]);
+    $this->connection->insert('Manufacturers', ['idManufacturer'=>1, 'name'=>'', '`key`'=>$factory->convertToDatabaseValue(new UUID(), $this->connection->getDatabasePlatform())]);
+    $this->connection->insert('Manufacturers', ['idManufacturer'=>1, 'name'=>'', '`key`'=>$factory->convertToDatabaseValue(new UUID(), $this->connection->getDatabasePlatform())]);
   }
 
   private function insertScalars(Schema $schema) {
