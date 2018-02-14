@@ -1,9 +1,9 @@
 <?php
-namespace \AppBundle\Entity;
+namespace AppBundle\Entity;
 
-use \Doctrine\ORM\Mapping as ORM;
-use \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use \AppBundle\Entity\UrlKey;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use AppBundle\Entity\UrlKey;
 
 /**
  * @ORM\Entity

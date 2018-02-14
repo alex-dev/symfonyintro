@@ -1,14 +1,14 @@
 <?php
-namespace \AppBundle\Entity\Architecture;
+namespace AppBundle\Entity\Architecture;
 
-use \Doctrine\ORM\Mapping as ORM;
-use \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use \Knp\DoctrineBehaviors\Model\Translatable\Translation;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Knp\DoctrineBehaviors\Model\Translatable\Translation;
 
 /**
  * @ORM\Entity
  * @ORM\Table(
- *   name="ArchitectureTranslations"
+ *   name="ArchitectureTranslations",
  *   uniqueConstraints={
  *     @ORM\UniqueConstraint(name="UK_ArchitectureTranslations_name_locale", columns={ "name", "locale" }),
  *     @ORM\UniqueConstraint(name="UK_ArchitectureTranslations_abbreviation_locale", columns={ "abbreviation", "locale" })
@@ -28,7 +28,7 @@ class ArchitectureTranslation {
   protected $name;
 
   /**
-   * @ORM\Column(name="abbreviation", type="string", length=Architecture::abbreviation_length)
+   * @ORM\Column(name="abbreviation", type="string", length=ArchitectureTranslation::abbreviation_length)
    */
   protected $abbreviation;  
 

@@ -1,12 +1,13 @@
 <?php
-namespace \AppBundle\Entity\Product;
+namespace AppBundle\Entity\Product;
 
-use \Doctrine\ORM\Mapping as ORM;
-use \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use \Symfony\Component\PropertyAccess\PropertyAccess;
-use \Knp\DoctrineBehaviors\Model\Translatable\Translatable;
-use \AppBundle\Entity\UrlKey;
-use \AppBundle\Entity\Product\ProductTranslation;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
+use AppBundle\Entity\UrlKey;
+use AppBundle\Entity\Manufacturer;
+use AppBundle\Entity\Product\ProductTranslation;
 
 /**
  * @ORM\Entity
@@ -22,7 +23,7 @@ use \AppBundle\Entity\Product\ProductTranslation;
  *   })
  * @UniqueEntity("`key`")
  */
-class Product extends UrlKey {
+abstract class Product extends UrlKey {
   use Translatable;
 
   /**
@@ -33,7 +34,9 @@ class Product extends UrlKey {
   protected $id;
 
   /**
-   * @ORM\ManyToOne(targetEntity="Manufacturer", cascade={ "persist", "refresh" })
+   * @ORM\ManyToOne(
+   *   targetEntity="AppBundle\Entity\Manufacturer",
+   *   cascade={ "persist", "refresh" })
    * @ORM\JoinColumn(name="idManufacturer", referencedColumnName="idManufacturer")
    */
   protected $manufacturer;

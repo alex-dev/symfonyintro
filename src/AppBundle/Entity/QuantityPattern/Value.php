@@ -1,17 +1,19 @@
 <?php
-namespace \AppBundle\Type\QuantityPattern;
+namespace AppBundle\Entity\QuantityPattern;
 
-use \Doctrine\ORM\Mapping as ORM;
-use \AppBundle\Exception\UnitException;
-use \AppBundle\Type\QuantityPattern\Unit\Unit;
+use Doctrine\ORM\Mapping as ORM;
+use AppBundle\CustomException\UnitException;
+use AppBundle\Entity\QuantityPattern\Unit\Unit;
 
 /**
  * @ORM\MappedSuperclass
  */
 abstract class Value {
   /**
-   * @ORM\ManyToOne(targetEntity="Unit", cascade={ "persist", "refresh" })
-   * @ORM\JoinColumn(name="idDimension", referencedColumnName="idDimension")
+   * @ORM\ManyToOne(
+   *   targetEntity="AppBundle\Entity\QuantityPattern\Unit\Unit",
+   *   cascade={ "persist", "refresh" })
+   * @ORM\JoinColumn(name="idUnit", referencedColumnName="idUnit")
    */
   protected $unit;
   

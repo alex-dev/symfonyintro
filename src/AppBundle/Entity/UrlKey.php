@@ -1,9 +1,8 @@
 <?php
-namespace \AppBundle\Entity;
+namespace AppBundle\Entity;
 
-use \Doctrine\ORM\Mapping as ORM;
-use \AppBundle\Database\Type\UUIDType;
-use \AppBundle\Type\UUID;
+use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Type\UUID;
 
 /**
  * @ORM\MappedSuperclass
@@ -19,7 +18,7 @@ abstract class UrlKey {
   }
 
   /**
-   * @return AppBundle\Type\UUID castable to string
+   * @return UUID castable to string
    */
   public function getKey() {
     return $this->key;

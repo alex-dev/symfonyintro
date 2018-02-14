@@ -1,11 +1,12 @@
 <?php
-namespace \AppBundle\Entity\Architecture;
+namespace AppBundle\Entity\Architecture;
 
-use \Doctrine\ORM\Mapping as ORM;
-use \Symfony\Component\PropertyAccess\PropertyAccess;
-use \Knp\DoctrineBehaviors\Model\Translatable\Translatable;
-use \AppBundle\Entity\UrlKey;
-use \AppBundle\Entity\Architecture\ArchitectureTranslation;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
+use AppBundle\Entity\UrlKey;
+use AppBundle\Entity\Architecture\ArchitectureTranslation;
 
 /**
  * @ORM\Entity
@@ -24,7 +25,7 @@ use \AppBundle\Entity\Architecture\ArchitectureTranslation;
  *   })
  * @UniqueEntity("`key`")
  */
-class Architecture extends UrlKey {
+abstract class Architecture extends UrlKey {
   use Translatable;
 
   /**

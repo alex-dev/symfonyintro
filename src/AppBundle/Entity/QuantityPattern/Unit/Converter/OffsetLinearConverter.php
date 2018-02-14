@@ -1,11 +1,11 @@
 <?php
-namespace \AppBundle\Entity\QuantityPattern\Unit\Converter;
+namespace AppBundle\Entity\QuantityPattern\Unit\Converter;
 
-use \Doctrine\ORM\Mapping as ORM;
-use \AppBundle\Entity\QuantityPattern\Unit\Converter\Converter;
+use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\QuantityPattern\Unit\Converter\Converter;
 
 /**
- * @Entity
+ * @ORM\Entity
  */
 class OffsetLinearConverter extends Converter {
   /**

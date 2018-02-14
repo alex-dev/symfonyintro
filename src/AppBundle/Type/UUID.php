@@ -1,7 +1,7 @@
 <?php
-namespace \AppBundle\Type;
+namespace AppBundle\Type;
 
-use \Appbundle\Exception\UUIDException;
+use Appbundle\CustomException\UUIDException;
 
 final class UUID {
   const regex = '/^\{?((?:[0-9A-F]{8}-[0-9A-F]{4}-[1-5][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12})|(?:[0-9A-F]{12}[1-5][0-9A-F]{3}[89AB][0-9A-F]{15}))\}?$/i';  

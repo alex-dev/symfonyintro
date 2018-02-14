@@ -1,15 +1,16 @@
 <?php
-namespace \AppBundle\Entity\QuantityPattern\Unit;
+namespace AppBundle\Entity\QuantityPattern\Unit;
 
-use \Doctrine\ORM\Mapping as ORM;
-use \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use AppBundle\Repository\DimensionRepository;
 
 /**
  * @ORM\Entity
  * @ORM\Table(
  *   name="QuantityDimensions",
  *   uniqueConstraints={
- *     @ORM\UniqueConstraint(name="UK_QuantityDimensions_name", columns={ "name" })
+ *     @ORM\UniqueConstraint(name="UK_QuantityDimensions_name", columns={ "name" }),
  *     @ORM\UniqueConstraint(name="UK_QuantityDimensions_symbol", columns={ "symbol" })
  *   })
  * @UniqueEntity("name")

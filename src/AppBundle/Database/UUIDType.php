@@ -1,32 +1,26 @@
 <?php
-namespace AppBundle\Database\Type;
+namespace AppBundle\Database;
 
 use Doctrine\DBAL\Types\Type;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Service\QuantityPattern\UnitFactory;
+use AppBundle\Type\UUID;
 
-final class UnitType extends Type {
-  const NAME = "unit";
-
-  private $factory;
-
-  public function __construct(UnitFactory $factory) {
-    $this->factory = $factory;
-  }
+final class UUIDType extends Type {
+  const NAME = "uuid_binary";
 
   public function getName() {
     return self::NAME;
   }
 
   public function getSqlDeclaration(array $fieldDeclaration, AbstractPlatform $platform) {
-    return sprintf('VARCHAR(10)');
+    return 'BINARY(16)';
   }
 
   public function convertToPhpValue($value, AbstractPlatform $platform) {
-    return $this->factory($value);
+    return $value === null ? null : UUID::createFromHex($uuid);
   }
 
   public function convertToDatabaseValue($value, AbstractPlatform $platform) {
-    return $this->factory->find($value);
+    return $value === null ? null : $value->toHex();
   }
 }

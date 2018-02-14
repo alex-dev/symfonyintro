@@ -53,10 +53,16 @@ doctrine:
         #   3. Uncomment next line:
         #path: '%database_path%'
 
+        types:
+            uuid_binary: AppBundle\Database\UUIDType
+
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+
+knp_doctrine_behaviors:
+    translatable: true
 
 # Swiftmailer Configuration
 swiftmailer:

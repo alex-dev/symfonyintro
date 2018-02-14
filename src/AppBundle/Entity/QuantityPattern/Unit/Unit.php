@@ -1,26 +1,24 @@
 <?php
-namespace \AppBundle\Entity\QuantityPattern\Unit;
+namespace AppBundle\Entity\QuantityPattern\Unit;
 
-use \Doctrine\Common\Collections\ArrayCollection;
-use \Doctrine\ORM\Mapping as ORM;
-use \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use \Symfony\Component\PropertyAccess\PropertyAccess;
-use \Knp\DoctrineBehaviors\Model\Translatable\Translatable;
-use \AppBundle\Exception\UnitException;
-use \AppBundle\Entity\QuantityPattern\Unit\UnitDimension;
-use \AppBundle\Entity\QuantityPattern\Unit\UnitTranslation;
-use \AppBundle\Entity\QuantityPattern\Unit\Converter\Converter;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
+use AppBundle\CustomException\UnitException;
+use AppBundle\Entity\QuantityPattern\Unit\UnitDimension;
+use AppBundle\Entity\QuantityPattern\Unit\UnitTranslation;
+use AppBundle\Entity\QuantityPattern\Unit\Converter\Converter;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="UnitRepository")
  * @ORM\Table(
  *   name="QuantityUnits",
  *   uniqueConstraints={
- *     @ORM\UniqueConstraint(name="UK_QuantityDimensions_name", columns={ "name" })
- *     @ORM\UniqueConstraint(name="UK_QuantityDimensions_symbol", columns={ "symbol" })
+ *     @ORM\UniqueConstraint(name="UK_QuantityUnit_key", columns={ "`key`" })
  *   })
- * @UniqueEntity("name")
- * @UniqueEntity("symbol")
+ * @UniqueEntity("`key`")
  */
 final class Unit {
   use Translatable;
@@ -33,21 +31,31 @@ final class Unit {
   private $id;
 
   /**
+   * @ORM\Column(name="`key`", type="string", length=20)
+   */
+  private $key;
+
+  /**
    * @ORM\ManyToMany(targetEntity="UnitDimension", cascade={ "persist", "refresh" })
    * @ORM\JoinTable(
    *   name="QuantityUnits_QuantityUnitDimensions",
    *   joinColumns={ @ORM\JoinColumn(name="idUnit", referencedColumnName="idUnit") },
-   *   inverseJoinColumns={ @ORM\JoinColumn(name="idUnitDimension", referencedColumnName="idUnitDimension") },
+   *   inverseJoinColumns={ @ORM\JoinColumn(name="idUnitDimension", referencedColumnName="idUnitDimension") })
    */
   private $dimensions;
 
   /**
-   * @ORM\OneToOne(targetEntity="Converter", orphanRemoval=true, cascade={ "persist", "refresh", "remove" })
+   * @ORM\OneToOne(
+   *   targetEntity="AppBundle\Entity\QuantityPattern\Unit\Converter\Converter",
+   *   orphanRemoval=true,
+   *   cascade={ "persist", "refresh", "remove" })
    * @ORM\JoinColumn(name="idConverter", referencedColumnName="idConverter")
    */
   private $converter;
 
-  public function __construct(array $names, array $symbols, array $dimensions, callable $converter) {
+  public function __construct(array $names, array $symbols, array $dimensions, callable $converter, string $key) {
+    $this->key = $key;
+    
     $this->setDimensions($dimensions);
     $this->setConverter($converter);
 

@@ -1,23 +1,20 @@
 <?php
-namespace \AppBundle\Entity\QuantityPattern\Unit;
+namespace AppBundle\Entity\QuantityPattern\Unit;
 
-use \Doctrine\ORM\Mapping as ORM;
-use \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use \AppBundle\Entity\QuantityPattern\Dimension;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use AppBundle\Entity\QuantityPattern\Unit\Dimension;
 
 /**
  * @ORM\Entity
  * @ORM\Table(
  *   name="QuantityUnitDimensions",
  *   uniqueConstraints={
- *     @ORM\UniqueConstraint(name="UK_QuantityUnitDimensions_idDimension_exponant", columns={ "idDimension", "exponant" })
+ *     @ORM\UniqueConstraint(name="UK_QuantityUnitDimensions_idDimension_Exponent", columns={ "idDimension", "exponent" })
  *   })
  * @UniqueEntity(fields={ "dimension", "exponent" })
  */
 final class UnitDimension {
-  const name_length = 50;
-  const symbol_length = 5;
-
   /**
    * @ORM\Id
    * @ORM\Column(name="idUnitDimension", type="bigint", options={ "unsigned":true })
@@ -34,7 +31,7 @@ final class UnitDimension {
   /**
    * @ORM\Column(name="exponent", type="integer")
    */
-  private $exponant;
+  private $Exponent;
 
   public function __construct(Dimension $dimension, integer $exponent) {
     $this->dimension = $dimension;
@@ -42,14 +39,14 @@ final class UnitDimension {
   }
 
   public function __toString() {
-    return "$this->exponent^$exponent";
+    return "$this->getDimension()^$this->getExponent()";
   }
 
   public function getDimension() {
     return $this->dimension;
   }
 
-  public function getExponant() {
-    return $this->exponant;
+  public function getExponent() {
+    return $this->exponent;
   }
 }

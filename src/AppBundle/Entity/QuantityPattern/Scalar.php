@@ -1,19 +1,15 @@
 <?php
-namespace \AppBundle\Type\QuantityPattern;
+namespace AppBundle\Entity\QuantityPattern;
 
-use \Doctrine\ORM\Mapping as ORM;
-use \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use \AppBundle\Type\QuantityPattern\Value;
-use \AppBundle\Type\QuantityPattern\Unit\Unit;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use AppBundle\GlobalConstants;
+use AppBundle\Entity\QuantityPattern\Value;
+use AppBundle\Entity\QuantityPattern\Unit\Unit;
 
 /**
  * @ORM\Entity
- * @ORM\Table(
- *   name="Scalars",
- *   uniqueConstraints={
- *     @ORM\UniqueConstraint(name="UK_Scalars_value_unit", columns={ "value", "unit" }),
- *   })
- * @ORM\UniqueEntity(fields={ "value", "unit" })
+ * @ORM\Table(name="Scalars")
  */
 final class Scalar extends Value {
   /**
@@ -34,7 +30,7 @@ final class Scalar extends Value {
   }
 
   public function __toString() {
-    $value = round($this->value, $precision=getenv('FLOAT_DEFAULT_PRECISION'));
+    $value = round($this->value, $precision=GlobalConstants::FLOAT_DEFAULT_PRECISION);
     return $value.$this->unit;
   }
 
@@ -46,7 +42,7 @@ final class Scalar extends Value {
   }
 
   /**
-   * @return Value
+   * @return Scalar
    */
   protected function convert_(Unit $to) {
     $converter = $this->getUnit()->getConverter($to);
