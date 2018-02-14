@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="author" content="Alexandre Parent">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <title>{% block title %}{% endblock %}</title>
+    {% include 'snippets/icons.html.twig' only %}
+    {% include 'snippets/stylesheets.html.twig' only %}
+    {% block stylesheets %}{% endblock %}
+    {% include 'snippets/scripts.html.twig' only %}
+    {% block scripts %}{% endblock %}
+  </head>
+  <body>
+    <div id="all">
+      {% include 'snippets/top-bar.html' %}
+      {% block body %}{% endblock %}
+      {% include 'snippets/footer.html' only %}
+    </div>
+    {% block modals %}{% endblock %}
+    {% include 'modals/login-modal.html.twig' only %}
+  </body>
 </html>

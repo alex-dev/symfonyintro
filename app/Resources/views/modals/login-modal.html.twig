@@ -1,0 +1,31 @@
+<div id="login-modal" tabindex="-1" role="dialog" aria-labelledby="login-modalLabel" aria-hidden="true" class="modal fade">
+  <div role="document" class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 id="login-modalLabel" class="modal-title">Customer Login</h4>
+        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-body">
+        {# login route #}
+        <form action="{{  }}" method="post">
+          <div class="form-group">
+            <input id="email_modal" type="text" placeholder="Email" class="form-control">
+          </div>
+          <div class="form-group">
+            <input id="password_modal" type="password" placeholder="Password" class="form-control">
+          </div>
+          <div class="text-center">
+            <button class="btn btn-template-outlined">
+              <i class="fa fa-sign-in"></i> Log in
+            </button>
+          </div>
+        </form>
+        <div class="text-center text-muted">
+          <p>Not registered yet?</p>
+          {# customer-register.html #}
+          <p><a href="{{  }}"><strong>Register now</strong></a></p>    
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
