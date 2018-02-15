@@ -19,12 +19,16 @@ use AppBundle\Entity\Product\ProductTranslation;
  * @ORM\Table(
  *   name="Products",
  *   uniqueConstraints={
- *     @ORM\UniqueConstraint(name="UK_Products_key", columns={ "`key`" })
+ *     @ORM\UniqueConstraint(name="UK_Products_key", columns={ "`key`" }),
+ *     @ORM\UniqueConstraint(name="UK_Products_code_manufacturer", columns={ "code", "idManufacturer" })
  *   })
  * @UniqueEntity("`key`")
+ * @UniqueEntity(fields={ "code", "manufacturer" })
  */
 abstract class Product extends UrlKey {
   use Translatable;
+
+  const code_length = 50;
 
   /**
    * @ORM\Id
@@ -34,7 +38,7 @@ abstract class Product extends UrlKey {
   protected $id;
 
   /**
-   * @ORM\Column(name="code", type="string", length=50)
+   * @ORM\Column(name="code", type="string", length=Product::code_length)
    */
   protected $code;
 
@@ -70,10 +74,18 @@ abstract class Product extends UrlKey {
     return $this->manufacturer;
   }
 
+  public function getCode() {
+    return $this->code;
+  }
+
   /**
    * @return void
    */
   public function setManufacturer(Manufacturer $manufacturer) {
     $this->manufacturer = $manufacturer;
+  }
+
+  public function setCode(string $value) {
+    $this->code = $value;
   }
 }
