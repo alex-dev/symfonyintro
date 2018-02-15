@@ -5,9 +5,6 @@ imports:
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
-parameters:
-    locale: en
-
 framework:
     #esi: ~
     #translator: { fallbacks: ['%locale%'] }
@@ -19,7 +16,7 @@ framework:
     csrf_protection: ~
     validation: { enable_annotations: true }
     #serializer: { enable_annotations: true }
-    default_locale: '%locale%'
+    default_locale: '%default_locale%'
     trusted_hosts: ~
     session:
         # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
@@ -35,6 +32,11 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    globals:
+        copyright: '%copyright%'
+        company_name: '%company_name%'
+        contact_phone: '%contact_phone%'
+        contact_mail: '%contact_mail%'
 
 # Doctrine Configuration
 doctrine:
@@ -63,11 +65,3 @@ doctrine:
 
 knp_doctrine_behaviors:
     translatable: true
-
-# Swiftmailer Configuration
-swiftmailer:
-    transport: '%mailer_transport%'
-    host: '%mailer_host%'
-    username: '%mailer_user%'
-    password: '%mailer_password%'
-    spool: { type: memory }

@@ -7,23 +7,36 @@
       </div>
       <div class="modal-body">
         {# login route #}
-        <form action="{{  }}" method="post">
+        <form action="#" method="post">
           <div class="form-group">
-            <input id="email_modal" type="text" placeholder="Email" class="form-control">
+            <input id="email_modal" type="text" placeholder="{{ 'Email' | trans([], 'messages', locale) }}" class="form-control"/>
           </div>
           <div class="form-group">
-            <input id="password_modal" type="password" placeholder="Password" class="form-control">
+            <input id="password_modal" type="password" placeholder="{{ 'Password' | trans([], 'messages', locale) }}" class="form-control"/>
           </div>
           <div class="text-center">
             <button class="btn btn-template-outlined">
-              <i class="fa fa-sign-in"></i> Log in
+              <i class="fa fa-sign-in"></i>
+              {% trans from 'messages' into locale %}
+              Log in
+              {% endtrans %}
             </button>
           </div>
         </form>
         <div class="text-center text-muted">
-          <p>Not registered yet?</p>
+          <p>
+            {% trans from 'messages' into locale %}
+            Not registered yet?
+            {% endtrans %}
+          </p>
           {# customer-register.html #}
-          <p><a href="{{  }}"><strong>Register now</strong></a></p>    
+          <p>
+            <a href="#">
+              {% trans from 'messages' into locale %}
+              <strong>Register now</strong>
+              {% endtrans %}
+            </a>
+          </p>    
         </div>
       </div>
     </div>

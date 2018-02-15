@@ -4,7 +4,7 @@ namespace AppBundle\Entity\Product;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Exception\UnitException;
 use AppBundle\Service\DimensionsFactory;
-use AppBundle\Entity\Manufacturer;
+use AppBundle\Entity\Architecture\MemoryArchitecture;
 use AppBundle\Entity\Product\Product;
 use AppBundle\Entity\QuantityPattern\Scalar;
 
@@ -34,6 +34,14 @@ class Memory extends Product {
    */
   protected $frequency;
 
+  /**
+   * @ORM\ManyToOne(
+   *   targetEntity="AppBundle\Entity\Architecture\MemoryArchitecture",
+   *   cascade={ "persist", "refresh" })
+   * @ORM\JoinColumn(name="idArchitecture", referencedColumnName="idArchitecture", nullable=false)
+   */
+  protected $architecture;
+
   public function __construct(array $names, Manufacturer $manufacturer, Scalar $size, Scalar $frequency, DimensionsFactory $factory) {
     $this->size_dimensions = $factory('byte');
     $this->frequency_dimensions = $factory('hertz');
@@ -54,6 +62,13 @@ class Memory extends Product {
    */
   public function getFrequency() {
     return $this->frequency;
+  }
+
+  /**
+   * @return Architecture
+   */
+  public function getArchitecture() {
+    return $this->architecture;
   }
 
   /**

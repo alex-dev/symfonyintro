@@ -7,12 +7,7 @@ use Knp\DoctrineBehaviors\Model\Translatable\Translation;
 
 /**
  * @ORM\Entity
- * @ORM\Table(
- *   name="ProductTranslations",
- *   uniqueConstraints={
- *     @ORM\UniqueConstraint(name="UK_ProductTranslations_name_locale", columns={ "name", "locale" })
- *   })
- * @UniqueEntity(fields={ "name", "locale" })
+ * @ORM\Table(name="ProductTranslations")
  */
 class ProductTranslation {
   use Translation;

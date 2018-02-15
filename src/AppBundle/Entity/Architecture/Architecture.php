@@ -8,6 +8,8 @@ use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use AppBundle\Entity\UrlKey;
 use AppBundle\Entity\Architecture\ArchitectureTranslation;
 
+// All currently inserted data are UDIMM
+
 /**
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")

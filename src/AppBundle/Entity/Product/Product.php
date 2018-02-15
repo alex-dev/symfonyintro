@@ -34,6 +34,11 @@ abstract class Product extends UrlKey {
   protected $id;
 
   /**
+   * @ORM\Column(name="code", type="string", length=50)
+   */
+  protected $code;
+
+  /**
    * @ORM\ManyToOne(
    *   targetEntity="AppBundle\Entity\Manufacturer",
    *   cascade={ "persist", "refresh" })
