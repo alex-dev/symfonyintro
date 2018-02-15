@@ -1,0 +1,9 @@
+twig:
+    globals:
+        copyright: '%app.copyright%'
+        companyname: '%app.company.name%'
+        contactphone: '%app.contact.phone%'
+        contactmail: '%app.contact.mail%'
+        locales: '%app.locales%'
+        locale: '%app.locale%'
+

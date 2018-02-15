@@ -3,6 +3,10 @@ imports:
     - { resource: parameters_general.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: twig_globals.yml }
+
+parameters:
+    locale: app.locale
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -17,7 +21,7 @@ framework:
     csrf_protection: ~
     validation: { enable_annotations: true }
     #serializer: { enable_annotations: true }
-    default_locale: '%default_locale%'
+    default_locale: '%app.locale%'
     trusted_hosts: ~
     session:
         # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id
@@ -33,11 +37,6 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
-    globals:
-        copyright: '%copyright%'
-        company_name: '%company_name%'
-        contact_phone: '%contact_phone%'
-        contact_mail: '%contact_mail%'
 
 # Doctrine Configuration
 doctrine:

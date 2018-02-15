@@ -4,13 +4,13 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-4 text-center-md">
-          &copy; {{ copyright }}. {{ company_name }}
+          &copy; {{ copyright }}. {{ companyname }}
         </div>
         <div class="col-lg-8 text-right text-center-md">
           {% trans with {
             '%theme_author%': '<a href="https://bootstrapious.com/free-templates">Bootstrapious Templates</a>' | raw
-          } from 'messages' into locale %}
-          Template design by %%theme_author%.
+          } from 'messages' into currentlocale %}
+          Template design by %theme_author%.
           {% endtrans %}
         </div>
       </div>
