@@ -45,3 +45,6 @@
 
 # Vendor packages
 /vendor/
+
+#temp files
+/app/DoctrineMigrations/sdfasfsdf.php

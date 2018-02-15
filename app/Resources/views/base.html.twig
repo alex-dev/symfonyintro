@@ -1,5 +1,5 @@
 {% set locale = app.request.get('_locale') %}
-{% set route = app.request.get('_locale') %}
+{% set route = app.request.get('_route') %}
 <!DOCTYPE html>
 <html lang="{{ locale[:2] }}">
   <head>
@@ -17,11 +17,11 @@
   </head>
   <body>
     <div id="all">
-      {% include 'snippets/top-bar.html.twig' with { "locale": "locale" } only %}
+      {% include 'snippets/top-bar.html.twig' with { 'locale': locale, 'route': route } only %}
       {% block body %}{{locale}}{% endblock %}
-      {% include 'snippets/footer.html.twig' with { "locale": "locale" } only %}
+      {% include 'snippets/footer.html.twig' with { 'locale': locale, 'route': route } only %}
     </div>
     {% block modals %}{% endblock %}
-    {% include 'modals/login-modal.html.twig' with { "locale": "locale" } only %}
+    {% include 'modals/login-modal.html.twig' with { 'locale': locale, 'route': route } only %}
   </body>
 </html>

@@ -2,20 +2,18 @@
   <div class="container">
     <div class="row d-flex align-items-center">
       <div class="col-md-6">
-        <form action=
+        {% include 'snippets/locale-dropdown.html.twig' with { 'locale': locale, 'route': route } only %}
       </div>
       <div class="col-md-6">
-        <div class="d-flex justify-content-md-end justify-content-between">
-          <div class="login">
-            <a href="#" data-toggle="modal" data-target="#login-modal" class="login-btn">
-              <i class="fa fa-sign-in"></i>
-              <span class="d-none d-md-inline-block">
-                {% trans from 'message' into locale %}
-                Sign in
-                {% endtrans %}
-              </span>
-            </a>
-          </div>
+        <div class="login">
+          <a href="#" data-toggle="modal" data-target="#login-modal" class="login-btn">
+            <i class="fa fa-sign-in"></i>
+            <span class="d-none d-md-inline-block">
+              {% trans from 'message' into locale %}
+              Sign in
+              {% endtrans %}
+            </span>
+          </a>
           <!-- Not fully functionnal yet -->
           <ul class="social-custom list-inline">
             <li class="list-inline-item">
