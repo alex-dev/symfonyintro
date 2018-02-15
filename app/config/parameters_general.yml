@@ -1,8 +1,7 @@
 parameters:
-    copyright: 2018
-    company_name: PHP Symfony Electronics Store
-    contact_phone: +1 888 553 8899
-    contact_mail: someone@phpsymfonyelectronicsstore.com
-    default_locale: fr_CA
-    locale: fr_CA
-    supported_locales: fr_CA|en_CA|en_US
+    app.copyright: 2018
+    app.company.name: PHP Symfony Electronics Store
+    app.contact.phone: +1 888 553 8899
+    app.contact.mail: someone@phpsymfonyelectronicsstore.com
+    app.locales: fr_CA|en_CA|en_US
+    app.locale: fr_CA
