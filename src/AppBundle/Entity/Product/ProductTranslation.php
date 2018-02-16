@@ -7,7 +7,8 @@ use Knp\DoctrineBehaviors\Model\Translatable\Translation;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="ProductTranslations")
+ * @ORM\Table
+ * })
  */
 class ProductTranslation {
   use Translation;
@@ -15,7 +16,7 @@ class ProductTranslation {
   const name_length = 255;
 
   /**
-   * @ORM\Column(name="name", type="string", length=ProductTranslation::name_length)
+   * @ORM\Column(type="string", length=ProductTranslation::name_length)
    */
   protected $name;
 
@@ -30,7 +31,7 @@ class ProductTranslation {
    * @return void
    * @throws LengthException if $value is longer than self::name_length
    */
-  public function setName(string $value) {
+  public function setName($value) {
     if (mb_strlen($value) > self::name_length) {
       throw new LengthException("$value must be less then ".self::name_length." characters long.");
     } else {

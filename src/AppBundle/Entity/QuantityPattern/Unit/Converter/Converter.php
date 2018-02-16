@@ -11,17 +11,17 @@ use Doctrine\ORM\Mapping as ORM;
  *   "zerobased" = "ZeroBasedLinearConverter",
  *   "offsetlinear" = "OffsetLinearConverter"
  * })
- * @ORM\Table(name="QuantityConverters")
+ * @ORM\Table
  */
 abstract class Converter {
   /**
    * @ORM\Id
-   * @ORM\Column(name="idConverter", type="bigint", options={ "unsigned":true })
+   * @ORM\Column(type="bigint", options={ "unsigned":true })
    * @ORM\GeneratedValue
    */
   protected $id;
 
   abstract public function __invoke(Converter $other);
-  abstract protected function convertToBase(float $value);
-  abstract protected function convertFromBase(float $value);
+  abstract protected function convertToBase($value);
+  abstract protected function convertFromBase($value);
 }

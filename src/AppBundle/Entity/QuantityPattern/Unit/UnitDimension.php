@@ -8,32 +8,31 @@ use AppBundle\Entity\QuantityPattern\Unit\Dimension;
 /**
  * @ORM\Entity
  * @ORM\Table(
- *   name="QuantityUnitDimensions",
  *   uniqueConstraints={
- *     @ORM\UniqueConstraint(name="UK_QuantityUnitDimensions_idDimension_Exponent", columns={ "idDimension", "exponent" })
+ *     @ORM\UniqueConstraint(name="UK_QuantityUnitDimensions_dimension_exponent", columns={ "dimension", "exponent" })
  *   })
  * @UniqueEntity(fields={ "dimension", "exponent" })
  */
 final class UnitDimension {
   /**
    * @ORM\Id
-   * @ORM\Column(name="idUnitDimension", type="bigint", options={ "unsigned":true })
+   * @ORM\Column(type="bigint", options={ "unsigned":true })
    * @ORM\GeneratedValue
    */
   private $id;
 
   /**
    * @ORM\ManyToOne(targetEntity="Dimension", cascade={ "persist", "refresh" })
-   * @ORM\JoinColumn(name="idDimension", referencedColumnName="idDimension", nullable=false)
+   * @ORM\JoinColumn(nullable=false)
    */
   private $dimension;
 
   /**
-   * @ORM\Column(name="exponent", type="integer")
+   * @ORM\Column(type="integer")
    */
-  private $Exponent;
+  private $exponent;
 
-  public function __construct(Dimension $dimension, integer $exponent) {
+  public function __construct(Dimension $dimension, $exponent) {
     $this->dimension = $dimension;
     $this->exponent = $exponent;
   }

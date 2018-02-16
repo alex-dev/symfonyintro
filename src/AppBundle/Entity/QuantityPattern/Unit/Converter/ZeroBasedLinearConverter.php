@@ -9,27 +9,27 @@ use AppBundle\Entity\QuantityPattern\Unit\Converter\Converter;
  */
 class ZeroBasedLinearConverter extends Converter {
   /**
-   * @ORM\Column(name="factor", type="float")
+   * @ORM\Column(type="float")
    */
   protected $factor;
 
   public function __invoke(Converter $other) {
     if ($other instanceof self) {
-      return function (float $value) {
+      return function ($value) {
         return $value * $this->factor / $other->factor;
       };
     } else {
-      return function (float $value) {
+      return function ($value) {
         return $other->convertFromBase($this->convertToBase($value));
       };
     }
   }
 
-  protected function convertToBase(float $value) {
+  protected function convertToBase($value) {
     return $value * $this->factor;
   }
 
-  protected function convertFromBase(float $value) {
+  protected function convertFromBase($value) {
     return $value / $this->factor;
   }
 }

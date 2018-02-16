@@ -8,7 +8,6 @@ use AppBundle\Entity\Product\Product;
 /**
  * @ORM\Entity
  * @ORM\Table(
- *   name="Images",
  *   uniqueConstraints={
  *     @ORM\UniqueConstraint(name="UK_Images_filename", columns={ "filename" })
  *   })
@@ -20,7 +19,7 @@ final class Image {
   /**
    * @ORM\Id
    * @ORM\GeneratedValue
-   * @ORM\Column(name="idImage", type="bigint", options={ "unsigned": true })
+   * @ORM\Column(type="bigint", options={ "unsigned": true })
    */
   protected $id;
 
@@ -28,16 +27,16 @@ final class Image {
    * @ORM\ManyToOne(
    *   targetEntity="AppBundle\Entity\Product\Product",
    *   cascade={ "persist", "refresh" })
-   * @ORM\JoinColumn(name="idProduct", referencedColumnName="idProduct", nullable=false)
+   * @ORM\JoinColumn(nullable=false)
    */
   protected $product;
   
   /**
-   * @ORM\Column(name="filename", type="string", length=Image::filename_length)
+   * @ORM\Column(type="string", length=Image::filename_length)
    */
   protected $filename;
 
-  public function __construct(string $filename) {
+  public function __construct($filename) {
     $this->setFilename($filename);
   }
 
@@ -51,7 +50,7 @@ final class Image {
   /**
    * @return void
    */
-  protected function setFilename(string $value) {
+  protected function setFilename($value) {
     if (mb_strlen($value) > self::filename_length) {
       throw new LengthException("$value must be less then ".self::filename_length." characters long.");
     } else {

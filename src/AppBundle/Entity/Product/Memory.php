@@ -10,7 +10,7 @@ use AppBundle\Entity\QuantityPattern\Scalar;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Memories")
+ * @ORM\Table
  */
 class Memory extends Product {
   private $size_dimensions;
@@ -21,7 +21,7 @@ class Memory extends Product {
    *   targetEntity="AppBundle\Entity\QuantityPattern\Scalar",
    *   orphanRemoval=true,
    *   cascade={ "persist", "refresh", "remove" })
-   * @ORM\JoinColumn(name="size", referencedColumnName="idScalar", nullable=false)
+   * @ORM\JoinColumn(nullable=false)
    */
   protected $size;
 
@@ -30,7 +30,7 @@ class Memory extends Product {
    *   targetEntity="AppBundle\Entity\QuantityPattern\Scalar",
    *   orphanRemoval=true,
    *   cascade={ "persist", "refresh", "remove" })
-   * @ORM\JoinColumn(name="frequency", referencedColumnName="idScalar", nullable=false)
+   * @ORM\JoinColumn(nullable=false)
    */
   protected $frequency;
 
@@ -38,7 +38,7 @@ class Memory extends Product {
    * @ORM\ManyToOne(
    *   targetEntity="AppBundle\Entity\Architecture\MemoryArchitecture",
    *   cascade={ "persist", "refresh" })
-   * @ORM\JoinColumn(name="idArchitecture", referencedColumnName="idArchitecture", nullable=false)
+   * @ORM\JoinColumn(nullable=false)
    */
   protected $architecture;
 

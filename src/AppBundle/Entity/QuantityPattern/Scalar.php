@@ -9,22 +9,22 @@ use AppBundle\Entity\QuantityPattern\Unit\Unit;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="Scalars")
+ * @ORM\Table
  */
 final class Scalar extends Value {
   /**
    * @ORM\Id
-   * @ORM\Column(name="idScalar", type="bigint", options={ "unsigned":true })
+   * @ORM\Column(type="bigint", options={ "unsigned":true })
    * @ORM\GeneratedValue
    */
   private $id;
 
   /**
-   * @ORM\Column(name="value", type="float")
+   * @ORM\Column(type="float")
    */
   private $value;
 
-  public function __construct(Unit $unit, float $value) {
+  public function __construct(Unit $unit, $value) {
     parent::__construct($unit);
     $this->value = $value;
   }

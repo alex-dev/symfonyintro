@@ -14,7 +14,6 @@ use AppBundle\Entity\QuantityPattern\Unit\Converter\Converter;
 /**
  * @ORM\Entity(repositoryClass="UnitRepository")
  * @ORM\Table(
- *   name="QuantityUnits",
  *   uniqueConstraints={
  *     @ORM\UniqueConstraint(name="UK_QuantityUnit_key", columns={ "`key`" })
  *   })
@@ -25,35 +24,33 @@ final class Unit {
 
   /**
    * @ORM\Id
-   * @ORM\Column(name="idUnit", type="bigint", options={ "unsigned":true })
+   * @ORM\Column(type="bigint", options={ "unsigned":true })
    * @ORM\GeneratedValue
    */
   private $id;
 
   /**
-   * @ORM\Column(name="`key`", type="string", length=20)
+   * @ORM\Column(type="string", length=20)
    */
   private $key;
 
   /**
    * @ORM\ManyToMany(targetEntity="UnitDimension", cascade={ "persist", "refresh" })
    * @ORM\JoinTable(
-   *   name="QuantityUnits_QuantityUnitDimensions",
-   *   joinColumns={ @ORM\JoinColumn(name="idUnit", referencedColumnName="idUnit", nullable=false) },
-   *   inverseJoinColumns={ @ORM\JoinColumn(name="idUnitDimension", referencedColumnName="idUnitDimension", nullable=false) })
+   *   joinColumns={ @ORM\JoinColumn(name="unit", referencedColumnName="id", nullable=false) },
+   *   inverseJoinColumns={ @ORM\JoinColumn(name="dimension", referencedColumnName="id", nullable=false) })
    */
   private $dimensions;
 
   /**
-   * @ORM\OneToOne(
+   * @ORM\ManyToOne(
    *   targetEntity="AppBundle\Entity\QuantityPattern\Unit\Converter\Converter",
-   *   orphanRemoval=true,
-   *   cascade={ "persist", "refresh", "remove" })
-   * @ORM\JoinColumn(name="idConverter", referencedColumnName="idConverter", nullable=false)
+   *   cascade={ "persist", "refresh" })
+   * @ORM\JoinColumn(nullable=false)
    */
   private $converter;
 
-  public function __construct(array $names, array $symbols, array $dimensions, callable $converter, string $key) {
+  public function __construct(array $names, array $symbols, array $dimensions, callable $converter, $key) {
     $this->key = $key;
     
     $this->setDimensions($dimensions);

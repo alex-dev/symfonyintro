@@ -17,10 +17,9 @@ use AppBundle\Entity\Product\ProductTranslation;
  *   "memory" = "Memory"
  * })
  * @ORM\Table(
- *   name="Products",
  *   uniqueConstraints={
  *     @ORM\UniqueConstraint(name="UK_Products_key", columns={ "`key`" }),
- *     @ORM\UniqueConstraint(name="UK_Products_code_manufacturer", columns={ "code", "idManufacturer" })
+ *     @ORM\UniqueConstraint(name="UK_Products_code_manufacturer", columns={ "code", "manufacturer" })
  *   })
  * @UniqueEntity("`key`")
  * @UniqueEntity(fields={ "code", "manufacturer" })
@@ -32,13 +31,13 @@ abstract class Product extends UrlKey {
 
   /**
    * @ORM\Id
-   * @ORM\Column(name="idProduct", type="bigint", options={ "unsigned":true })
+   * @ORM\Column(type="bigint", options={ "unsigned":true })
    * @ORM\GeneratedValue
    */
   protected $id;
 
   /**
-   * @ORM\Column(name="code", type="string", length=Product::code_length)
+   * @ORM\Column(type="string", length=Product::code_length)
    */
   protected $code;
 
@@ -46,7 +45,7 @@ abstract class Product extends UrlKey {
    * @ORM\ManyToOne(
    *   targetEntity="AppBundle\Entity\Manufacturer",
    *   cascade={ "persist", "refresh" })
-   * @ORM\JoinColumn(name="idManufacturer", referencedColumnName="idManufacturer", nullable=false)
+   * @ORM\JoinColumn(nullable=false)
    */
   protected $manufacturer;
 
@@ -85,7 +84,7 @@ abstract class Product extends UrlKey {
     $this->manufacturer = $manufacturer;
   }
 
-  public function setCode(string $value) {
+  public function setCode($value) {
     $this->code = $value;
   }
 }

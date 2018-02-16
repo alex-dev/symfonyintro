@@ -13,7 +13,7 @@ abstract class Value {
    * @ORM\ManyToOne(
    *   targetEntity="AppBundle\Entity\QuantityPattern\Unit\Unit",
    *   cascade={ "persist", "refresh" })
-   * @ORM\JoinColumn(name="idUnit", referencedColumnName="idUnit", nullable=false)
+   * @ORM\JoinColumn(nullable=false)
    */
   protected $unit;
   

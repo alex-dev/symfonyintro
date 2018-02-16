@@ -6,7 +6,7 @@ use AppBundle\Entity\Architecture\Architecture;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="HardDriveArchitectures")
+ * @ORM\Table
  */
 class HardDriveArchitecture extends Architecture {
   public function __construct(array $names, array $abbreviations) {

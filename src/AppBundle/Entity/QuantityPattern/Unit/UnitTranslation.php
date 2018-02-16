@@ -7,12 +7,10 @@ use Knp\DoctrineBehaviors\Model\Translatable\Translation;
 
 /**
  * @ORM\Entity
- * @ORM\Table(
- *   name="QuantityUnitTranslations",
- *   uniqueConstraints={
- *     @ORM\UniqueConstraint(name="UK_QuantityUnitTranslations_name_locale", columns={ "name", "locale" }),
- *     @ORM\UniqueConstraint(name="UK_QuantityUnitTranslations_symbol_locale", columns={ "symbol", "locale" })
- *   })
+ * @ORM\Table(uniqueConstraints={
+ *   @ORM\UniqueConstraint(name="UK_QuantityUnitTranslations_name_locale", columns={ "name", "locale" }),
+ *   @ORM\UniqueConstraint(name="UK_QuantityUnitTranslations_symbol_locale", columns={ "symbol", "locale" })
+ * })
  * @UniqueEntity(fields={ "name", "locale" })
  * @UniqueEntity(fields={ "symbol", "locale" })
  */
@@ -23,12 +21,12 @@ final class UnitTranslation {
   const symbol_length = 5;
 
   /**
-   * @ORM\Column(name="name", type="string", length=UnitTranslation::name_length)
+   * @ORM\Column(type="string", length=UnitTranslation::name_length)
    */
   private $name;
 
   /**
-   * @ORM\Column(name="symbol", type="string", length=UnitTranslation::symbol_length)
+   * @ORM\Column(type="string_sensitive", length=UnitTranslation::symbol_length)
    */
   private $symbol;
 
@@ -40,7 +38,7 @@ final class UnitTranslation {
     return $this->symbol;
   }
 
-  private function setName(string $value) {
+  private function setName($value) {
     if (mb_strlen($value) > self::name_length) {
       throw new LengthException("$value must be less then ".self::name_length." characters long.");
     } else {
@@ -48,7 +46,7 @@ final class UnitTranslation {
     }
   }
 
-  private function setSymbol(string $value) {
+  private function setSymbol($value) {
     if (mb_strlen($value) > self::name_length) {
       throw new LengthException("$value must be less then ".self::name_length." characters long.");
     } else {

@@ -8,7 +8,6 @@ use AppBundle\Entity\UrlKey;
 /**
  * @ORM\Entity
  * @ORM\Table(
- *   name="Manufacturers",
  *   uniqueConstraints={
  *     @ORM\UniqueConstraint(name="UK_Manufacturers_name", columns={ "name" }),
  *     @ORM\UniqueConstraint(name="UK_Manufacturers_key", columns={ "`key`" })
@@ -21,17 +20,17 @@ class Manufacturer extends UrlKey {
 
   /**
    * @ORM\Id
-   * @ORM\Column(name="idManufacturer", type="bigint", options={ "unsigned":true })
+   * @ORM\Column(type="bigint", options={ "unsigned":true })
    * @ORM\GeneratedValue
    */
   protected $id;
 
   /**
-   * @ORM\Column(name="name", type="string", length=Manufacturer::name_length)
+   * @ORM\Column(type="string", length=Manufacturer::name_length)
    */
   protected $name;
   
-  public function __construct(string $name) {
+  public function __construct($name) {
     parent::__construct();
     $this->setName($name);
   }
@@ -47,7 +46,7 @@ class Manufacturer extends UrlKey {
    * @return void
    * @throws LengthException if $value is longer than self::name_length
    */
-  public function setName(string $value) {
+  public function setName($value) {
     if (mb_strlen($value) > self::name_length) {
       throw new LengthException("$value must be less then ".self::name_length." characters long.");
     } else {

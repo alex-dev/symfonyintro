@@ -21,4 +21,9 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
-    AppBundle\Service\DimensionFactory:
+    AppBundle\Database\NamingStrategy:
+        ressource: '../../src/AppBundle/Database/NamingStrategy.php'
+        public: true
+
+    AppBundle\Service\:
+        resource: '../../src/AppBundle/Service'

@@ -8,7 +8,6 @@ use AppBundle\Repository\DimensionRepository;
 /**
  * @ORM\Entity
  * @ORM\Table(
- *   name="QuantityDimensions",
  *   uniqueConstraints={
  *     @ORM\UniqueConstraint(name="UK_QuantityDimensions_name", columns={ "name" }),
  *     @ORM\UniqueConstraint(name="UK_QuantityDimensions_symbol", columns={ "symbol" })
@@ -22,22 +21,22 @@ final class Dimension {
 
   /**
    * @ORM\Id
-   * @ORM\Column(name="idDimension", type="bigint", options={ "unsigned":true })
+   * @ORM\Column(type="bigint", options={ "unsigned":true })
    * @ORM\GeneratedValue
    */
   private $id;
 
   /**
-   * @ORM\Column(name="name", type="string", length=Dimension::name_length)
+   * @ORM\Column(type="string", length=Dimension::name_length)
    */
   private $name;
 
   /**
-   * @ORM\Column(name="symbol", type="string", length=Dimension::symbol_length)
+   * @ORM\Column(type="string_sensitive", length=Dimension::symbol_length)
    */
   private $symbol;
 
-  public function __construct(string $name, string $symbol) {
+  public function __construct($name, $symbol) {
     $this->setName($name);
     $this->setSymbol($symbol);
   }
@@ -46,7 +45,7 @@ final class Dimension {
     return $this->symbol;
   }
 
-  private function setName(string $value) {
+  private function setName($value) {
     if (mb_strlen($value) > self::name_length) {
       throw new LengthException("$value must be less then ".self::name_length." characters long.");
     } else {
@@ -54,7 +53,7 @@ final class Dimension {
     }
   }
 
-  private function setSymbol(string $value) {
+  private function setSymbol($value) {
     if (mb_strlen($value) > self::name_length) {
       throw new LengthException("$value must be less then ".self::name_length." characters long.");
     } else {

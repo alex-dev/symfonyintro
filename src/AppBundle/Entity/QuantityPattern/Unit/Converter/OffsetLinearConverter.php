@@ -9,27 +9,27 @@ use AppBundle\Entity\QuantityPattern\Unit\Converter\Converter;
  */
 class OffsetLinearConverter extends Converter {
   /**
-   * @ORM\Column(name="factor", type="float")
+   * @ORM\Column(type="float")
    */
   protected $factor;
 
   /**
-   * @ORM\Column(name="offset", type="float")
+   * @ORM\Column(type="float")
    */
   protected $offset;
 
 
   public function __invoke(Converter $other) {
-    return function (float $value) {
+    return function ($value) {
       return $other->convertFromBase($this->convertToBase($value));
     };
   }
 
-  protected function convertToBase(float $value) {
+  protected function convertToBase($value) {
     return $value * $this->factor + $this->offset;
   }
 
-  protected function convertFromBase(float $value) {
+  protected function convertFromBase($value) {
     return ($value - $this->offset) * $this->factor;
   }
 }

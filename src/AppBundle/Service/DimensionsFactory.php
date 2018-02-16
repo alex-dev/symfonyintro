@@ -16,7 +16,7 @@ final class DimensionsFactory extends AbstractFactory {
   /**
    * @return array<Dimension> representing Dimension combination
    */
-  public function __invoke(string $value) {
+  public function __invoke($value) {
     return $this->repository->findBy(['`key`'=>$value])->getDimensions();
   }
 }

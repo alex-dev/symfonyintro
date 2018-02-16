@@ -20,11 +20,7 @@ use AppBundle\Entity\Architecture\ArchitectureTranslation;
  *   "memory" = "MemoryArchitecture",
  *   "processor" = "ProcessorArchitecture"
  * })
- * @ORM\Table(
- *   name="Architectures",
- *   uniqueConstraints={
- *     @ORM\UniqueConstraint(name="UK_Manufacturers_key", columns={ "`key`" })
- *   })
+ * @ORM\Table(uniqueConstraints={ @ORM\UniqueConstraint(name="UK_Architectures_key", columns={ "`key`" }) })
  * @UniqueEntity("`key`")
  */
 abstract class Architecture extends UrlKey {
@@ -32,7 +28,7 @@ abstract class Architecture extends UrlKey {
 
   /**
    * @ORM\Id
-   * @ORM\Column(name="idArchitecture", type="bigint", options={ "unsigned":true })
+   * @ORM\Column(type="bigint", options={ "unsigned":true })
    * @ORM\GeneratedValue
    */
   protected $id;

@@ -29,7 +29,7 @@ final class UUID {
     return pack('H*', str_replace('-', '', $this->value));
   }
 
-  private function __construct(string $value) {
+  private function __construct($value) {
     $this->value = $value;
   }
 
@@ -45,8 +45,9 @@ final class UUID {
    * @throws UUIDException if $value is not a valid string UUID
    * @throws Exception if preg_match fail to run the regex
    */
-  public static function createFromString(string $value) {
-    $temp = preg_match(self::regex, $value, $matches = []);
+  public static function createFromString($value) {
+    $matches = [];
+    $temp = preg_match(self::regex, $value, $matches);
 
     if ($temp !== 0 && $temp !== 1) {
       throw new Exception('Unknown error.');
@@ -61,8 +62,9 @@ final class UUID {
    * @return UUID
    * @throws UUIDException if $value is not a valid binary string UUID
    */
-  public static function createFromHex(string $value) {
-    $hash = array_shift(unpack('H*', $value));
+  public static function createFromHex($value) {
+    $hash = unpack('H*', $value);
+    $hash = array_shift($hash);
 
     if (strlen($hash) !== 32) {
       throw new UUIDException(sprintf('%s is not a valid UUID.', $hash));
@@ -82,7 +84,7 @@ final class UUID {
   private static function generate() {
     list($time_mid, $time_low) = explode(' ', microtime());
     
-    return sprintf(
+    return mb_strtoupper(sprintf(
       '%08x-%04x-%04x-%04x-%012s',
       (int)$time_low,
       (int)substr($time_mid, 2) & 0xffff,
@@ -93,8 +95,6 @@ final class UUID {
         function_exists('zend_thread_id')
           ? zend_thread_id()
           : getmypid(),
-        $request !== null
-          ? ip2long(getHostByName(getHostName()))
-          : crc32(getHostName()))));
+        ip2long(getHostByName(getHostName()))))));
   }
 }
