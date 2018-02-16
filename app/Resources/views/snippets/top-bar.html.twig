@@ -1,17 +1,19 @@
+{% set currentlocale = app.request.get('_locale') %}
+
 <div class="top-bar">
   <div class="container">
     <div class="row d-flex align-items-center">
       <div class="col-10 col-lg-11">
-        {% include 'snippets/locale-dropdown.html.twig' with { 'locale': locale, 'route': route } only %}
+        {%- include 'dropdowns/locale.html.twig' only -%}
       </div>
       <div class="col-2 col-lg-1 justify-content-md-end">
         <div class="login row">
           <a href="#" data-toggle="modal" data-target="#login-modal" class="login-btn">
             <i class="fa fa-sign-in"></i>
             <span class="d-none d-md-inline-block">
-              {% trans from 'message' into currentlocale %}
-              Sign in
-              {% endtrans %}
+              {%- trans from 'message' into currentlocale -%}
+                Sign in
+              {%- endtrans -%}
             </span>
           </a>
         </div>

@@ -1,4 +1,5 @@
 parameters:
+    app.routes.types: memories|processors|graphicaccelerators|harddrives
     app.copyright: 2018
     app.company.name: PHP Symfony Electronics Store
     app.contact.phone: +1 888 553 8899

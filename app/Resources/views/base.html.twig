@@ -1,5 +1,6 @@
+{% spaceless %}
 {% set currentlocale = app.request.get('_locale') %}
-{% set route = app.request.get('_route') %}
+
 <!DOCTYPE html>
 <html lang="{{ currentlocale[:2] }}">
   <head>
@@ -8,20 +9,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
-    <title>{% block title %}{% endblock %}</title>
-    {% include 'snippets/icons.html.twig' only %}
-    {% include 'snippets/stylesheets.html.twig' only %}
-    {% block stylesheets %}{% endblock %}
-    {% include 'snippets/scripts.html.twig' only %}
-    {% block scripts %}{% endblock %}
+    <title>{%- block title -%}{%- endblock -%}</title>
+    {%- include 'snippets/icons.html.twig' only -%}
+    {%- include 'snippets/stylesheets.html.twig' only -%}
+    {%- block stylesheets %}{% endblock -%}
+    {%- include 'snippets/scripts.html.twig' only -%}
+    {%- block scripts %}{% endblock -%}
   </head>
   <body>
     <div id="all">
-      {% include 'snippets/top-bar.html.twig' with { 'currentlocale': currentlocale, 'route': route } only %}
-      {% block body %}{{currentlocale}}{% endblock %}
-      {% include 'snippets/footer.html.twig' with { 'currentlocale': currentlocale, 'route': route } only %}
+      {%- include 'snippets/top-bar.html.twig' only -%}
+      {%- include 'snippets/nav-bar.html.twig' only -%}      
+      {%- block body -%}{{- currentlocale -}}{%- endblock -%}
+      {%- include 'snippets/footer.html.twig' only -%}
     </div>
-    {% block modals %}{% endblock %}
-    {% include 'modals/login-modal.html.twig' with { 'currentlocale': currentlocale, 'route': route } only %}
+    {%- block modals -%}{%- endblock -%}
+    {%- include 'modals/login.html.twig' only -%}
   </body>
 </html>
+
+{% endspaceless %}

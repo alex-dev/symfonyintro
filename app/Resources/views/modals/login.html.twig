@@ -1,0 +1,43 @@
+{% extends 'modals/base.html.twig' %}
+
+{% block modalid -%}login-modal{%- endblock %}
+{% block tabindex -%}-1{%- endblock %}
+
+{% block title -%}
+  <h4 id="login-modalLabel" class="modal-title">Customer Login</h4>
+{%- endblock %}
+
+{% block body -%}
+  {# login route #}
+  <form action="#" method="post">
+    <div class="form-group">
+      <input id="email_modal" type="text" placeholder="{{ 'Email' | trans([], 'messages', locale) }}" class="form-control"/>
+    </div>
+    <div class="form-group">
+      <input id="password_modal" type="password" placeholder="{{ 'Password' | trans([], 'messages', locale) }}" class="form-control"/>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-template-outlined">
+        <i class="fa fa-sign-in"></i>
+        {%- trans from 'messages' into locale -%}
+          <span>Log in</span>
+        {%- endtrans -%}
+      </button>
+    </div>
+  </form>
+  <div class="text-center text-muted">
+    <p>
+      {%- trans from 'messages' into locale -%}
+        <span>Not registered yet?</span>
+      {%- endtrans -%}
+    </p>
+    {# customer-register.html #}
+    <p>
+      <a href="#">
+        {%- trans from 'messages' into locale -%}
+          <strong>Register now</strong>
+        {%- endtrans -%}
+      </a>
+    </p>    
+  </div>
+{%- endblock %}

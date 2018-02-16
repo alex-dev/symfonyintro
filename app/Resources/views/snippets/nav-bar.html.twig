@@ -1,0 +1,41 @@
+{% set currentlocale = app.request.get('_locale') %}
+
+<header class="nav-holder make-sticky">
+  <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
+    <div class="container">
+      <a href="index.html" class="navbar-brand home">
+        <span class="sr-only">Universal - go to homepage</span>
+      </a>
+      <button type="button" data-toggle="collapse" data-target="#navigation" class="navbar-toggler btn-template-outlined">
+        <span class="sr-only">Toggle navigation</span>
+        <i class="fa fa-align-justify"></i>
+      </button>
+      <div id="navigation" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav ml-auto">
+          <li class="nav-item dropdown active">
+            <a href="javascript: void(0)" data-toggle="dropdown" class="dropdown-toggle">
+              {%- trans from 'menus' into currentlocale -%}
+                Our products
+              {%- endtrans -%}
+              <b class="caret"></b>
+            </a>
+            {%- include 'dropdowns/menu.html.twig' with { 'options': {
+              'All': path('list_product', { '_locale': currentlocale }),
+              'Processor': path('list_product_type', { '_locale': currentlocale, 'type': 'processors' }),
+              'Graphic Card': path('list_product_type', { '_locale': currentlocale, 'type': 'graphicaccelerators' }),
+              'Memory': path('list_product_type', { '_locale': currentlocale, 'type': 'memories' }),
+              'Hard Drive': path('list_product_type', { '_locale': currentlocale, 'type': 'harddrives' })
+              }} only -%}
+          </li>
+          <li class="nav-item">
+          <a href="{{ path('about', {'_locale': currentlocale}) }}">
+            {%- trans from 'menus' into currentlocale -%}
+              About us
+            {%- endtrans -%}
+          </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>

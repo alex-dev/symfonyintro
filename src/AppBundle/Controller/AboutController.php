@@ -7,14 +7,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class AboutController extends Controller
 {
   /**
-   * @Route("/", name="list_products", defaults={ "_locale"="%app.locale%" })
-   * @Route("/{_locale}/", name="local_list_products", requirements={ "_locale"="%app.locales%" })
+   * @Route("/about", name="default_about", defaults={ "_locale"="%app.locale%" })
+   * @Route("/{_locale}/about", name="about", requirements={ "_locale"="%app.locales%" })
    * @Method({ "GET" })
    */
-  public function indexAction()
+  public function show()
   {
     return $this->render('base.html.twig', []);
   }

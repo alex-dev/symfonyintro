@@ -1,17 +1,17 @@
+{% set currentlocale = app.request.get('_locale') %}
+
 <footer class="main-footer">
   <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
   <div class="copyrights">
     <div class="container">
       <div class="row">
-        <div class="col-lg-4 text-center-md">
-          &copy; {{ copyright }}. {{ companyname }}
-        </div>
+        <div class="col-lg-4 text-center-md">&copy; {{ copyright }}. {{ companyname }}</div>
         <div class="col-lg-8 text-right text-center-md">
-          {% trans with {
+          {%- trans with {
             '%theme_author%': '<a href="https://bootstrapious.com/free-templates">Bootstrapious Templates</a>' | raw
-          } from 'messages' into currentlocale %}
-          Template design by %theme_author%.
-          {% endtrans %}
+          } from 'messages' into currentlocale -%}
+            Template design by %theme_author%.
+          {%- endtrans -%}
         </div>
       </div>
     </div>

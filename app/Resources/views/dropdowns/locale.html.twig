@@ -1,0 +1,11 @@
+{% set currentlocale = app.request.locale %}
+{% set route = app.request.get('_route') %}
+{% set route_params = app.request.get('_route_params') %}
+
+<select onchange="redirect(event)">
+  {%- for locale in locales | split('|') | sort -%}
+    <option value="{{ path(route, route_params | merge({ '_locale': locale })) }}" {{ locale == currentlocale ? 'selected' : '' }}>
+      {{- locale[:2] | trans({}, 'locales', currentlocale) }} - {{ locale[3:] | trans({}, 'locales', currentlocale) -}}
+    </option>
+  {%- endfor -%}
+</select>

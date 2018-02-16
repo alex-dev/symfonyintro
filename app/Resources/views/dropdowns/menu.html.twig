@@ -1,0 +1,9 @@
+{% set currentlocale = app.request.get('_locale') %}
+
+<ul class="dropdown-menu">
+  {%- for name, route in options -%}
+    <li class="dropdown-item">
+      <a href="{{ route }}" class="nav-link">{{ name | trans({}, 'menus', currentlocale) }}</a>
+    </li>
+  {%- endfor -%}
+</ul>
