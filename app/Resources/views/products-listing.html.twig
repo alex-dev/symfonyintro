@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title -%}
+  {%- trans from 'messages' into currentlocale -%}
+    Our products
+  {%- endtrans -%}
+{%- endblock %}
+
+{#{% block scripts -%}
+  <script defer src="{{  }}"></script>
+{%- endblock %}#}
+
+{% block heading -%}
+  {%- include 'snippets/heading.html.twig' with {
+    current: 'Our products',
+    items: { }
+  } only -%}
+{%- endblock %}
+
+{% block body -%}
+  <div class="container">
+    <div class="row bar">
+      <div class="col-md-9">
+        <div class="row products products-big">
+          {%- for product in products -%}
+            <div class="col-lg-4 col-md-6">
+              <div class="product">
+                <div class="image">
+                    <a href="{{ path('show_product', {
+                      '_locale': currentlocale,
+                      'type': product | product_kind,
+                      'key': product.key
+                    }) }}">
+                      <img src="{{ asset("databasemedia/#{ product.mainimage }.png") }}" alt="{{ 'Product image' | trans({}, 'products', currentlocale) }}" class="img-fluid"/>
+                  </a>
+                </div>
+                <div class="text">
+                  <h3 class="h5">
+                    <a href="{{ path('show_product', {
+                      '_locale': currentlocale,
+                      'type': product | product_kind,
+                      'key': product.key
+                    }) }}">
+                      {{- product.translate(currentlocale).name -}}
+                    </a>
+                  </h3>
+                  <p class="price">N/A</p>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+      <div class="col">
+        {%- block filters -%}
+          {%- include 'side-panels/product-filters.html.twig' with {
+            'manufacturers': filters['manufacturers']
+          } only -%}
+        {%- endblock -%}
+      </div>
+    </div>
+  </div>
+{%- endblock %}
+
+{% block modals -%}
+
+{%- endblock %}

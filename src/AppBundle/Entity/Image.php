@@ -9,11 +9,13 @@ use AppBundle\Entity\Product\Product;
  * @ORM\Entity
  * @ORM\Table(
  *   uniqueConstraints={
- *     @ORM\UniqueConstraint(name="UK_Images_filename", columns={ "filename" })
+ *     @ORM\UniqueConstraint(name="UK_Images_filename", columns={ "filename" }),
+ *     @ORM\UniqueConstraint(name="UK_Images_product_main", columns={ "product", "main" })
  *   })
  * @UniqueEntity("filename")
+ * @UniqueEntity(fields={ "product", "main" })
  */
-final class Image {
+class Image {
   const filename_length = 25;
 
   /**
@@ -26,6 +28,7 @@ final class Image {
   /**
    * @ORM\ManyToOne(
    *   targetEntity="AppBundle\Entity\Product\Product",
+   *   inversedBy="images",
    *   cascade={ "persist", "refresh" })
    * @ORM\JoinColumn(nullable=false)
    */
@@ -36,25 +39,37 @@ final class Image {
    */
   protected $filename;
 
-  public function __construct($filename) {
-    $this->setFilename($filename);
-  }
-
-  /**
-   * @return string
-   */
   public function getFilename() {
     return $this->filename;
   }
 
-  /**
-   * @return void
-   */
   protected function setFilename($value) {
     if (mb_strlen($value) > self::filename_length) {
       throw new LengthException("$value must be less then ".self::filename_length." characters long.");
     } else {
       $this->filename = $value;
     }
+  }
+
+  /**
+   * @ORM\Column(type="boolean")
+   */
+  protected $main;
+
+  public function isMain() {
+    return $this->main;
+  }
+
+  protected function setIsMain($value) {
+    $this->main = $value;
+  }
+
+  public function __construct($filename, $isMain) {
+    $this->setFilename($filename);
+    $this->setIsMain($isMain);
+  }
+
+  public function __toString() {
+    return $this->getFilename();
   }
 }

@@ -1,0 +1,21 @@
+{% set currentlocale = app.request.get('_locale') %}
+
+<div id="heading-breadcrumbs">
+  <div class="container">
+    <div class="row d-flex align-items-center flex-wrap">
+      <div class="col-md-7">
+        <h1 class="h2">{{ current | trans({}, 'menus', currentlocale) }}</h1>
+      </div>
+      <div class="col-md-5">
+        <ul class="breadcrumb d-flex justify-content-end">
+          {%- for name, route in items -%}
+            <li class="breadcrumb-item">
+              <a href="{{ route }}">{{ name | trans({}, 'menus', currentlocale) }}</a>
+            </li>
+          {%- endfor -%}
+          <li class="breadcrumb-item active">{{ current | trans({}, 'menus', currentlocale) }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

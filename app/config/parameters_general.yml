@@ -1,8 +1,9 @@
 parameters:
-    app.routes.types: memories|processors|graphicaccelerators|harddrives
+    app.routes.types: '%app.routes.memory%'
+    app.routes.memory: memories
     app.copyright: 2018
     app.company.name: PHP Symfony Electronics Store
-    app.contact.phone: +1 888 553 8899
+    app.contact.phone: +1 888 553-8899
     app.contact.mail: someone@phpsymfonyelectronicsstore.com
     app.locales: fr_CA|en_CA|en_US
     app.locale: fr_CA

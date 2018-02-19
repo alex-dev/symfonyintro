@@ -1,0 +1,30 @@
+{% set query = app.request.query.all %}
+{% extends 'side-panels/form-base.html.twig' %}
+
+{% block title -%}
+  {%- trans from 'messages' into currentlocale -%}
+    Filters
+  {%- endtrans -%}
+{%- endblock %}
+
+{%- block body -%}
+  <fieldset class="form-group">
+    <legend class="text-sm category-menu">
+      {%- trans from 'messages' into currentlocale -%}
+        Manufacturers
+      {%- endtrans -%}
+    </legend>
+    {%- for manufacturer in manufacturers -%}
+      <div class="checkbox">
+        {%- if query.manufacturers is defined and manufacturer.key.__toString() in query.manufacturers -%}
+          <input name="manufacturers[]" id="{{ manufacturer.key }}" type="checkbox" value="{{ manufacturer.key }}" checked/>
+        {%- else -%}
+          <input name="manufacturers[]" id="{{ manufacturer.key }}" value="{{ manufacturer.key }}" type="checkbox"/>
+        {%- endif -%}
+        <label for="{{ manufacturer.key }}">
+          {{- manufacturer.name -}}
+        </label>
+      </div>
+    {%- endfor -%}
+  </fieldset>
+{%- endblock -%}

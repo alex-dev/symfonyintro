@@ -20,17 +20,10 @@ class ProductTranslation {
    */
   protected $name;
 
-  /**
-   * @return string
-   */
   public function getName() {
     return $this->name;
   }
 
-  /**
-   * @return void
-   * @throws LengthException if $value is longer than self::name_length
-   */
   public function setName($value) {
     if (mb_strlen($value) > self::name_length) {
       throw new LengthException("$value must be less then ".self::name_length." characters long.");

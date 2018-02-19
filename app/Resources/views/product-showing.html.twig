@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title -%}
+  {{- product.translate(currentlocale).name -}}
+{%- endblock %}
+
+{% block heading -%}
+  {%- include 'snippets/heading.html.twig' with {
+    current: product.translate(currentlocale).name,
+    items: {
+      'Our products': path('list_products', {'_locale': currentlocale }),
+      'Memories': path('list_memories', {'_locale': currentlocale })
+    }
+  } only -%}
+{%- endblock %}
+
+{% block body -%}
+
+
+  {{dump(product)}}
+{%- endblock %}

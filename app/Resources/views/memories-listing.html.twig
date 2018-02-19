@@ -1,0 +1,17 @@
+{% extends 'products-listing.html.twig' %}
+
+{% block heading -%}
+  {%- include 'snippets/heading.html.twig' with {
+    current: 'Memories',
+    items: { 'Our products': path('list_products', {'_locale': currentlocale }) }
+  } only -%}
+{%- endblock %}
+
+{% block filters -%}
+  {%- include 'side-panels/memory-filters.html.twig' with {
+    'manufacturers': filters['manufacturers'],
+    'architectures': filters['architectures'],
+    'size': filters['size'],
+    'frequency': filters['frequency']
+  } only -%}
+{%- endblock %}

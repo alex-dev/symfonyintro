@@ -14,7 +14,7 @@ use Knp\DoctrineBehaviors\Model\Translatable\Translation;
  * @UniqueEntity(fields={ "name", "locale" })
  * @UniqueEntity(fields={ "symbol", "locale" })
  */
-final class UnitTranslation {
+class UnitTranslation {
   use Translation;
 
   const name_length = 50;
@@ -25,20 +25,11 @@ final class UnitTranslation {
    */
   private $name;
 
-  /**
-   * @ORM\Column(type="string_sensitive", length=UnitTranslation::symbol_length)
-   */
-  private $symbol;
-
   public function getName() {
     return $this->name;
   }
 
-  public function getSymbol() {
-    return $this->symbol;
-  }
-
-  private function setName($value) {
+  public function setName($value) {
     if (mb_strlen($value) > self::name_length) {
       throw new LengthException("$value must be less then ".self::name_length." characters long.");
     } else {
@@ -46,7 +37,16 @@ final class UnitTranslation {
     }
   }
 
-  private function setSymbol($value) {
+  /**
+   * @ORM\Column(type="string_sensitive", length=UnitTranslation::symbol_length)
+   */
+  private $symbol;
+
+  public function getSymbol() {
+    return $this->symbol;
+  }
+
+  public function setSymbol($value) {
     if (mb_strlen($value) > self::name_length) {
       throw new LengthException("$value must be less then ".self::name_length." characters long.");
     } else {

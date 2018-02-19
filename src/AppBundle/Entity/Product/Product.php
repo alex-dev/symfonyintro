@@ -1,16 +1,18 @@
 <?php
 namespace AppBundle\Entity\Product;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
+use AppBundle\Repository\ProductRepository;
 use AppBundle\Entity\UrlKey;
 use AppBundle\Entity\Manufacturer;
+use AppBundle\Entity\Image;
 use AppBundle\Entity\Product\ProductTranslation;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=20)
  * @ORM\DiscriminatorMap({
@@ -41,6 +43,29 @@ abstract class Product extends UrlKey {
    */
   protected $code;
 
+  public function getCode() {
+    return $this->code;
+  }
+
+  private function setCode($value) {
+    $this->code = $value;
+  }
+
+  /**
+   * @ORM\OneToMany(
+   *   targetEntity="AppBundle\Entity\Image",
+   *   mappedBy="product")
+   */
+  protected $images;
+  
+  public function getImages() {
+    return $this->images;
+  }
+
+  public function setImages(array $value) {
+    $this->images = new ArrayCollection($value);
+  }
+  
   /**
    * @ORM\ManyToOne(
    *   targetEntity="AppBundle\Entity\Manufacturer",
@@ -49,42 +74,32 @@ abstract class Product extends UrlKey {
    */
   protected $manufacturer;
 
-  public function __construct(array $names, Manufacturer $manufacturer) {
-    parent::__construct();
-    $this-­­­­>setManufacturer($manufacturer);
-    
-    foreach ($names as $locale=>$name) {
-      $this->translate($locale)->setName($name);
-    }
-  }
-
-  public function __call($method, $arguments) {
-    if (count($arguments) > 0 || !in_array($method, ['getName', 'setName'])) {
-      throw new BadMethodCallException("$method is not supported by $this.");
-    } else {
-      return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), $method);
-    }
-  }
-
-  /**
-   * @return Manufacturer
-   */
   public function getManufacturer() {
     return $this->manufacturer;
   }
 
-  public function getCode() {
-    return $this->code;
-  }
-
-  /**
-   * @return void
-   */
   public function setManufacturer(Manufacturer $manufacturer) {
     $this->manufacturer = $manufacturer;
   }
 
-  public function setCode($value) {
-    $this->code = $value;
+  public function getName() {
+    return $this->translate()->getName();
+  }
+
+  public function getMainImage() {
+    return $this->getImages()->filter(function ($item) {
+      return $item->isMain();
+    })[0];
+  }
+
+  public function __construct($code, array $names, array $images, Manufacturer $manufacturer) {
+    parent::__construct();
+    $this->setImages($images);
+    $this-­­­­>setManufacturer($manufacturer);
+    $this->setCode($code);
+
+    foreach ($names as $locale=>$name) {
+      $this->translate($locale)->setName($name);
+    }
   }
 }

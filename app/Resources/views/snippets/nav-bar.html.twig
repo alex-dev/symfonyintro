@@ -3,11 +3,12 @@
 <header class="nav-holder make-sticky">
   <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
     <div class="container">
-      <a href="index.html" class="navbar-brand home">
-        <span class="sr-only">Universal - go to homepage</span>
-      </a>
       <button type="button" data-toggle="collapse" data-target="#navigation" class="navbar-toggler btn-template-outlined">
-        <span class="sr-only">Toggle navigation</span>
+        <span class="sr-only">
+          {%- trans from 'messages' into currentlocale -%}
+            Toggle navigation
+          {%- endtrans -%}
+        </span>
         <i class="fa fa-align-justify"></i>
       </button>
       <div id="navigation" class="navbar-collapse collapse">
@@ -20,12 +21,14 @@
               <b class="caret"></b>
             </a>
             {%- include 'dropdowns/menu.html.twig' with { 'options': {
-              'All': path('list_product', { '_locale': currentlocale }),
+              'All': path('list_products', { '_locale': currentlocale }),
+              'Memory': path('list_memories', { '_locale': currentlocale })
+              }} only -%}
+            {#
               'Processor': path('list_product_type', { '_locale': currentlocale, 'type': 'processors' }),
               'Graphic Card': path('list_product_type', { '_locale': currentlocale, 'type': 'graphicaccelerators' }),
-              'Memory': path('list_product_type', { '_locale': currentlocale, 'type': 'memories' }),
               'Hard Drive': path('list_product_type', { '_locale': currentlocale, 'type': 'harddrives' })
-              }} only -%}
+            #}
           </li>
           <li class="nav-item">
           <a href="{{ path('about', {'_locale': currentlocale}) }}">

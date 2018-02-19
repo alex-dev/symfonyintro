@@ -19,8 +19,11 @@
   <body>
     <div id="all">
       {%- include 'snippets/top-bar.html.twig' only -%}
-      {%- include 'snippets/nav-bar.html.twig' only -%}      
-      {%- block body -%}{{- currentlocale -}}{%- endblock -%}
+      {%- include 'snippets/nav-bar.html.twig' only -%}
+      {%- block heading -%}{%- endblock -%}
+      <div id="content">
+        {%- block body -%}{%- endblock -%}
+      </div>
       {%- include 'snippets/footer.html.twig' only -%}
     </div>
     {%- block modals -%}{%- endblock -%}

@@ -1,0 +1,22 @@
+{% set currentlocale = app.request.get('_locale') %}
+
+<form class="panel panel-default sidebar-menu">
+  <div class="panel-heading">
+    <h3 class="h4 panel-title">{%- block title -%}{%- endblock -%}</h3>
+  <button type="reset" class="btn btn-sm btn-danger">
+    <i class="fa fa-times-circle"></i>
+    <span class="d-none d-md-inline-block">
+      {%- trans from 'messages' into currentlocale -%}
+        Clear
+      {%- endtrans -%}
+    </span>
+  </button>
+  </div>
+  <div class="panel-body">
+    {%- block body -%}{%- endblock -%}
+    <button type="submit" class="btn btn-sm btn-template-outlined">
+      <i class="fa fa-pencil"></i>
+      Apply
+    </button>
+  </div>
+</form>

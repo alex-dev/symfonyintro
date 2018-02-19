@@ -13,7 +13,7 @@ use AppBundle\Entity\QuantityPattern\Unit\Dimension;
  *   })
  * @UniqueEntity(fields={ "dimension", "exponent" })
  */
-final class UnitDimension {
+class UnitDimension {
   /**
    * @ORM\Id
    * @ORM\Column(type="bigint", options={ "unsigned":true })
@@ -22,15 +22,26 @@ final class UnitDimension {
   private $id;
 
   /**
-   * @ORM\ManyToOne(targetEntity="Dimension", cascade={ "persist", "refresh" })
+   * @ORM\ManyToOne(
+   *   targetEntity="Dimension",
+   *   cascade={ "persist", "refresh" },
+   *   fetch="EAGER")
    * @ORM\JoinColumn(nullable=false)
    */
   private $dimension;
+
+  public function getDimension() {
+    return $this->dimension;
+  }
 
   /**
    * @ORM\Column(type="integer")
    */
   private $exponent;
+
+  public function getExponent() {
+    return $this->exponent;
+  }
 
   public function __construct(Dimension $dimension, $exponent) {
     $this->dimension = $dimension;
@@ -39,13 +50,5 @@ final class UnitDimension {
 
   public function __toString() {
     return "$this->getDimension()^$this->getExponent()";
-  }
-
-  public function getDimension() {
-    return $this->dimension;
-  }
-
-  public function getExponent() {
-    return $this->exponent;
   }
 }

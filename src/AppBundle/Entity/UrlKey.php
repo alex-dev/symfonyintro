@@ -12,19 +12,16 @@ abstract class UrlKey {
    * @ORM\Column(name="`key`", type="uuid_binary")
    */
   protected $key;
-  
-  public function __construct() {
-    $this->setKey(new UUID());
-  }
 
-  /**
-   * @return UUID castable to string
-   */
   public function getKey() {
     return $this->key;
   }
 
   private function setKey(UUID $value) {
     $this->key = $value;
+  }
+  
+  public function __construct() {
+    $this->setKey(new UUID());
   }
 }

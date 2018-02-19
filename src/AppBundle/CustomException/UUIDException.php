@@ -1,7 +1,9 @@
 <?php
 namespace AppBundle\CustomException;
 
-class UUIDException extends Exception {
+use Zend\Code\Exception\RuntimeException;
+
+class UUIDException extends RuntimeException {
   public function __construct($message = "", $code = 0, Throwable $previous = null) {
     parent::__construct($message, $code, $previous);
   }

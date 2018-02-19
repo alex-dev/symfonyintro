@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title -%}
+  {%- trans from 'messages' into currentlocale -%}
+    About us
+  {%- endtrans -%}
+{%- endblock %}
+
+{% block heading -%}
+  {%- include 'snippets/heading.html.twig' with { current: 'About us', items: { } } only -%}
+{%- endblock %}
+
+{% block body -%}
+  <div class="container">
+    <div class="row bar">
+      <div class="col-md-3">
+        {%- include 'side-panels/about.html.twig' only -%}
+      </div>
+      <div class="col">
+        <section id="who-are-we">
+          <h2>
+            {%- trans from 'about' into currentlocale -%}
+              Who are we?
+            {%- endtrans -%}
+          </h2>
+          <p>
+            {%- trans from 'about' into currentlocale -%}
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur interdum, erat a eleifend molestie, nibh ex facilisis augue, a volutpat purus ligula eget arcu. Sed sit amet tellus eros. Maecenas est arcu, suscipit quis nisl sit amet, accumsan sodales libero. Quisque sit amet dolor eu purus tincidunt mollis. Proin suscipit vehicula sagittis. Vestibulum porta erat sit amet lorem convallis, sit amet interdum mi porttitor. Pellentesque dolor magna, semper vel posuere vitae, fermentum ac risus. Sed feugiat dui vel congue dignissim. Sed molestie arcu at arcu elementum dictum. In ac dolor a diam tincidunt vestibulum. Nam sit amet magna blandit, porta lorem sed, iaculis dui. Morbi euismod eleifend mi, in commodo neque rutrum non. Mauris fringilla luctus sagittis.
+            {%- endtrans -%}
+          </p>
+          <p>
+            {%- trans from 'about' into currentlocale -%}
+              Morbi viverra fringilla sodales. Nullam mattis, leo ac pretium bibendum, leo risus mollis elit, quis bibendum libero velit luctus magna. Sed quis sapien viverra, molestie nisi eget, dignissim mauris. Ut neque massa, dictum at velit quis, mattis congue justo. Sed ac venenatis magna, eu pellentesque mauris. Nunc et dolor et mi accumsan egestas. Sed dictum dolor sit amet magna gravida, a tempor nulla vestibulum. Sed libero tellus, dignissim non ligula quis, posuere hendrerit felis. Nullam tempus ipsum id venenatis efficitur. Ut sodales consectetur dictum. Suspendisse potenti.
+            {%- endtrans -%}
+          </p>
+          <p>
+            {%- trans from 'about' into currentlocale -%}
+              Sed non lobortis dolor, tincidunt mattis turpis. Curabitur in odio sit amet odio commodo vehicula. Nullam consectetur dolor non nisl semper pretium. Sed semper, tellus ut tincidunt luctus, enim ligula mollis urna, quis suscipit massa felis maximus tellus. Nunc accumsan semper metus at volutpat. Proin suscipit dolor ipsum, eu mollis arcu molestie ut. Mauris urna mauris, tincidunt et gravida sed, rhoncus ac justo. Morbi sed imperdiet sem, quis commodo tellus. Praesent volutpat porta massa, a molestie diam tempus a. Donec efficitur neque semper, sollicitudin dui semper, rutrum orci. Curabitur rhoncus lorem cursus ex convallis dictum. Vivamus convallis gravida odio vitae vehicula. Pellentesque cursus sodales dui, eget suscipit libero lacinia eget. Pellentesque ac ipsum nec elit consequat pulvinar.
+            {%- endtrans -%}
+          </p>
+        </section>
+        <section id="our-policies">
+          <h2>
+            {%- trans from 'about' into currentlocale -%}
+              Our policies
+            {%- endtrans -%}
+          </h2>
+          <ul>
+            <li>
+              {%- trans from 'about' into currentlocale -%}
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              {%- endtrans -%}
+            </li>
+            <li>
+              {%- trans from 'about' into currentlocale -%}
+                Morbi tristique erat vitae suscipit tempor.
+              {%- endtrans -%}
+            </li>
+            <li>
+              {%- trans from 'about' into currentlocale -%}
+                Morbi eu ligula et neque mollis dignissim.
+              {%- endtrans -%}
+            </li>
+            <li>
+              {%- trans from 'about' into currentlocale -%}
+                Quisque id massa eu turpis sollicitudin auctor.
+              {%- endtrans -%}
+            </li>
+            <li>
+              {%- trans from 'about' into currentlocale -%}
+                Pellentesque eu magna mattis, molestie augue ac, fringilla magna.
+              {%- endtrans -%}
+            </li>
+          </ul>
+        </section>
+        <section id="contact-us">
+          <h2>
+            {%- trans from 'about' into currentlocale -%}
+              Contact us
+            {%- endtrans -%}
+          </h2>
+          <ul>
+            <li>
+              {%- trans with {
+                '%phone%': "<a href=\"tel:#{ contactphone }\">#{ contactphone }</a>"
+              } from 'about' into currentlocale -%}
+                Our phone number: %phone%
+              {%- endtrans -%}
+            </li>
+            <li>
+              {%- trans with {
+                '%mail%': "<a href=\"mailto:#{ contactmail }\">#{ contactmail }</a>"
+              } from 'about' into currentlocale -%}
+                Our email: %mail%
+              {%- endtrans -%}
+            </li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+{%- endblock %}

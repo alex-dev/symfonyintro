@@ -21,30 +21,11 @@ class ArchitectureTranslation {
    * @ORM\Column(type="string", length=ArchitectureTranslation::name_length)
    */
   protected $name;
-
-  /**
-   * @ORM\Column(type="string", length=ArchitectureTranslation::abbreviation_length)
-   */
-  protected $abbreviation;  
-
-  /**
-   * @return string
-   */
+  
   public function getName() {
     return $this->name;
   }
-
-  /**
-   * @return string
-   */
-  public function getAbbreviation() {
-    return $this->abbreviation;
-  }
-
-  /**
-   * @return void
-   * @throws LengthException if $value is longer than self::name_length
-   */
+  
   public function setName($value) {
     if (mb_strlen($value) > self::name_length) {
       throw new LengthException("$value must be less then ".self::name_length." characters long.");
@@ -54,9 +35,14 @@ class ArchitectureTranslation {
   }
 
   /**
-   * @return void
-   * @throws LengthException if $value is longer than self::abbreviation_length
+   * @ORM\Column(type="string", length=ArchitectureTranslation::abbreviation_length)
    */
+  protected $abbreviation;  
+
+  public function getAbbreviation() {
+    return $this->abbreviation;
+  }
+
   public function setAbbreviation($value) {
     if (mb_strlen($value) > self::abbreviation_length) {
       throw new LengthException("$value must be less then ".self::abbreviation_length." characters long.");

@@ -6,7 +6,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\UrlKey;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ManufacturerRepository")
  * @ORM\Table(
  *   uniqueConstraints={
  *     @ORM\UniqueConstraint(name="UK_Manufacturers_name", columns={ "name" }),
@@ -29,28 +29,21 @@ class Manufacturer extends UrlKey {
    * @ORM\Column(type="string", length=Manufacturer::name_length)
    */
   protected $name;
-  
-  public function __construct($name) {
-    parent::__construct();
-    $this->setName($name);
-  }
 
-  /**
-   * @return string
-   */
   public function getName() {
     return $this->name;
   }
 
-  /**
-   * @return void
-   * @throws LengthException if $value is longer than self::name_length
-   */
   public function setName($value) {
     if (mb_strlen($value) > self::name_length) {
       throw new LengthException("$value must be less then ".self::name_length." characters long.");
     } else {
       $this->name = $value;
     }
+  }
+  
+  public function __construct($name) {
+    parent::__construct();
+    $this->setName($name);
   }
 }

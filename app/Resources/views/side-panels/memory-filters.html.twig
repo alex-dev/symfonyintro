@@ -1,0 +1,73 @@
+{% set query = app.request.query.all %}
+{% extends 'side-panels/form-base.html.twig' %}
+
+{% block title -%}
+  {%- trans from 'messages' into currentlocale -%}
+    Filters
+  {%- endtrans -%}
+{%- endblock %}
+
+{%- block body -%}
+  <fieldset class="form-group">
+    <legend class="text-sm category-menu">
+      {%- trans from 'messages' into currentlocale -%}
+        Manufacturers
+      {%- endtrans -%}
+    </legend>
+    {%- for manufacturer in manufacturers -%}
+      <div class="checkbox">
+        {%- if query.manufacturers is defined and manufacturer.key.__toString() in query.manufacturers -%}
+          <input name="manufacturers[]" id="{{ manufacturer.key }}" type="checkbox" value="{{ manufacturer.key }}" checked/>
+        {%- else -%}
+          <input name="manufacturers[]" id="{{ manufacturer.key }}" value="{{ manufacturer.key }}" type="checkbox"/>
+        {%- endif -%}
+        <label for="{{ manufacturer.key }}">
+          {{- manufacturer.name -}}
+        </label>
+      </div>
+    {%- endfor -%}
+  </fieldset>
+  <fieldset class="form-group">
+    <legend class="text-sm category-menu">
+      {%- trans from 'messages' into currentlocale -%}
+        Architectures
+      {%- endtrans -%}
+    </legend>
+    {%- for architecture in architectures -%}
+      <div class="checkbox">
+          {%- if query.architectures is defined and architecture.key.__toString() in query.architectures -%}
+            <input type="checkbox" name="architectures[]" id="{{ architecture.key }}" value="{{ architecture.key }}" checked/>
+          {%- else -%}
+            <input type="checkbox" name="architectures[]" id="{{ architecture.key }}" value="{{ architecture.key }}"/>
+          {%- endif -%}
+        <label for="{{ architecture.key }}">
+          {{- architecture.translate(currentlocale).abbreviation() -}}
+        </label>
+      </div>
+    {%- endfor -%}
+  </fieldset>
+  <fieldset>
+    <legend class="text-sm category-menu">
+      {%- trans from 'messages' into currentlocale -%}
+        Size (GB)
+      {%- endtrans -%}
+    </legend>
+    {%- if query.size is defined -%}
+      <input name="size" value="{{ query.size }}" type="text" class="slider" data-slider-id="size" data-slider-min="{{ size.min }}" data-slider-max="{{ size.max }}" data-slider-step="2" data-slider-value="[{{ query.size }}]"/>
+    {%- else -%}
+      <input name="size" value="{{ size.min }},{{ size.max }}" type="text" class="slider" data-slider-id="size" data-slider-min="{{ size.min }}" data-slider-max="{{ size.max }}" data-slider-step="2" data-slider-value="[{{ size.min }},{{ size.max }}]"/>
+    {%- endif -%}
+  </fieldset>
+  <fieldset>
+    <legend class="text-sm category-menu">
+      {%- trans from 'messages' into currentlocale -%}
+        Frequency (MHz)
+      {%- endtrans -%}
+    </legend>
+    {%- if query.frequency is defined -%}
+      <input name="frequency" value="{{ query.frequency }}" type="text" class="slider" data-slider-id="frequency" data-slider-min="{{ frequency.min }}" data-slider-max="{{ frequency.max }}" data-slider-step="2" data-slider-value="[{{ query.frequency }}]"/>
+    {%- else -%}
+      <input name="frequency" value="{{ frequency.min }},{{ frequency.max }}" type="text" class="slider" data-slider-id="frequency" data-slider-min="{{ frequency.min }}" data-slider-max="{{ frequency.max }}" data-slider-step="2" data-slider-value="[{{ frequency.min }},{{ frequency.max }}]"/>
+    {%- endif -%}
+  </fieldset>
+{%- endblock -%}

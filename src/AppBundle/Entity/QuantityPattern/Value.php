@@ -12,10 +12,15 @@ abstract class Value {
   /**
    * @ORM\ManyToOne(
    *   targetEntity="AppBundle\Entity\QuantityPattern\Unit\Unit",
-   *   cascade={ "persist", "refresh" })
+   *   cascade={ "persist", "refresh" },
+   *   fetch="EAGER")
    * @ORM\JoinColumn(nullable=false)
    */
   protected $unit;
+
+  public function getUnit() {
+    return $this->unit;
+  }
   
   public function __construct(Unit $unit) {
     $this->unit = $unit;
@@ -24,19 +29,12 @@ abstract class Value {
   abstract public function __toString();
 
   /**
-   * @return Unit
-   */
-  public function getUnit() {
-    return $this->unit;
-  }
-
-  /**
    * @return Value
    * @throws UnitException if $this is not convertible to $to 
    */
   public function convert(Unit $to) {
-    if (!$this->unit->isConvertible($unit)) {
-      throw new UnitException("$this->getUnit() is not convertible to $unit.");
+    if (!$this->unit->isConvertibleTo($to)) {
+      throw new UnitException("$this->getUnit() is not convertible to $to.");
     } else {
       return $this->convert_($to);
     }

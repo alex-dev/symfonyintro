@@ -4,7 +4,11 @@
 {% block tabindex -%}-1{%- endblock %}
 
 {% block title -%}
-  <h4 id="login-modalLabel" class="modal-title">Customer Login</h4>
+  <h4 id="login-modalLabel" class="modal-title">
+    {%- trans from 'messages' into currentlocale -%}
+      Customer login
+    {%- endtrans -%}
+  </h4>
 {%- endblock %}
 
 {% block body -%}
@@ -19,24 +23,28 @@
     <div class="text-center">
       <button class="btn btn-template-outlined">
         <i class="fa fa-sign-in"></i>
-        {%- trans from 'messages' into locale -%}
-          <span>Log in</span>
-        {%- endtrans -%}
+        <span>
+          {%- trans from 'messages' into currentlocale -%}
+            Log in
+          {%- endtrans -%}
+        </span>
       </button>
     </div>
   </form>
   <div class="text-center text-muted">
     <p>
-      {%- trans from 'messages' into locale -%}
-        <span>Not registered yet?</span>
+      {%- trans from 'messages' into currentlocale -%}
+        Not registered yet?
       {%- endtrans -%}
     </p>
     {# customer-register.html #}
     <p>
       <a href="#">
-        {%- trans from 'messages' into locale -%}
-          <strong>Register now</strong>
-        {%- endtrans -%}
+        <strong>
+          {%- trans from 'messages' into currentlocale -%}
+            Register now
+          {%- endtrans -%}
+        </strong>
       </a>
     </p>    
   </div>

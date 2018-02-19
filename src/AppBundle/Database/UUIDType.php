@@ -17,7 +17,7 @@ final class UUIDType extends Type {
   }
 
   public function convertToPhpValue($value, AbstractPlatform $platform) {
-    return $value === null ? null : UUID::createFromHex($uuid);
+    return $value === null ? null : UUID::createFromHex($value);
   }
 
   public function convertToDatabaseValue($value, AbstractPlatform $platform) {

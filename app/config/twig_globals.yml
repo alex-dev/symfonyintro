@@ -6,4 +6,5 @@ twig:
         contactmail: '%app.contact.mail%'
         locales: '%app.locales%'
         locale: '%app.locale%'
+        route_memory: '%app.routes.memory%'
 

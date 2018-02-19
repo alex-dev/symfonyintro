@@ -13,13 +13,17 @@ class ZeroBasedLinearConverter extends Converter {
    */
   protected $factor;
 
+  public function __construct($factor) {
+    $this->factor = $factor;
+  }
+
   public function __invoke(Converter $other) {
     if ($other instanceof self) {
-      return function ($value) {
+      return function ($value) use (&$other) {
         return $value * $this->factor / $other->factor;
       };
     } else {
-      return function ($value) {
+      return function ($value) use (&$other) {
         return $other->convertFromBase($this->convertToBase($value));
       };
     }

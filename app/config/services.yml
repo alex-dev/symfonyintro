@@ -27,3 +27,8 @@ services:
 
     AppBundle\Service\:
         resource: '../../src/AppBundle/Service'
+
+    AppBundle\Twig\ProductExtension:
+        ressource: '../../src/AppBundle/Twig/ProductExtension.php'
+        tags: ['twig.extension']
+        arguments: ['%app.routes.memory%']

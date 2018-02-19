@@ -1,0 +1,10 @@
+{% set currentlocale = app.request.get('_locale') %}
+
+<div class="panel panel-default sidebar-menu">
+  <div class="panel-heading">
+    <h3 class="h4 panel-title">{%- block title -%}{%- endblock -%}</h3>
+  </div>
+  <div class="panel-body">
+    {%- block body -%}{%- endblock -%}
+  </div>
+</div>

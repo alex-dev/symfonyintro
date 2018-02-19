@@ -18,9 +18,13 @@ class OffsetLinearConverter extends Converter {
    */
   protected $offset;
 
+  public function __construct($factor, $offset) {
+    $this->factor = $factor;
+    $this->offset = $offset;
+  }
 
   public function __invoke(Converter $other) {
-    return function ($value) {
+    return function ($value) use (&$other) {
       return $other->convertFromBase($this->convertToBase($value));
     };
   }

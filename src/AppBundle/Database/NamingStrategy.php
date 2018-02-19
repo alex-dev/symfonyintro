@@ -31,8 +31,8 @@ class NamingStrategy implements INamingStrategy {
 
     if (in_array($class, $this->quantity_prefix)) {
       return self::quantity.$class.'s';
-    } else if (isset($wrongPlural[$class])) {
-      return $wrongPlural[$class];
+    } else if (isset($this->wrongPlural[$class])) {
+      return $this->wrongPlural[$class];
     } else {
       return $class.'s';
     }

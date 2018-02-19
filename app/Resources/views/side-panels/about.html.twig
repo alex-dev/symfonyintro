@@ -1,0 +1,33 @@
+{% extends 'side-panels/base.html.twig' %}
+
+{% block title -%}
+  {%- trans from 'messages' into currentlocale -%}
+    Menu
+  {%- endtrans -%}
+{%- endblock %}
+
+{% block body -%}
+  <ul class="nav nav-pills flex-column text-sm">
+    <li class="nav-item">
+      <a href="#who-are-we" class="nav-link">
+        {%- trans from 'messages' into currentlocale -%}
+          Who are we?
+        {%- endtrans -%}
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#our-policies" class="nav-link">
+        {%- trans from 'messages' into currentlocale -%}
+          Our policies
+        {%- endtrans -%}
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#contact-us" class="nav-link">
+        {%- trans from 'messages' into currentlocale -%}
+          Contact us
+        {%- endtrans -%}
+      </a>
+    </li>
+  </ul>
+{%- endblock %}

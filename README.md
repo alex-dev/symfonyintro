@@ -8,3 +8,6 @@ Install:
 Ce projet utilise quelques packages composer supplémentaires:
   - KnpLabs/Doctrine-Behavior fournit les traits 'Translatable' et 'Translation' pour internationaliser et localiser efficacement les informations traductibles d'une DB.
   -doctrine/doctrine-migrations-bundle fournit une façon simple de déployer un nouveau schéma ou d'insérer une grande quantité d'enregistrement rapidement.
+
+Ce projet utilise présentement Seiyria/bootstrap-slider pour implémenter mes min-max sliders. Ils ne fonctionnent pas comme désirés, donc je les changerai dans la prochaine itération pour http://demos.jquerymobile.com/1.3.2/widgets/sliders/rangeslider.html.
+La DB est appellé trop souvent par Doctrine, les stratégies d'"hydration" ne sont donc pas optimisées.

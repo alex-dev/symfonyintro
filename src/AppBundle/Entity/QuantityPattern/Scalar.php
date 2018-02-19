@@ -11,18 +11,22 @@ use AppBundle\Entity\QuantityPattern\Unit\Unit;
  * @ORM\Entity
  * @ORM\Table
  */
-final class Scalar extends Value {
+class Scalar extends Value {
   /**
    * @ORM\Id
    * @ORM\Column(type="bigint", options={ "unsigned":true })
    * @ORM\GeneratedValue
    */
-  private $id;
+  protected $id;
 
   /**
    * @ORM\Column(type="float")
    */
-  private $value;
+  protected $value;
+
+  public function getValue() {
+    return $this->value;
+  }
 
   public function __construct(Unit $unit, $value) {
     parent::__construct($unit);
@@ -34,18 +38,16 @@ final class Scalar extends Value {
     return $value.$this->unit;
   }
 
-  /**
-   * @return float
-   */
-  public function getValue() {
-    return $this->value;
+  public function isGreaterThan(Scalar $other) {
+    return $this->getValue() > $other->convert($this->getUnit())->getValue();
   }
 
-  /**
-   * @return Scalar
-   */
+  public function isLesserThan(Scalar $other) {
+    return $this->getValue() < $other->convert($this->getUnit())->getValue();
+  }
+
   protected function convert_(Unit $to) {
     $converter = $this->getUnit()->getConverter($to);
-    return new Scalar($to, $converter($value));
+    return new Scalar($to, $converter($this->getValue()));
   }
 }

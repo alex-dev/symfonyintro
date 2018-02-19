@@ -3,7 +3,6 @@ namespace AppBundle\Entity\Architecture;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\PropertyAccess\PropertyAccess;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use AppBundle\Entity\UrlKey;
 use AppBundle\Entity\Architecture\ArchitectureTranslation;
@@ -33,6 +32,14 @@ abstract class Architecture extends UrlKey {
    */
   protected $id;
   
+  public function getName() {
+    return $this->translate()->getName();
+  }
+
+  public function getAbbreviation() {
+    return $this->translate()->getAbbreviation();
+  }
+
   public function __construct(array $names, array $abbreviations) {
     parent::__construct();
 
@@ -42,14 +49,6 @@ abstract class Architecture extends UrlKey {
 
     foreach ($abbreviations as $locale=>$abbreviation) {
       $this->translate($locale)->setName($abbreviation);
-    }
-  }
-
-  public function __call($method, $arguments) {
-    if (count($arguments) > 0 || !in_array($method, ['getName', 'getAbbreviation', 'setName', 'setAbbreviation'])) {
-      throw new BadMethodCallException("$method is not supported by $this.");
-    } else {
-      return PropertyAccess::createPropertyAccessor()->getValue($this->translate(), $method);
     }
   }
 }

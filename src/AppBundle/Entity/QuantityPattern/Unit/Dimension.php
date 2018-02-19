@@ -15,7 +15,7 @@ use AppBundle\Repository\DimensionRepository;
  * @UniqueEntity("name")
  * @UniqueEntity("symbol")
  */
-final class Dimension {
+class Dimension {
   const name_length = 50;
   const symbol_length = 5;
 
@@ -31,18 +31,8 @@ final class Dimension {
    */
   private $name;
 
-  /**
-   * @ORM\Column(type="string_sensitive", length=Dimension::symbol_length)
-   */
-  private $symbol;
-
-  public function __construct($name, $symbol) {
-    $this->setName($name);
-    $this->setSymbol($symbol);
-  }
-
-  public function __toString() {
-    return $this->symbol;
+  private function getName() {
+    return $this->name;
   }
 
   private function setName($value) {
@@ -53,11 +43,29 @@ final class Dimension {
     }
   }
 
+  /**
+   * @ORM\Column(type="string_sensitive", length=Dimension::symbol_length)
+   */
+  private $symbol;
+
+  private function getSymbol() {
+    return $this->symbol;
+  }
+
   private function setSymbol($value) {
     if (mb_strlen($value) > self::name_length) {
       throw new LengthException("$value must be less then ".self::name_length." characters long.");
     } else {
       $this->name = $value;
     }
+  }
+
+  public function __construct($name, $symbol) {
+    $this->setName($name);
+    $this->setSymbol($symbol);
+  }
+
+  public function __toString() {
+    return $this->getSymbol();
   }
 }
