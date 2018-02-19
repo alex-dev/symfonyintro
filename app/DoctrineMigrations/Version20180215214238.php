@@ -250,9 +250,9 @@ class Version20180215214238 extends AbstractMigration
       $this->connection->insert($prefix.'Dimensions', ['id'=>3, 'name'=>'Time', 'symbol'=>'t']);  
     }
     {
-      $this->connection->insert($prefix.'UnitDimensions', ['dimension'=>1, 'exponent'=>1]);
-      $this->connection->insert($prefix.'UnitDimensions', ['dimension'=>2, 'exponent'=>1]);
-      $this->connection->insert($prefix.'UnitDimensions', ['dimension'=>3, 'exponent'=>-1]);
+      $this->connection->insert($prefix.'UnitDimensions', ['id'=>1, 'dimension'=>1, 'exponent'=>1]);
+      $this->connection->insert($prefix.'UnitDimensions', ['id'=>2, 'dimension'=>2, 'exponent'=>1]);
+      $this->connection->insert($prefix.'UnitDimensions', ['id'=>3, 'dimension'=>3, 'exponent'=>-1]);
     }
     {
       $this->connection->insert($prefix.'Units', ['id'=>1, 'converter'=>1, '`key`'=>'bit']);

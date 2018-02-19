@@ -9,7 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=20)
  * @ORM\DiscriminatorMap({
  *   "zerobased" = "ZeroBasedLinearConverter",
- *   "offsetlinear" = "OffsetLinearConverter"
+ *   "offsetlinear" = "OffsetLinearConverter",
+ *   "money" = "MoneyConverter"
  * })
  * @ORM\Table
  */

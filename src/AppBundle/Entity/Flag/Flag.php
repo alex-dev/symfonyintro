@@ -3,7 +3,6 @@ namespace AppBundle\Entity\Flag;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use AppBundle\Exception\UnitException;
 use AppBundle\Service\DimensionsFactory;
 use AppBundle\Entity\UrlKey;
@@ -11,17 +10,9 @@ use AppBundle\Entity\Product\Product;
 use AppBundle\Entity\QuantityPattern\Scalar;
 
 /**
- * @ORM\Entity
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=20)
- * @ORM\DiscriminatorMap({
- *   "productstate" = "productstate",
- * })
- * @ORM\Table
+ * @ORM\MappedSuperclass
  */
-abstract class Flag {
-  use Translatable;
-
+abstract class Flag extends UrlKey {
   const name_length = 128;
 
   /**
@@ -31,9 +22,10 @@ abstract class Flag {
    */
   protected $id;
 
-  public function getId() {
-    $this->id;
-  }
+  /**
+   * @ORM\Column(type="string", length=Flag::name_length)
+   */
+  protected $nameTranslationKey;
 
   public function getName() {
     return $this->translate()->getName();
