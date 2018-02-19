@@ -6,7 +6,6 @@ use AppBundle\Entity\Architecture\Architecture;
 
 /**
  * @ORM\Entity
- * @ORM\Table
  */
 class GraphicAcceleratorArchitecture extends Architecture {
   public function __construct(array $names, array $abbreviations) {

@@ -15,7 +15,53 @@
 {%- endblock %}
 
 {% block body -%}
-
-
-  {{dump(product)}}
+  <div id="product" class="container">
+    <div id="productMain" class="row">
+      <div class="col-sm-6 col-md-4 d-flex flex-column justify-content-center">
+        <div data-slider-id="product-image" class="owl-carousel shop-detail-carousel">
+          {%- for image in product.images -%}
+            <div>
+              <img src="{{ asset("databasemedia/#{ image }.png") }}" alt="{{ 'Product image' | trans({}, 'products', currentlocale) }}" class="img-fluid"/>
+            </div>
+          {%- endfor -%}
+        </div>
+        <div data-slider-id="product-image" class="owl-thumbs row">
+          {%- for image in product.images -%}
+            <button class="owl-thumb-item col-4 col-md-3">
+              <img src="{{ asset("databasemedia/#{ image }.png") }}" alt="{{ 'Product image' | trans({}, 'products', currentlocale) }}" class="img-fluid"/>
+            </button>
+          {%- endfor -%}
+        </div>
+      </div>
+      <div class="col">
+        <div class="box mb-2 mt-2">
+          <form>
+            <p class="price">N/A</p>
+            <p class="text-center">
+              <button type="submit" class="btn btn-template-outlined">
+                <i class="fa fa-shopping-cart"></i>
+                {%- trans from 'messages' into currentlocale -%}
+                  Add to cart
+                {%- endtrans -%}
+              </button>
+              <button type="submit" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-default">
+                <i class="fa fa-heart-o"></i>
+              </button>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div id="details" class="box mb-2 mt-2">
+      {%- block details -%}{%- endblock -%}
+    </div>
+    <div id="product-social" class="box social text-center mb-2 mt-2">
+      <ul class="social list-inline">
+        <li class="list-inline-item"><a href="#" data-animate-hover="pulse" class="external facebook"><i class="fa fa-facebook"></i></a></li>
+        <li class="list-inline-item"><a href="#" data-animate-hover="pulse" class="external gplus"><i class="fa fa-google-plus"></i></a></li>
+        <li class="list-inline-item"><a href="#" data-animate-hover="pulse" class="external twitter"><i class="fa fa-twitter"></i></a></li>
+        <li class="list-inline-item"><a href="#" data-animate-hover="pulse" class="email"><i class="fa fa-envelope"></i></a></li>
+      </ul>
+    </div>
+  </div>
 {%- endblock %}

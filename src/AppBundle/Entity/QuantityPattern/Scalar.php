@@ -35,7 +35,8 @@ class Scalar extends Value {
 
   public function __toString() {
     $value = round($this->value, $precision=GlobalConstants::FLOAT_DEFAULT_PRECISION);
-    return $value.$this->unit;
+    $unit = $this->getUnit();
+    return "$value $unit";
   }
 
   public function isGreaterThan(Scalar $other) {

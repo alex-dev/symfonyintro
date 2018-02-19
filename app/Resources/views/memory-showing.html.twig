@@ -1,1 +1,43 @@
 {% extends 'product-showing.html.twig' %}
+
+{%- block details -%}
+  <h4>
+    {%- trans from 'messages' into currentlocale -%}
+      Details
+    {%- endtrans -%}
+  </h4>
+  <ul>
+    <li>
+      <span>
+        {%- trans from 'messages' into currentlocale -%}
+          Manufacturer
+        {%- endtrans -%}
+      </span>
+      : {{ product.manufacturer.name }}
+    </li>
+    <li>
+      <span>
+        {%- trans from 'messages' into currentlocale -%}
+          Architecture
+        {%- endtrans -%}
+      </span>
+      : {{ product.architecture.translate(currentlocale).name }}
+    </li>
+    <li>
+      <span>
+        {%- trans from 'messages' into currentlocale -%}
+          Size
+        {%- endtrans -%}
+      </span>
+      : {{ product.size }}
+    </li>
+    <li>
+      <span>
+        {%- trans from 'messages' into currentlocale -%}
+          Frequency
+        {%- endtrans -%}
+      </span>
+      : {{ product.frequency }}
+    </li>
+  </ul>
+{%- endblock -%}

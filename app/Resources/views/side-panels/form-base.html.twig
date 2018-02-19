@@ -16,7 +16,9 @@
     {%- block body -%}{%- endblock -%}
     <button type="submit" class="btn btn-sm btn-template-outlined">
       <i class="fa fa-pencil"></i>
-      Apply
+      {%- trans from 'messages' into currentlocale -%}
+        Apply
+      {%- endtrans -%}
     </button>
   </div>
 </form>

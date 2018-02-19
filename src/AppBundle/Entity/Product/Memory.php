@@ -31,11 +31,7 @@ class Memory extends Product {
   }
 
   public function setSize(Scalar $value) {
-    if ($value->getUnit()->getDimensions() != $this->size_dimensions) {
-      throw new UnitException("$value->getUnit()->getDimensions() is not $this->size_dimensions.");
-    } else {
-      $this->size = $value;
-    }
+    $this->setSize_($value, $this->getSize()->getDimensions());
   }
 
   /**
@@ -52,11 +48,7 @@ class Memory extends Product {
   }
 
   public function setFrequency(Scalar $value) {
-    if ($value->getUnit()->getDimensions() != $this->frequency_dimensions) {
-      throw new UnitException("$value->getUnit()->getDimensions() is not $this->frequency_dimensions.");
-    } else {
-      $this->frequency = $value;
-    }
+    $this->setFrequency_($value, $this->getFrequency()->getDimensions());
   }
 
   /**
@@ -76,12 +68,25 @@ class Memory extends Product {
   }
 
   public function __construct($code, array $names, array $images, Manufacturer $manufacturer, MemoryArchitecture $architecture, Scalar $size, Scalar $frequency, DimensionsFactory $factory) {
-    $this->size_dimensions = $factory('byte');
-    $this->frequency_dimensions = $factory('hertz');
-
     parent::__construct($code, $names, $images, $manufacturer);
     $this->setArchitecture($architecture);
-    $this->setSize($size);
-    $this->setFrequency($frequency);
+    $this->setSize_($size, $factory('byte'));
+    $this->setFrequency_($frequency, $factory('hertz'));
+  }
+
+  protected function setSize_(Scalar $value, $dimensions) {
+    if ($value->getUnit()->getDimensions() != $dimensions) {
+      throw new UnitException($value->getUnit()->getDimensions()." is not $dimensions.");
+    } else {
+      $this->size = $value;
+    }
+  }
+
+  protected function setFrequency_(Scalar $value, $dimensions) {
+    if ($value->getUnit()->getDimensions() != $dimensions) {
+      throw new UnitException($value->getUnit()->getDimensions()." is not $dimensions.");
+    } else {
+      $this->frequency = $value;
+    }
   }
 }
