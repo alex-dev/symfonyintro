@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block title -%}
-  {{- product.translate(currentlocale).name -}}
+  {{- product.product.translate(currentlocale).name -}}
 {%- endblock %}
 
 {% block heading -%}
   {%- include 'snippets/heading.html.twig' with {
-    current: product.translate(currentlocale).name,
+    current: product.product.translate(currentlocale).name,
     items: {
-      'Our products': path('list_products', {'_locale': currentlocale }),
-      'Memories': path('list_memories', {'_locale': currentlocale })
+      'product.our': path('list_products', {'_locale': currentlocale }),
+      'menu.memory': path('list_memories', {'_locale': currentlocale })
     }
   } only -%}
 {%- endblock %}
@@ -21,14 +21,14 @@
         <div data-slider-id="product-image" class="owl-carousel shop-detail-carousel">
           {%- for image in product.images -%}
             <div>
-              <img src="{{ asset("databasemedia/#{ image }.png") }}" alt="{{ 'Product image' | trans({}, 'products', currentlocale) }}" class="img-fluid"/>
+              <img src="{{ asset("databasemedia/#{ image }.png") }}" alt="{{ 'product.image' | trans({}, 'messages', currentlocale) }}" class="img-fluid"/>
             </div>
           {%- endfor -%}
         </div>
         <div data-slider-id="product-image" class="owl-thumbs row">
           {%- for image in product.images -%}
             <button class="owl-thumb-item col-4 col-md-3">
-              <img src="{{ asset("databasemedia/#{ image }.png") }}" alt="{{ 'Product image' | trans({}, 'products', currentlocale) }}" class="img-fluid"/>
+              <img src="{{ asset("databasemedia/#{ image }.png") }}" alt="{{ 'product.image' | trans({}, 'messages', currentlocale) }}" class="img-fluid"/>
             </button>
           {%- endfor -%}
         </div>
@@ -36,12 +36,12 @@
       <div class="col">
         <div class="box mb-2 mt-2">
           <form>
-            <p class="price">N/A</p>
+            <p class="price">{{ product.cost }}</p>
             <p class="text-center">
               <button type="submit" class="btn btn-template-outlined">
                 <i class="fa fa-shopping-cart"></i>
                 {%- trans from 'messages' into currentlocale -%}
-                  Add to cart
+                  cart.add
                 {%- endtrans -%}
               </button>
               <button type="submit" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-default">

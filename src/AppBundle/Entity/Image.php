@@ -27,10 +27,10 @@ class Image {
 
   /**
    * @ORM\ManyToOne(
-   *   targetEntity="AppBundle\Entity\Product\Product",
+   *   targetEntity="AppBundle\Entity\Item",
    *   inversedBy="images",
    *   cascade={ "persist", "refresh" })
-   * @ORM\JoinColumn(nullable=false)
+   * @ORM\JoinColumn(referencedColumnName="product", nullable=false)
    */
   protected $product;
   

@@ -10,7 +10,7 @@ use AppBundle\Entity\Product\Product;
 use AppBundle\Entity\QuantityPattern\Scalar;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\MemoryRepository")
+ * @ORM\Entity
  * @ORM\Table
  */
 class Memory extends Product {

@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block title -%}
-  {%- trans from 'messages' into currentlocale -%}
-    Our products
+  {%- trans from 'menus' into currentlocale -%}
+    product.our
   {%- endtrans -%}
 {%- endblock %}
 
@@ -12,7 +12,7 @@
 
 {% block heading -%}
   {%- include 'snippets/heading.html.twig' with {
-    current: 'Our products',
+    current: 'product.our',
     items: { }
   } only -%}
 {%- endblock %}
@@ -23,7 +23,7 @@
       <div class="col-md-9">
         {%- if products is empty -%}
           {%- trans from 'messages' into currentlocale -%}
-            No items matching your search criterias was found.
+            item.none.found
           {%- endtrans -%}
         {%- else -%}
           <div class="row products products-big">
@@ -33,23 +33,23 @@
                   <div class="image">
                       <a href="{{ path('show_product', {
                         '_locale': currentlocale,
-                        'type': product | product_kind,
-                        'key': product.key
-                      }) }}" onclick="popup(this.href); return false;">
-                        <img src="{{ asset("databasemedia/#{ product.mainimage }.png") }}" alt="{{ 'Product image' | trans({}, 'products', currentlocale) }}" class="img-fluid"/>
+                        'type': product.product | product_kind,
+                        'key': product.product.key
+                      }) }}" onclick="popup(this.href, '{{ product.product.translate(currentlocale).name }}'); return false;">
+                        <img src="{{ asset("databasemedia/#{ product.mainimage }.png") }}" alt="{{ 'product.image' | trans({}, 'messages', currentlocale) }}" class="img-fluid"/>
                     </a>
                   </div>
                   <div class="text">
                     <h3 class="h5">
                       <a data-target="#loading-modal" href="{{ path('show_product', {
                         '_locale': currentlocale,
-                        'type': product | product_kind,
-                        'key': product.key
-                      }) }}" onclick="popup(this.href); return false;">
-                        {{- product.translate(currentlocale).name -}}
+                        'type': product.product | product_kind,
+                        'key': product.product.key
+                      }) }}" onclick="popup(this.href, '{{ product.product.translate(currentlocale).name }}'); return false;">
+                        {{- product.product.translate(currentlocale).name -}}
                       </a>
                     </h3>
-                    <p class="price">N/A</p>
+                    <p class="price">{{product.cost}}</p>
                   </div>
                 </div>
               </div>

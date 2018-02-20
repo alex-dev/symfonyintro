@@ -6,7 +6,7 @@
       <button type="button" data-toggle="collapse" data-target="#navigation" class="navbar-toggler btn-template-outlined">
         <span class="sr-only">
           {%- trans from 'messages' into currentlocale -%}
-            Toggle navigation
+            nav.toggle
           {%- endtrans -%}
         </span>
         <i class="fa fa-align-justify"></i>
@@ -16,13 +16,13 @@
           <li class="nav-item dropdown active">
             <a href="javascript: void(0)" data-toggle="dropdown" class="dropdown-toggle">
               {%- trans from 'menus' into currentlocale -%}
-                Our products
+                product.our
               {%- endtrans -%}
               <b class="caret"></b>
             </a>
             {%- include 'dropdowns/menu.html.twig' with { 'options': {
-              'All': path('list_products', { '_locale': currentlocale }),
-              'Memory': path('list_memories', { '_locale': currentlocale })
+              'menu.all': path('list_products', { '_locale': currentlocale }),
+              'menu.memory': path('list_memories', { '_locale': currentlocale })
               }} only -%}
             {#
               'Processor': path('list_product_type', { '_locale': currentlocale, 'type': 'processors' }),
@@ -33,7 +33,7 @@
           <li class="nav-item">
           <a href="{{ path('about', {'_locale': currentlocale}) }}">
             {%- trans from 'menus' into currentlocale -%}
-              About us
+              about.us
             {%- endtrans -%}
           </a>
           </li>

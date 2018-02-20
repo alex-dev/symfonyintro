@@ -3,7 +3,7 @@
 
 {% block title -%}
   {%- trans from 'messages' into currentlocale -%}
-    Filters
+    filters
   {%- endtrans -%}
 {%- endblock %}
 
@@ -11,7 +11,7 @@
   <fieldset class="form-group">
     <legend class="text-sm category-menu">
       {%- trans from 'messages' into currentlocale -%}
-        Manufacturers
+        manufacturers
       {%- endtrans -%}
     </legend>
     {%- for manufacturer in manufacturers -%}
@@ -30,7 +30,7 @@
   <fieldset class="form-group">
     <legend class="text-sm category-menu">
       {%- trans from 'messages' into currentlocale -%}
-        Architectures
+        architectures
       {%- endtrans -%}
     </legend>
     {%- for architecture in architectures -%}
@@ -49,7 +49,7 @@
   <fieldset>
     <legend class="text-sm category-menu">
       {%- trans from 'messages' into currentlocale -%}
-        Size (GB)
+        size.unit.gb
       {%- endtrans -%}
     </legend>
     {%- if query.size is defined -%}
@@ -61,7 +61,7 @@
   <fieldset>
     <legend class="text-sm category-menu">
       {%- trans from 'messages' into currentlocale -%}
-        Frequency (MHz)
+        frequency.unit.mhz
       {%- endtrans -%}
     </legend>
     {%- if query.frequency is defined -%}

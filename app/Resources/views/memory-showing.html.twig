@@ -3,41 +3,41 @@
 {%- block details -%}
   <h4>
     {%- trans from 'messages' into currentlocale -%}
-      Details
+      details
     {%- endtrans -%}
   </h4>
   <ul>
     <li>
       <span>
         {%- trans from 'messages' into currentlocale -%}
-          Manufacturer
+          manufacturer
         {%- endtrans -%}
       </span>
-      : {{ product.manufacturer.name }}
+      : {{ product.product.manufacturer.name }}
     </li>
     <li>
       <span>
         {%- trans from 'messages' into currentlocale -%}
-          Architecture
+          architecture
         {%- endtrans -%}
       </span>
-      : {{ product.architecture.translate(currentlocale).name }}
+      : {{ product.product.architecture.translate(currentlocale).name }}
     </li>
     <li>
       <span>
         {%- trans from 'messages' into currentlocale -%}
-          Size
+          size
         {%- endtrans -%}
       </span>
-      : {{ product.size }}
+      : {{ product.product.size }}
     </li>
     <li>
       <span>
         {%- trans from 'messages' into currentlocale -%}
-          Frequency
+          frequency
         {%- endtrans -%}
       </span>
-      : {{ product.frequency }}
+      : {{ product.product.frequency }}
     </li>
   </ul>
 {%- endblock -%}

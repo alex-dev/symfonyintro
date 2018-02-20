@@ -14,6 +14,7 @@ use AppBundle\Entity\QuantityPattern\Scalar;
 class ProductController extends Controller {
   const unit = 'AppBundle\Entity\QuantityPattern\Unit\Unit';
   const manufacturer = 'AppBundle\Entity\Manufacturer';
+  const item = 'AppBundle\Entity\Item';
   const product = 'AppBundle\Entity\Product\Product';
   const memory = 'AppBundle\Entity\Product\Memory';
   const memoryarch = 'AppBundle\Entity\Architecture\MemoryArchitecture';
@@ -34,7 +35,7 @@ class ProductController extends Controller {
     $manufacturers = $this->convertParamToUUIDList($request->query->get('manufacturers'));
 
     return $this->render('products-listing.html.twig', [
-      'products'=>$manager->getRepository(self::product)->findMany($page, $manufacturers),
+      'products'=>$manager->getRepository(self::item)->findMany($page, $manufacturers),
       'filters'=>[
         'manufacturers'=>$manager->getRepository(self::manufacturer)->findManufacturerFor(self::product)
       ]
@@ -70,7 +71,7 @@ class ProductController extends Controller {
     });
 
     return $this->render('memories-listing.html.twig', [
-      'products'=>$manager->getRepository(self::memory)->findMany($page, $manufacturers, $architectures, $size, $frequency),
+      'products'=>$manager->getRepository(self::item)->findManyMemories($page, $manufacturers, $architectures, $size, $frequency),
       'filters'=>[
         'manufacturers'=>$manager->getRepository(self::manufacturer)->findManufacturerFor(self::memory),
         'architectures'=>$manager->getRepository(self::memoryarch)->findAll(),
@@ -100,7 +101,7 @@ class ProductController extends Controller {
 
   private function showMemory(EntityManagerInterface $manager, UUID $key) {
     return $this->render('memory-showing.html.twig', [
-      'product'=>$manager->getRepository(self::memory)->findByKey($key)
+      'product'=>$manager->getRepository(self::item)->findByKey($key)
     ]);
   }
 

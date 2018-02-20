@@ -4,28 +4,26 @@
 {% block tabindex -%}-1{%- endblock %}
 
 {% block title -%}
-  <h4 id="login-modalLabel" class="modal-title">
-    {%- trans from 'messages' into currentlocale -%}
-      Customer login
-    {%- endtrans -%}
-  </h4>
+  {%- trans from 'messages' into currentlocale -%}
+    login.customer
+  {%- endtrans -%}
 {%- endblock %}
 
 {% block body -%}
   {# login route #}
   <form action="#" method="post">
     <div class="form-group">
-      <input id="email_modal" type="text" placeholder="{{ 'Email' | trans([], 'messages', locale) }}" class="form-control"/>
+      <input id="email_modal" type="text" placeholder="{{ 'email' | trans([], 'messages', locale) }}" class="form-control"/>
     </div>
     <div class="form-group">
-      <input id="password_modal" type="password" placeholder="{{ 'Password' | trans([], 'messages', locale) }}" class="form-control"/>
+      <input id="password_modal" type="password" placeholder="{{ 'password' | trans([], 'messages', locale) }}" class="form-control"/>
     </div>
     <div class="text-center">
       <button class="btn btn-template-outlined">
         <i class="fa fa-sign-in"></i>
         <span>
           {%- trans from 'messages' into currentlocale -%}
-            Log in
+            login
           {%- endtrans -%}
         </span>
       </button>
@@ -34,7 +32,7 @@
   <div class="text-center text-muted">
     <p>
       {%- trans from 'messages' into currentlocale -%}
-        Not registered yet?
+        register.not
       {%- endtrans -%}
     </p>
     {# customer-register.html #}
@@ -42,7 +40,7 @@
       <a href="#">
         <strong>
           {%- trans from 'messages' into currentlocale -%}
-            Register now
+            register.now
           {%- endtrans -%}
         </strong>
       </a>

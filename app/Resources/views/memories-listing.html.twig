@@ -2,8 +2,8 @@
 
 {% block heading -%}
   {%- include 'snippets/heading.html.twig' with {
-    current: 'Memories',
-    items: { 'Our products': path('list_products', {'_locale': currentlocale }) }
+    current: 'menu.memory',
+    items: { 'product.our': path('list_products', {'_locale': currentlocale }) }
   } only -%}
 {%- endblock %}
 

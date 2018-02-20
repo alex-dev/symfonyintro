@@ -14,3 +14,4 @@ Problèmes connus:
   - La DB est appellé trop souvent par Doctrine, les stratégies d'"hydration" ne sont donc pas optimisées.
   - Product modal affiche un carousel trop petit sur tous les écrans md+.
   - Les conversions de monnaies ne sont pas fonctionnelles. Toutes les monnaies affichées sont des CAD.
+  - To avoid handling unit based conversions in the database, values of items in various currencies are assumed to be roughly equal. In the end, this means the price shown may not be the lowest price in database. Listing all items (not yet implemented) would show the whole list of items.

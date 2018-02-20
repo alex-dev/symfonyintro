@@ -3,16 +3,16 @@
 <div class="top-bar">
   <div class="container">
     <div class="row d-flex align-items-center">
-      <div class="col-10 col-lg-11">
+      <div class="col-9 col-lg-10">
         {%- include 'dropdowns/locale.html.twig' only -%}
       </div>
-      <div class="col-2 col-lg-1 justify-content-md-end">
+      <div class="col justify-content-md-end">
         <div class="login row">
           <a href="#" data-toggle="modal" data-target="#login-modal" class="login-btn">
             <i class="fa fa-sign-in"></i>
             <span class="d-none d-md-inline-block">
-              {%- trans from 'message' into currentlocale -%}
-                Sign in
+              {%- trans from 'messages' into currentlocale -%}
+                login.sign
               {%- endtrans -%}
             </span>
           </a>

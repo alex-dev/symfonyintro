@@ -12,7 +12,7 @@ use AppBundle\Entity\Image;
 use AppBundle\Entity\Product\ProductTranslation;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ProductRepository")
+ * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=20)
  * @ORM\DiscriminatorMap({
@@ -52,21 +52,6 @@ abstract class Product extends UrlKey {
   }
 
   /**
-   * @ORM\OneToMany(
-   *   targetEntity="AppBundle\Entity\Image",
-   *   mappedBy="product")
-   */
-  protected $images;
-  
-  public function getImages() {
-    return $this->images;
-  }
-
-  public function setImages(array $value) {
-    $this->images = new ArrayCollection($value);
-  }
-  
-  /**
    * @ORM\ManyToOne(
    *   targetEntity="AppBundle\Entity\Manufacturer",
    *   cascade={ "persist", "refresh" })
@@ -84,12 +69,6 @@ abstract class Product extends UrlKey {
 
   public function getName() {
     return $this->translate()->getName();
-  }
-
-  public function getMainImage() {
-    return $this->getImages()->filter(function ($item) {
-      return $item->isMain();
-    })[0];
   }
 
   public function __construct($code, array $names, array $images, Manufacturer $manufacturer) {

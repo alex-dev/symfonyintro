@@ -6,30 +6,19 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Exception\UnitException;
 use AppBundle\Service\DimensionsFactory;
 use AppBundle\Entity\UrlKey;
-use AppBundle\Entity\Flag\ProductState;
 use AppBundle\Entity\Product\Product;
 use AppBundle\Entity\QuantityPattern\Scalar;
 
 /**
- * @ORM\Entity
- * @ORM\Table(
- *   uniqueConstraints={
- *     @ORM\UniqueConstraint(name="UK_Items_key", columns={ "`key`" })
- *   })
- * @UniqueEntity("key")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ItemRepository")
+ * @ORM\Table
  */
-class Item extends UrlKey {
+class Item {
   /**
    * @ORM\Id
-   * @ORM\GeneratedValue
-   * @ORM\Column(type="bigint", options={ "unsigned": true })
-   */
-  protected $id;
-
-  /**
-   * @ORM\ManyToOne(
+   * @ORM\OneToOne(
    *   targetEntity="AppBundle\Entity\Product\Product",
-   *   cascade={ "persist", "refresh" })
+   *   cascade={ "persist", "refresh", "remove" })
    * @ORM\JoinColumn(nullable=false)
    */
   protected $product;
@@ -52,7 +41,7 @@ class Item extends UrlKey {
   protected $cost;
 
   public function getCost() {
-    return $this->product;
+    return $this->cost;
   }
 
   public function setCost(Scalar $value) {
@@ -60,24 +49,42 @@ class Item extends UrlKey {
   }
 
   /**
-   * @ORM\ManyToOne(
-   *   targetEntity="AppBundle\Entity\Flag\ProductState",
-   *   cascade={ "persist", "refresh" })
-   * @ORM\JoinColumn(nullable=false)
+   * @ORM\Column(type="bigint", options={ "unsigned": true })
    */
-  protected $state;
+  protected $count;
 
-  public function getState() {
-    return $this->product;
+  public function getCount() {
+    return $this->count;
   }
 
-  public function setState(ProductState $value) {
-    $this->product = $value;
+  public function setCount($value) {
+    $this->count = $value;
   }
 
-  public function __construct(Product $product, Scalar $cost, ProductState $state, DimensionsFactory $factory) {
+  /**
+   * @ORM\OneToMany(
+   *   targetEntity="AppBundle\Entity\Image",
+   *   mappedBy="product")
+   */
+  protected $images;
+  
+  public function getImages() {
+    return $this->images;
+  }
+
+  public function setImages(array $value) {
+    $this->images = new ArrayCollection($value);
+  }
+
+  public function getMainImage() {
+    return $this->getImages()->filter(function ($item) {
+      return $item->isMain();
+    })[0];
+  }
+  
+  public function __construct(Product $product, Scalar $cost, $count, DimensionsFactory $factory) {
     $this->setProduct($product);
-    $this->setState($state);
+    $this->setCount($count);
     $this->setCost_($size, $factory('cad'));
   }
 
