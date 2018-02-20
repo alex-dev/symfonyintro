@@ -1,5 +1,8 @@
 {% set currentlocale = app.request.locale %}
 {% set route = app.request.get('_route') %}
+{% if 'default' in route %}
+  {% set route = route[8:] %}
+{% endif %}
 {% set route_params = app.request.get('_route_params') %}
 
 <select class="bs-select" onchange="redirect(event)">

@@ -88,14 +88,14 @@ final class ItemRepository extends EntityRepository {
       if ($size != null) {
         $results = array_filter($results, function ($item) use (&$size) {
           return !$item->getProduct()->getSize()->isGreaterThan($size->max)
-            && !$item->getSize()->isLesserThan($size->min);
+            && !$item->getProduct()->getSize()->isLesserThan($size->min);
         });
       }
 
       if ($frequency != null) {
         $results = array_filter($results, function ($item) use (&$frequency) {
           return !$item->getProduct()->getFrequency()->isGreaterThan($frequency->max)
-            && !$item->getFrequency()->isLesserThan($frequency->min);
+            && !$item->getProduct()->getFrequency()->isLesserThan($frequency->min);
         });
       }
     }
