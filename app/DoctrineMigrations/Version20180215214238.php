@@ -273,11 +273,11 @@ class Version20180215214238 extends AbstractMigration
       $this->connection->insert($prefix.'Units', ['id'=>16, 'converter'=>16, '`key`'=>'mebibyte']);
       $this->connection->insert($prefix.'Units', ['id'=>17, 'converter'=>17, '`key`'=>'gibibyte']);
       $this->connection->insert($prefix.'Units', ['id'=>18, 'converter'=>18, '`key`'=>'tebibyte']);
-      $this->connection->insert($prefix.'Units', ['id'=>19, 'converter'=>10, '`key`'=>'hertz']);
-      $this->connection->insert($prefix.'Units', ['id'=>20, 'converter'=>11, '`key`'=>'kilohertz']);
-      $this->connection->insert($prefix.'Units', ['id'=>21, 'converter'=>12, '`key`'=>'megahertz']);
-      $this->connection->insert($prefix.'Units', ['id'=>22, 'converter'=>13, '`key`'=>'gigahertz']);
-      $this->connection->insert($prefix.'Units', ['id'=>23, 'converter'=>14, '`key`'=>'terahertz']);
+      $this->connection->insert($prefix.'Units', ['id'=>19, 'converter'=>1, '`key`'=>'hertz']);
+      $this->connection->insert($prefix.'Units', ['id'=>20, 'converter'=>2, '`key`'=>'kilohertz']);
+      $this->connection->insert($prefix.'Units', ['id'=>21, 'converter'=>3, '`key`'=>'megahertz']);
+      $this->connection->insert($prefix.'Units', ['id'=>22, 'converter'=>4, '`key`'=>'gigahertz']);
+      $this->connection->insert($prefix.'Units', ['id'=>23, 'converter'=>5, '`key`'=>'terahertz']);
     }
     {
       $this->connection->insert($prefix.'UnitTranslations', ['translatable_id'=>1, 'name'=>'bit', 'symbol'=>'b', 'locale'=>'en_US']);

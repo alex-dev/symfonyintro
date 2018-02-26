@@ -41,7 +41,7 @@ class Version20180220002114 extends AbstractMigration
     $this->addSql('ALTER TABLE Memories ADD CONSTRAINT FK_F68AB0D3F7C0246A FOREIGN KEY (size) REFERENCES QuantityScalars (id)');
     $this->addSql('ALTER TABLE Memories ADD CONSTRAINT FK_F68AB0D3267FB813 FOREIGN KEY (frequency) REFERENCES QuantityScalars (id)');
     $this->addSql('ALTER TABLE Memories ADD CONSTRAINT FK_F68AB0D374995EFA FOREIGN KEY (architecture) REFERENCES MemoryArchitectures (id)');
-}
+  }
 
   public function postUp(Schema $schema) {
     for ($i = 1; $i <=15; ++$i) {
