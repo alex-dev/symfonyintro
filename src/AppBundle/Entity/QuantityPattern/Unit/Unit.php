@@ -34,6 +34,14 @@ class Unit {
    */
   private $key;
 
+  public function getKey() {
+    return $this->key;
+  }
+
+  public function setKey($value) {
+    $this->key = $value;
+  }
+
   /**
    * @ORM\ManyToMany(
    *   targetEntity="UnitDimension",

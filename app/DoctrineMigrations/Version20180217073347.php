@@ -31,11 +31,12 @@ class Version20180217073347 extends AbstractMigration
     }
     {
       $prefix = 'Quantity';
-      $this->connection->insert($prefix.'Converters', ['id'=>19, 'discriminator'=>'money']);
+      $this->connection->insert($prefix.'Converters', ['id'=>19, 'discriminator'=>'money', 'factor'=>1]);
+      $this->connection->insert($prefix.'Converters', ['id'=>20, 'discriminator'=>'money']);
       $this->connection->insert($prefix.'Dimensions', ['id'=>4, 'name'=>'Money', 'symbol'=>'$']);
       $this->connection->insert($prefix.'UnitDimensions', ['id'=>4, 'dimension'=>4, 'exponent'=>1]);
-      $this->connection->insert($prefix.'Units', ['id'=>24, 'converter'=>19, '`key`'=>'cad']);
-      $this->connection->insert($prefix.'Units', ['id'=>25, 'converter'=>19, '`key`'=>'usd']);
+      $this->connection->insert($prefix.'Units', ['id'=>24, 'converter'=>19, '`key`'=>'CAD']);
+      $this->connection->insert($prefix.'Units', ['id'=>25, 'converter'=>20, '`key`'=>'USD']);
       $this->connection->insert($prefix.'UnitTranslations', ['translatable_id'=>24, 'name'=>'Canadian dollars', 'symbol'=>'CAD$', 'locale'=>'en_US']);
       $this->connection->insert($prefix.'UnitTranslations', ['translatable_id'=>24, 'name'=>'Canadian dollars', 'symbol'=>'CAD$', 'locale'=>'en_CA']);
       $this->connection->insert($prefix.'UnitTranslations', ['translatable_id'=>24, 'name'=>'dollars canadiens', 'symbol'=>'$CAD', 'locale'=>'fr_CA']);

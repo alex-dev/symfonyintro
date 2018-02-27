@@ -7,3 +7,5 @@ parameters:
     app.contact.mail: someone@phpsymfonyelectronicsstore.com
     app.locales: fr_CA|en_CA|en_US
     app.locale: fr_CA
+    api.param.timeout: 2.0
+    api.fixer.uri: https://api.fixer.io/latest

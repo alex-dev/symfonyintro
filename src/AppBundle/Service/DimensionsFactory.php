@@ -4,7 +4,7 @@ namespace AppBundle\Service;
 use AppBundle\Entity\QuantityPattern\Unit\Dimension;
 use AppBundle\Entity\QuantityPattern\Unit\Unit;
 use AppBundle\Repository\UnitRepository;
-use AppBundle\Service\AbstractFactory;
+use AppBundle\Service\Factory\AbstractFactory;
 
 final class DimensionsFactory extends AbstractFactory {
   private $repository;

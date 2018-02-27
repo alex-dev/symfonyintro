@@ -2,23 +2,13 @@
 namespace AppBundle\Entity\QuantityPattern\Unit\Converter;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\QuantityPattern\Unit\Converter\Converter;
+use AppBundle\Entity\QuantityPattern\Unit\Converter\ZeroBasedLinearConverter;
 
 /**
  * @ORM\Entity
  */
-class MoneyConverter extends Converter {
-  public function __invoke(Converter $other) {
-    return function ($value) use (&$other) {
-      return $value;
-    };
-  }
-
-  protected function convertToBase($value) {
-    return $value;
-  }
-
-  protected function convertFromBase($value) {
-    return $value;
+class MoneyConverter extends ZeroBasedLinearConverter {
+  public function __construct($factor) {
+    parent::__construct($factor);
   }
 }

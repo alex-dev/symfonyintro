@@ -31,7 +31,7 @@ class UnitTranslation {
 
   public function setName($value) {
     if (mb_strlen($value) > self::name_length) {
-      throw new LengthException("$value must be less then ".self::name_length." characters long.");
+      throw new LengthException("$value must be less then ".self::name_length.' characters long.');
     } else {
       $this->name = $value;
     }
@@ -48,7 +48,7 @@ class UnitTranslation {
 
   public function setSymbol($value) {
     if (mb_strlen($value) > self::name_length) {
-      throw new LengthException("$value must be less then ".self::name_length." characters long.");
+      throw new LengthException("$value must be less then ".self::name_length.' characters long.');
     } else {
       $this->name = $value;
     }

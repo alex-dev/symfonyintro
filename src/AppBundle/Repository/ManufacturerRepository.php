@@ -6,6 +6,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 
 final class ManufacturerRepository extends EntityRepository {
+  const manufacturer = 'AppBundle\Entity\Manufacturer';
+
   public function __construct(EntityManagerInterface $manager, ClassMetadata $class){
     parent::__construct($manager, $class);
   }
@@ -15,7 +17,7 @@ final class ManufacturerRepository extends EntityRepository {
 
     {
       $builder->select(['m'])
-        ->from('AppBundle\Entity\Manufacturer', 'm')
+        ->from(self::manufacturer, 'm')
         ->join($product, 'p', 'WITH', 'p.manufacturer = m.id');
     }
 

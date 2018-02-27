@@ -37,7 +37,7 @@ class Dimension {
 
   private function setName($value) {
     if (mb_strlen($value) > self::name_length) {
-      throw new LengthException("$value must be less then ".self::name_length." characters long.");
+      throw new LengthException("$value must be less then ".self::name_length.' characters long.');
     } else {
       $this->name = $value;
     }
@@ -54,7 +54,7 @@ class Dimension {
 
   private function setSymbol($value) {
     if (mb_strlen($value) > self::name_length) {
-      throw new LengthException("$value must be less then ".self::name_length." characters long.");
+      throw new LengthException("$value must be less then ".self::name_length.' characters long.');
     } else {
       $this->name = $value;
     }
