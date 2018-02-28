@@ -29,6 +29,10 @@ class OffsetLinearConverter extends Converter {
     };
   }
 
+  public function isMain() {
+    return $this->factor == 1 && $this->offset == 0;
+  }
+
   protected function convertToBase($value) {
     return $value * $this->factor + $this->offset;
   }

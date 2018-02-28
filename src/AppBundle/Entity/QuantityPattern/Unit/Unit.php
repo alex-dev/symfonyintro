@@ -38,7 +38,7 @@ class Unit {
     return $this->key;
   }
 
-  public function setKey($value) {
+  private function setKey($value) {
     $this->key = $value;
   }
 
@@ -113,6 +113,10 @@ class Unit {
 
   public function __toString() {
     return $this->getSymbol();
+  }
+
+  public function isMain() {
+    return $this->getConverter_()->isMain();
   }
 
   public function getDimensions() {

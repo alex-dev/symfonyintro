@@ -29,6 +29,10 @@ class ZeroBasedLinearConverter extends Converter {
     }
   }
 
+  public function isMain() {
+    return $this->factor == 1;
+  }
+
   protected function convertToBase($value) {
     return $value * $this->factor;
   }

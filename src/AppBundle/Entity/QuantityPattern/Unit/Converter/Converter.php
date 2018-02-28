@@ -23,6 +23,7 @@ abstract class Converter {
   protected $id;
 
   abstract public function __invoke(Converter $other);
+  abstract public function isMain();
   abstract protected function convertToBase($value);
   abstract protected function convertFromBase($value);
 }
