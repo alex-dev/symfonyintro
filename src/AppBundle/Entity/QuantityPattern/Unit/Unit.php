@@ -57,8 +57,10 @@ class Unit {
    */
   private $dimensions;
 
-  private function getDimensions_() {
-    return $this->dimensions;
+  public function getDimensions() {
+    return array_reduce($this->dimensions, function ($carry, $item) {
+      return $carry.' '.$item;
+    }, '');
   }
 
   private function setDimensions(array $value) {
@@ -80,7 +82,7 @@ class Unit {
    */
   private $converter;
   
-  private function getConverter_() {
+  public function getConverter() {
     return $this->converter;
   }
 
@@ -116,25 +118,19 @@ class Unit {
   }
 
   public function isMain() {
-    return $this->getConverter_()->isMain();
-  }
-
-  public function getDimensions() {
-    return array_reduce($this->getDimensions_(), function ($carry, $item) {
-      return $carry.' '.$item;
-    }, '');
+    return $this->getConverter()->isMain();
   }
 
   public function isConvertibleTo(Unit $to) {
-    return $this->getDimensions_() === $to->getDimensions_();
+    return $this->dimensions == $to->dimensions;
   }
 
-  public function getConverter(Unit $to) {
+  public function getConversion(Unit $to) {
     if (!$this->isConvertibleTo($to)) {
       throw new UnitException("$this is not convertible to $to.");
     } else {
-      $converter = $this->getConverter_();
-      return $converter($to->getConverter_());
+      $converter = $this->getConverter();
+      return $converter($to->getConverter());
     }
   }
 }

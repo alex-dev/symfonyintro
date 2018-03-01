@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Service;
+namespace AppBundle\Service\Factory;
 
 use GuzzleHttp\Client;
 use AppBundle\Service\Factory\AbstractFactory;
@@ -17,6 +17,6 @@ final class ClientAPIFactory extends AbstractFactory {
   public function __invoke($baseUri) {
     return new Client([
       'base_uri'=>$baseUri,
-      'timeout'=>$timeout]);
+      'timeout'=>$this->timeout]);
   }
 }

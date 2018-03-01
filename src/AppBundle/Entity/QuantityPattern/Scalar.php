@@ -48,7 +48,7 @@ class Scalar extends Value {
   }
 
   protected function convert_(Unit $to) {
-    $converter = $this->getUnit()->getConverter($to);
+    $converter = $this->getUnit()->getConversion($to);
     return new Scalar($to, $converter($this->getValue()));
   }
 }

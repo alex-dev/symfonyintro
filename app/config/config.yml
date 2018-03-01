@@ -12,17 +12,20 @@ parameters:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 framework:
     #esi: ~
-    serializer: { enable_annotations: true }
-    translator: { fallbacks: ['%locale%'] }
+    validation: 
+        enable_annotations: true
+    serializer:
+        enable_annotations: true
+    translator:
+        fallbacks: 
+            - '%locale%'
+    default_locale: '%app.locale%'
     secret: '%secret%'
     router:
         resource: '%kernel.project_dir%/app/config/routing.yml'
         strict_requirements: ~
     form: ~
     csrf_protection: ~
-    validation: { enable_annotations: true }
-    #serializer: { enable_annotations: true }
-    default_locale: '%app.locale%'
     trusted_hosts: ~
     session:
         # https://symfony.com/doc/current/reference/configuration/framework.html#handler-id

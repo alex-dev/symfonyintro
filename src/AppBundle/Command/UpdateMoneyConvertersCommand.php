@@ -2,16 +2,19 @@
 namespace AppBundle\Command;
 
 use Doctrine\Common\Collections\Collection;
-use Psr\Log\LoggerInterface;
-use Psr7\Http\Message\ResponseInterface;
+use Doctrine\ORM\EntityManagerInterface as EntityManager;
+use GuzzleHttp\ClientInterface as Client;
+use Psr\Log\LoggerInterface as Logger;
+use Psr\Http\Message\ResponseInterface as Response;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface as Input;
+use Symfony\Component\Console\Output\OutputInterface as Output;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\Serializer\SerializerInterface as Serializer;
 use AppBundle\Entity\QuantityPattern\Unit\Unit;
 
 class UpdateMoneyConvertersCommand extends Command
 {
-  const name = 'app:converters:money:update';
-
   const unit = 'AppBundle\Entity\QuantityPattern\Unit\Unit';
 
   const base = 'base';
@@ -22,7 +25,7 @@ class UpdateMoneyConvertersCommand extends Command
   private $serializer;
   private $client;
 
-  public function __construct(ClientInterface\Fixer $client, SerializerInterface $serializer, LoggerInterface $logger, EntityManager $manager) {
+  public function __construct(Client $client, Serializer $serializer, Logger $logger, EntityManager $manager) {
     $this->manager = $manager;
     $this->logger = $logger;
     $this->serializer = $serializer;
@@ -31,51 +34,48 @@ class UpdateMoneyConvertersCommand extends Command
     parent::__construct();
   }
 
-  protected function configure() {
-    $this->setName(self::name);
-  }
+  protected function configure() { }
 
-  protected function execute() {
-    list($units, $base) = $this->queryUnits();
+  protected function execute(Input $input, Output $output) {
+    extract($this->queryUnits());
     $this->queryExchangeRates(
       $base->getKey(),
       $units->map(function (Unit $item) { return $item->getKey(); }))
-      ->then(function (ParameterBag $reponse) use ($units) {
-        $this->writeExchangeRates($response, $units);
-        $this->manager->persist($units);
-        return $units;
-      });
+      ->then(function (ParameterBag $rates) use ($units) {
+        $this->updateExchangeRates($rates, $units);
+      })
+      ->wait();
+    $this->manager->flush();      
   }
 
   private function queryUnits() {
-    $currencies = $manager->getRepository(self::unit)->findCurrencies();
+    $currencies = $this->manager->getRepository(self::unit)->findCurrencies();
 
     return [
-      'currencies'=>$currencies,
+      'units'=>$currencies,
       'base'=>$currencies->filter(function (Unit $item) {
-        return $item->isMain()->first();
-      })
+        return $item->isMain();
+      })->first()
     ];
   }
 
   private function queryExchangeRates($base, Collection $rates) {
-    $params = 
-    $promise = $this->$client->getAsync('/', [
+    return $this->client->getAsync('', [
       'query' => [
         self::base => $base,
-        self::symbols => $implode(',', $rates->toArray())
+        self::symbols => implode(',', $rates->toArray())
       ]
-    ])->then(function (ResponseInterface $reponse) {
-      list($base, $rates) = $this->serializer->decode($response->getBody());
+    ])->then(function (Response $response) {
+      extract($this->serializer->decode($response->getBody(), 'json'));
       $results = new ParameterBag($rates);
       $results->set($base, 1);
       return $results;
     });
   }
 
-  private function writeExchangeRates(ParameterBag $rates, Collection $units) {
+  private function updateExchangeRates(ParameterBag $rates, Collection $units) {
     foreach ($units->getIterator() as $unit) {
-      $unit->getConverter()->setFactor
+      $unit->getConverter()->updateFactor($rates->get($unit->getKey()));
     }
   }
 }

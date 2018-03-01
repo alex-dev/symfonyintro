@@ -11,4 +11,8 @@ class MoneyConverter extends ZeroBasedLinearConverter {
   public function __construct($factor) {
     parent::__construct($factor);
   }
+
+  public function updateFactor($value) {
+    $this->factor = $value;
+  }
 }

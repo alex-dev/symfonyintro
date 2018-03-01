@@ -17,31 +17,45 @@ services:
     # controllers are imported separately to make sure they're public
     # and have a tag that allows actions to type-hint services
     ClientInterface\Fixer:
-        factory: ['@AppBundle\Service\Factory\ClientAPIFactory', __invoke]
-        arguments: ['%api.fixer.uri%']
+        factory: 
+            - '@AppBundle\Service\Factory\ClientAPIFactory'
+            - __invoke
+        arguments: 
+            - '%api.fixer.uri%'
 
     AppBundle\Controller\:
         resource: '../../src/AppBundle/Controller/*'
         public: true
-        tags: ['controller.service_arguments']
+        tags: 
+            - 'controller.service_arguments'
 
     AppBundle\Command\:
         resource: '../../src/AppBundle/Command/*'
         public: true
-        tags: ['console.command']
+        tags:
+            - 'console.command'
+
+    AppBundle\Command\UpdateMoneyConvertersCommand:
+        arguments:
+            $client: '@ClientInterface\Fixer'
+        tags:
+            - { name: 'console.command', command: 'app:update-currencies' }
 
     AppBundle\Service\:
         resource: '../../src/AppBundle/Service/*'
 
     AppBundle\Service\Factory\ClientAPIFactory:
-        arguments: ['%api.param.timeout%']
+        arguments: 
+            - '%api.param.timeout%'
 
     AppBundle\Twig\:
         resource: '../../src/AppBundle/Twig/*'
-        tags: ['twig.extension']
+        tags: 
+            - 'twig.extension'
 
     AppBundle\Twig\ProductExtension:
-        arguments: ['%app.routes.memory%']
+        arguments: 
+            - '%app.routes.memory%'
 
     AppBundle\Database\NamingStrategy:
         public: true
