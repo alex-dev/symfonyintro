@@ -24,8 +24,7 @@ class UnitDimension {
   /**
    * @ORM\ManyToOne(
    *   targetEntity="Dimension",
-   *   cascade={ "persist", "refresh" },
-   *   fetch="EAGER")
+   *   cascade={ "persist", "refresh" })
    * @ORM\JoinColumn(nullable=false)
    */
   private $dimension;

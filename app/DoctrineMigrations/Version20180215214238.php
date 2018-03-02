@@ -164,9 +164,9 @@ class Version20180215214238 extends AbstractMigration
     $prefix = 'Architecture';
 
     {
-      $this->connection->insert($prefix.'s', ['id'=>1, 'discriminator'=>'memory', '`key`'=>UUID::create()->toHex()]);
-      $this->connection->insert($prefix.'s', ['id'=>2, 'discriminator'=>'memory', '`key`'=>UUID::create()->toHex()]);
-      $this->connection->insert($prefix.'s', ['id'=>3, 'discriminator'=>'memory', '`key`'=>UUID::create()->toHex()]);
+      $this->connection->insert($prefix.'s', ['id'=>1, 'discriminator'=>'memoryarchitecture', '`key`'=>UUID::create()->toHex()]);
+      $this->connection->insert($prefix.'s', ['id'=>2, 'discriminator'=>'memoryarchitecture', '`key`'=>UUID::create()->toHex()]);
+      $this->connection->insert($prefix.'s', ['id'=>3, 'discriminator'=>'memoryarchitecture', '`key`'=>UUID::create()->toHex()]);
     }
     {
       $this->connection->insert($prefix.'Translations', ['translatable_id'=>1, 'name'=>'DDR4', 'abbreviation'=>'DDR4', 'locale'=>'en_US']);
@@ -225,24 +225,24 @@ class Version20180215214238 extends AbstractMigration
     $prefix = 'Quantity';
 
     {
-      $this->connection->insert($prefix.'Converters', ['id'=>1, 'discriminator'=>'zerobased', 'factor'=>1, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>2, 'discriminator'=>'zerobased', 'factor'=>10 ** 3, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>3, 'discriminator'=>'zerobased', 'factor'=>10 ** 6, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>4, 'discriminator'=>'zerobased', 'factor'=>10 ** 9, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>5, 'discriminator'=>'zerobased', 'factor'=>10 ** 12, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>6, 'discriminator'=>'zerobased', 'factor'=>1024, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>7, 'discriminator'=>'zerobased', 'factor'=>1024 ** 2, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>8, 'discriminator'=>'zerobased', 'factor'=>1024 ** 3, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>9, 'discriminator'=>'zerobased', 'factor'=>1024 ** 4, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>10, 'discriminator'=>'zerobased', 'factor'=>8, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>11, 'discriminator'=>'zerobased', 'factor'=>8 * 10 ** 3, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>12, 'discriminator'=>'zerobased', 'factor'=>8 * 10 ** 6, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>13, 'discriminator'=>'zerobased', 'factor'=>8 * 10 ** 9, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>14, 'discriminator'=>'zerobased', 'factor'=>8 * 10 ** 12, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>15, 'discriminator'=>'zerobased', 'factor'=>8 * 1024, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>16, 'discriminator'=>'zerobased', 'factor'=>8 * 1024 ** 2, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>17, 'discriminator'=>'zerobased', 'factor'=>8 * 1024 ** 3, 'offset'=>0]);
-      $this->connection->insert($prefix.'Converters', ['id'=>18, 'discriminator'=>'zerobased', 'factor'=>8 * 1024 ** 4, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>1, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>1, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>2, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>10 ** 3, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>3, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>10 ** 6, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>4, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>10 ** 9, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>5, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>10 ** 12, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>6, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>1024, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>7, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>1024 ** 2, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>8, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>1024 ** 3, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>9, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>1024 ** 4, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>10, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>8, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>11, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>8 * 10 ** 3, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>12, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>8 * 10 ** 6, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>13, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>8 * 10 ** 9, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>14, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>8 * 10 ** 12, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>15, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>8 * 1024, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>16, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>8 * 1024 ** 2, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>17, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>8 * 1024 ** 3, 'offset'=>0]);
+      $this->connection->insert($prefix.'Converters', ['id'=>18, 'discriminator'=>'zerobasedlinearconverter', 'factor'=>8 * 1024 ** 4, 'offset'=>0]);
     }
     {
       $this->connection->insert($prefix.'Dimensions', ['id'=>1, 'name'=>'Information', 'symbol'=>'Y']);

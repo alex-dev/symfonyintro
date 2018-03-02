@@ -1,7 +1,6 @@
 <?php
 namespace AppBundle\Command;
 
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface as EntityManager;
 use GuzzleHttp\ClientInterface as Client;
 use Psr\Log\LoggerInterface as Logger;
@@ -38,12 +37,8 @@ class UpdateMoneyConvertersCommand extends Command
 
   protected function execute(Input $input, Output $output) {
     extract($this->queryUnits());
-    $this->queryExchangeRates(
-      $base->getKey(),
-      $units->map(function (Unit $item) { return $item->getKey(); }))
-      ->then(function (ParameterBag $rates) use ($units) {
-        $this->updateExchangeRates($rates, $units);
-      })
+    $this->queryExchangeRates($base->getKey(), array_map(function (Unit $item) { return $item->getKey(); }, $units))
+      ->then(function (array $rates) use ($units) { $this->updateExchangeRates($rates, $units); })
       ->wait();
     $this->manager->flush();      
   }
@@ -52,30 +47,27 @@ class UpdateMoneyConvertersCommand extends Command
     $currencies = $this->manager->getRepository(self::unit)->findCurrencies();
 
     return [
-      'units'=>$currencies,
-      'base'=>$currencies->filter(function (Unit $item) {
-        return $item->isMain();
-      })->first()
+      'units' => $currencies,
+      'base' => array_filter($currencies, function (Unit $item) { return $item->isMain(); })[0]
     ];
   }
 
-  private function queryExchangeRates($base, Collection $rates) {
+  private function queryExchangeRates($base, array $rates) {
     return $this->client->getAsync('', [
       'query' => [
         self::base => $base,
-        self::symbols => implode(',', $rates->toArray())
+        self::symbols => implode(',', $rates)
       ]
     ])->then(function (Response $response) {
       extract($this->serializer->decode($response->getBody(), 'json'));
-      $results = new ParameterBag($rates);
-      $results->set($base, 1);
-      return $results;
+      $rates[$base] = 1;
+      return $rates;
     });
   }
 
-  private function updateExchangeRates(ParameterBag $rates, Collection $units) {
-    foreach ($units->getIterator() as $unit) {
-      $unit->getConverter()->updateFactor($rates->get($unit->getKey()));
+  private function updateExchangeRates(array $rates, array $units) {
+    foreach ($units as $unit) {
+      $unit->getConverter()->updateFactor($rates[$unit->getKey()]);
     }
   }
 }

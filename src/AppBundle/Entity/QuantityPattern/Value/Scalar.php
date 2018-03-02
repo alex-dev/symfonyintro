@@ -1,11 +1,11 @@
 <?php
-namespace AppBundle\Entity\QuantityPattern;
+namespace AppBundle\Entity\QuantityPattern\Value;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\GlobalConstants;
-use AppBundle\Entity\QuantityPattern\Value;
 use AppBundle\Entity\QuantityPattern\Unit\Unit;
+use AppBundle\Entity\QuantityPattern\Value\Value;
 
 /**
  * @ORM\Entity
@@ -34,7 +34,7 @@ class Scalar extends Value {
   }
 
   public function __toString() {
-    $value = round($this->value, $precision=GlobalConstants::FLOAT_DEFAULT_PRECISION);
+    $value = round($this->value, $precision = GlobalConstants::FLOAT_DEFAULT_PRECISION);
     $unit = $this->getUnit();
     return "$value $unit";
   }
@@ -47,8 +47,7 @@ class Scalar extends Value {
     return $this->getValue() < $other->convert($this->getUnit())->getValue();
   }
 
-  protected function convert_(Unit $to) {
-    $converter = $this->getUnit()->getConversion($to);
+  protected function convert_(Unit $to , callable $converter) {
     return new Scalar($to, $converter($this->getValue()));
   }
 }

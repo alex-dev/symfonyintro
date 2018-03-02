@@ -13,12 +13,6 @@ use AppBundle\Entity\Architecture\ArchitectureTranslation;
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=20)
- * @ORM\DiscriminatorMap({
- *   "graphic" = "GraphicAcceleratorArchitecture",
- *   "hard" = "HardDriveArchitecture",
- *   "memory" = "MemoryArchitecture",
- *   "processor" = "ProcessorArchitecture"
- * })
  * @ORM\Table(uniqueConstraints={ @ORM\UniqueConstraint(name="UK_Architectures_key", columns={ "`key`" }) })
  * @UniqueEntity("`key`")
  */
@@ -32,23 +26,31 @@ abstract class Architecture extends UrlKey {
    */
   protected $id;
   
-  public function getName() {
-    return $this->translate()->getName();
+  public function getName($locale) {
+    return $this->translate($locale)->getName();
   }
 
-  public function getAbbreviation() {
-    return $this->translate()->getAbbreviation();
+  private function setName($value, $locale) {
+    return $this->translate($locale)->setName($value);
+  }
+
+  public function getAbbreviation($locale) {
+    return $this->translate($locale)->getAbbreviation();
+  }
+
+  private function setAbbreviation($value, $locale) {
+    return $this->translate($locale)->setAbbreviation($value);
   }
 
   public function __construct(array $names, array $abbreviations) {
     parent::__construct();
 
     foreach ($names as $locale=>$name) {
-      $this->translate($locale)->setName($name);
+      $this->setName($name, $locale);
     }
 
     foreach ($abbreviations as $locale=>$abbreviation) {
-      $this->translate($locale)->setName($abbreviation);
+      $this->setName($abbreviation, $locale);
     }
   }
 }

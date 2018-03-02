@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Entity\QuantityPattern\Unit\Converter;
+namespace AppBundle\Entity\QuantityPattern\Converter;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -7,11 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=20)
- * @ORM\DiscriminatorMap({
- *   "zerobased" = "ZeroBasedLinearConverter",
- *   "offsetlinear" = "OffsetLinearConverter",
- *   "money" = "MoneyConverter"
- * })
  * @ORM\Table
  */
 abstract class Converter {
@@ -22,7 +17,7 @@ abstract class Converter {
    */
   protected $id;
 
-  abstract public function __invoke(Converter $other);
+  abstract public function __invoke(Converter $other = null);
   abstract public function isMain();
   abstract protected function convertToBase($value);
   abstract protected function convertFromBase($value);

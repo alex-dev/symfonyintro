@@ -23,7 +23,7 @@ class Version20180217073347 extends AbstractMigration
 
   public function postUp(Schema $schema) {
     {
-      $this->connection->insert('Architectures', ['id'=>4, 'discriminator'=>'memory', '`key`'=>UUID::create()->toHex()]);
+      $this->connection->insert('Architectures', ['id'=>4, 'discriminator'=>'memoryarchitecture', '`key`'=>UUID::create()->toHex()]);
       $this->connection->insert('ArchitectureTranslations', ['translatable_id'=>4, 'name'=>'DDR1', 'abbreviation'=>'DDR1', 'locale'=>'en_US']);
       $this->connection->insert('ArchitectureTranslations', ['translatable_id'=>4, 'name'=>'DDR1', 'abbreviation'=>'DDR1', 'locale'=>'en_CA']);
       $this->connection->insert('ArchitectureTranslations', ['translatable_id'=>4, 'name'=>'DDR1', 'abbreviation'=>'DDR1', 'locale'=>'fr_CA']);
@@ -31,8 +31,8 @@ class Version20180217073347 extends AbstractMigration
     }
     {
       $prefix = 'Quantity';
-      $this->connection->insert($prefix.'Converters', ['id'=>19, 'discriminator'=>'money', 'factor'=>1]);
-      $this->connection->insert($prefix.'Converters', ['id'=>20, 'discriminator'=>'money']);
+      $this->connection->insert($prefix.'Converters', ['id'=>19, 'discriminator'=>'moneyconverter', 'factor'=>1]);
+      $this->connection->insert($prefix.'Converters', ['id'=>20, 'discriminator'=>'moneyconverter']);
       $this->connection->insert($prefix.'Dimensions', ['id'=>4, 'name'=>'Money', 'symbol'=>'$']);
       $this->connection->insert($prefix.'UnitDimensions', ['id'=>4, 'dimension'=>4, 'exponent'=>1]);
       $this->connection->insert($prefix.'Units', ['id'=>24, 'converter'=>19, '`key`'=>'CAD']);

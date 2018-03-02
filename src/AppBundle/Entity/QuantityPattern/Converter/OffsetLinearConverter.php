@@ -1,8 +1,8 @@
 <?php
-namespace AppBundle\Entity\QuantityPattern\Unit\Converter;
+namespace AppBundle\Entity\QuantityPattern\Converter;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\QuantityPattern\Unit\Converter\Converter;
+use AppBundle\Entity\QuantityPattern\Converter\Converter;
 
 /**
  * @ORM\Entity
@@ -23,10 +23,16 @@ class OffsetLinearConverter extends Converter {
     $this->offset = $offset;
   }
 
-  public function __invoke(Converter $other) {
-    return function ($value) use (&$other) {
-      return $other->convertFromBase($this->convertToBase($value));
-    };
+  public function __invoke(Converter $other = null) {
+    if (is_null($other)) {
+      return function ($value) {
+        return $other->convertFromBase($value);
+      };
+    } else {
+      return function ($value) use (&$other) {
+        return $other->convertFromBase($this->convertToBase($value));
+      };
+    }
   }
 
   public function isMain() {

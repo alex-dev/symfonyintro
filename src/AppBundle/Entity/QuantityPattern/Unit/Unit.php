@@ -7,12 +7,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
 use AppBundle\CustomException\UnitException;
 use AppBundle\Repository\UnitRepository;
+use AppBundle\Entity\QuantityPattern\Converter\Converter;
 use AppBundle\Entity\QuantityPattern\Unit\UnitDimension;
 use AppBundle\Entity\QuantityPattern\Unit\UnitTranslation;
-use AppBundle\Entity\QuantityPattern\Unit\Converter\Converter;
 
 /**
- * @ORM\Entity(repositoryClass="AppBundle\Repository\UnitRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\QuantityPattern\UnitRepository")
  * @ORM\Table(
  *   uniqueConstraints={
  *     @ORM\UniqueConstraint(name="UK_QuantityUnit_key", columns={ "`key`" })
@@ -45,8 +45,7 @@ class Unit {
   /**
    * @ORM\ManyToMany(
    *   targetEntity="UnitDimension",
-   *   cascade={ "persist", "refresh" },
-   *   fetch="EAGER")
+   *   cascade={ "persist", "refresh" })
    * @ORM\JoinTable(
    *   joinColumns={
    *     @ORM\JoinColumn(name="unit", nullable=false)
@@ -75,9 +74,8 @@ class Unit {
 
   /**
    * @ORM\ManyToOne(
-   *   targetEntity="AppBundle\Entity\QuantityPattern\Unit\Converter\Converter",
-   *   cascade={ "persist", "refresh" },
-   *   fetch="EAGER")
+   *   targetEntity="AppBundle\Entity\QuantityPattern\Converter\Converter",
+   *   cascade={ "persist", "refresh" })
    * @ORM\JoinColumn(nullable=false)
    */
   private $converter;
@@ -90,12 +88,20 @@ class Unit {
     $this->converter = $converter;
   }
 
-  public function getName() {
-    return $this->translate()->getName();
+  public function getName($locale) {
+    return $this->translate($locale)->getName();
   }
 
-  public function getSymbol() {
-    return $this->translate()->getSymbol();
+  private function setName($value, $locale) {
+    return $this->translate($locale)->setName($value);
+  }
+
+  public function getSymbol($locale) {
+    return $this->translate($locale)->getSymbol();
+  }
+
+  private function setSymbol($value, $locale) {
+    return $this->translate($locale)->setSymbol($value);
   }
 
   public function __construct(array $names, array $symbols, array $dimensions, callable $converter, $key) {
@@ -105,11 +111,11 @@ class Unit {
     $this->setConverter($converter);
 
     foreach ($names as $locale=>$name) {
-      $this->translate($locale)->setName($name);
+      $this->setName($name, $locale);
     }
     
     foreach ($symbols as $locale=>$symbol) {
-      $this->translate($locale)->setSymbol($symbol);
+      $this->setSymbol($symbol, $locale);
     }
   }
 
@@ -123,6 +129,10 @@ class Unit {
 
   public function isConvertibleTo(Unit $to) {
     return $this->dimensions == $to->dimensions;
+  }
+
+  public function getBaseConversion() {
+    return $this->getConverter();
   }
 
   public function getConversion(Unit $to) {

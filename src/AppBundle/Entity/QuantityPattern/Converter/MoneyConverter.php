@@ -1,8 +1,8 @@
 <?php
-namespace AppBundle\Entity\QuantityPattern\Unit\Converter;
+namespace AppBundle\Entity\QuantityPattern\Converter;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\QuantityPattern\Unit\Converter\ZeroBasedLinearConverter;
+use AppBundle\Entity\QuantityPattern\Converter\ZeroBasedLinearConverter;
 
 /**
  * @ORM\Entity

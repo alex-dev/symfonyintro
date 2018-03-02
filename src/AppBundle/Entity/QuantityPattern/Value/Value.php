@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Entity\QuantityPattern;
+namespace AppBundle\Entity\QuantityPattern\Value;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\CustomException\UnitException;
@@ -12,8 +12,7 @@ abstract class Value {
   /**
    * @ORM\ManyToOne(
    *   targetEntity="AppBundle\Entity\QuantityPattern\Unit\Unit",
-   *   cascade={ "persist", "refresh" },
-   *   fetch="EAGER")
+   *   cascade={ "persist", "refresh" })
    * @ORM\JoinColumn(nullable=false)
    */
   protected $unit;
@@ -28,6 +27,10 @@ abstract class Value {
 
   abstract public function __toString();
 
+  public function convertToBase() {
+    return $this->convert_($to, $this->getUnit()->getBaseConversion());
+  }
+
   /**
    * @return Value
    * @throws UnitException if $this is not convertible to $to 
@@ -36,7 +39,7 @@ abstract class Value {
     if (!$this->unit->isConvertibleTo($to)) {
       throw new UnitException("$this->getUnit() is not convertible to $to.");
     } else {
-      return $this->convert_($to);
+      return $this->convert_($to, $this->getUnit()->getConversion($to));
     }
   }
 

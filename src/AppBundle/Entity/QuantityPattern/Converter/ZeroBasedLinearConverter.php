@@ -1,8 +1,8 @@
 <?php
-namespace AppBundle\Entity\QuantityPattern\Unit\Converter;
+namespace AppBundle\Entity\QuantityPattern\Converter;
 
 use Doctrine\ORM\Mapping as ORM;
-use AppBundle\Entity\QuantityPattern\Unit\Converter\Converter;
+use AppBundle\Entity\QuantityPattern\Converter\Converter;
 
 /**
  * @ORM\Entity
@@ -17,8 +17,12 @@ class ZeroBasedLinearConverter extends Converter {
     $this->factor = $factor;
   }
 
-  public function __invoke(Converter $other) {
-    if ($other instanceof self) {
+  public function __invoke(Converter $other = null) {
+    if (is_null($other)) {
+      return function ($value) {
+        return $other->convertFromBase($value);
+      };
+    } else if ($other instanceof self) {
       return function ($value) use (&$other) {
         return $value * $this->factor / $other->factor;
       };
