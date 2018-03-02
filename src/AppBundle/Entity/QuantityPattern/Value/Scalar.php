@@ -8,7 +8,7 @@ use AppBundle\Entity\QuantityPattern\Unit\Unit;
 use AppBundle\Entity\QuantityPattern\Value\Value;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\QuantityPattern\ValueRepository")
  * @ORM\Table
  */
 class Scalar extends Value {
@@ -47,7 +47,7 @@ class Scalar extends Value {
     return $this->getValue() < $other->convert($this->getUnit())->getValue();
   }
 
-  protected function convert_(Unit $to , callable $converter) {
+  protected function convert_(Unit $to, callable $converter) {
     return new Scalar($to, $converter($this->getValue()));
   }
 }

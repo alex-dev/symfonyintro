@@ -10,20 +10,4 @@ class ValueRepository extends EntityRepository {
   public function __construct(EntityManager $manager, ClassMetadata $class){
     parent::__construct($manager, $class);
   }
-
-  public function find() {
-
-  }
-
-  public function findAll() {
-
-  }
-
-  public function findBy() {
-
-  }
-
-  public function findOneBy() {
-
-  }
 }

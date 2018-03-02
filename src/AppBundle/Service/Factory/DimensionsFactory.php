@@ -1,5 +1,5 @@
 <?php
-namespace AppBundle\Service;
+namespace AppBundle\Service\Factory;
 
 use AppBundle\Entity\QuantityPattern\Unit\Dimension;
 use AppBundle\Entity\QuantityPattern\Unit\Unit;

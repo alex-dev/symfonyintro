@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=20)
+ * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=50)
  * @ORM\Table
  */
 abstract class Converter {

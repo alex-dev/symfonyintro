@@ -26,7 +26,10 @@ abstract class Value {
   }
 
   abstract public function __toString();
-
+  
+  /**
+   * @return double
+   */
   public function convertToBase() {
     return $this->convert_($to, $this->getUnit()->getBaseConversion());
   }
@@ -46,5 +49,5 @@ abstract class Value {
   /**
    * @return Value
    */
-  abstract protected function convert_(Unit $to);
+  abstract protected function convert_(Unit $to, callable $converter);
 }

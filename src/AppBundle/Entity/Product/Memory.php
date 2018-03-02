@@ -3,11 +3,10 @@ namespace AppBundle\Entity\Product;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Exception\UnitException;
-use AppBundle\Service\DimensionsFactory;
-use AppBundle\Repository\MemoryRepository;
 use AppBundle\Entity\Architecture\MemoryArchitecture;
 use AppBundle\Entity\Product\Product;
-use AppBundle\Entity\QuantityPattern\Scalar;
+use AppBundle\Entity\QuantityPattern\Value\Scalar;
+use AppBundle\Service\Factory\DimensionsFactory;
 
 /**
  * @ORM\Entity
@@ -67,7 +66,15 @@ class Memory extends Product {
     $this->architecture = $architecture;
   }
 
-  public function __construct($code, array $names, array $images, Manufacturer $manufacturer, MemoryArchitecture $architecture, Scalar $size, Scalar $frequency, DimensionsFactory $factory) {
+  public function __construct(
+    $code,
+    array $names,
+    array $images,
+    Manufacturer $manufacturer,
+    MemoryArchitecture $architecture,
+    Scalar $size,
+    Scalar $frequency,
+    DimensionsFactory $factory) {
     parent::__construct($code, $names, $images, $manufacturer);
     $this->setArchitecture($architecture);
     $this->setSize_($size, $factory('byte'));

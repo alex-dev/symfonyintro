@@ -14,10 +14,7 @@ use AppBundle\Entity\Product\ProductTranslation;
 /**
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=20)
- * @ORM\DiscriminatorMap({
- *   "memory" = "Memory"
- * })
+ * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=50)
  * @ORM\Table(
  *   uniqueConstraints={
  *     @ORM\UniqueConstraint(name="UK_Products_key", columns={ "`key`" }),
@@ -67,8 +64,12 @@ abstract class Product extends UrlKey {
     $this->manufacturer = $manufacturer;
   }
 
-  public function getName() {
-    return $this->translate()->getName();
+  public function getName($locale) {
+    return $this->translate($locale)->getName();
+  }
+
+  private function setName($value, $locale) {
+    return $this->translate($locale)->setName($value);
   }
 
   public function __construct($code, array $names, array $images, Manufacturer $manufacturer) {
@@ -78,7 +79,7 @@ abstract class Product extends UrlKey {
     $this->setCode($code);
 
     foreach ($names as $locale=>$name) {
-      $this->translate($locale)->setName($name);
+      $this->setName($name, $locale);
     }
   }
 }

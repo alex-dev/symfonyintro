@@ -12,7 +12,7 @@ use AppBundle\Entity\Architecture\ArchitectureTranslation;
 /**
  * @ORM\Entity
  * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=20)
+ * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=50)
  * @ORM\Table(uniqueConstraints={ @ORM\UniqueConstraint(name="UK_Architectures_key", columns={ "`key`" }) })
  * @UniqueEntity("`key`")
  */
