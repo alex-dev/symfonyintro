@@ -29,7 +29,7 @@
           size
         {%- endtrans -%}
       </span>
-      : {{ product.product.size }}
+      : {{ product.product.size.write(currentlocale) }}
     </li>
     <li>
       <span>
@@ -37,7 +37,7 @@
           frequency
         {%- endtrans -%}
       </span>
-      : {{ product.product.frequency }}
+      : {{ product.product.frequency.write(currentlocale) }}
     </li>
   </ul>
 {%- endblock -%}

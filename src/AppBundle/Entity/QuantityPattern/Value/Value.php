@@ -25,7 +25,7 @@ abstract class Value {
     $this->unit = $unit;
   }
 
-  abstract public function __toString();
+  abstract public function write($locale);
   
   /**
    * @return double

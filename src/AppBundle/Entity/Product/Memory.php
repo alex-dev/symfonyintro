@@ -18,7 +18,7 @@ class Memory extends Product {
 
   /**
    * @ORM\OneToOne(
-   *   targetEntity="AppBundle\Entity\QuantityPattern\Scalar",
+   *   targetEntity="AppBundle\Entity\QuantityPattern\Value\Scalar",
    *   orphanRemoval=true,
    *   cascade={ "persist", "refresh", "remove" })
    * @ORM\JoinColumn(nullable=false)
@@ -35,7 +35,7 @@ class Memory extends Product {
 
   /**
    * @ORM\OneToOne(
-   *   targetEntity="AppBundle\Entity\QuantityPattern\Scalar",
+   *   targetEntity="AppBundle\Entity\QuantityPattern\Value\Scalar",
    *   orphanRemoval=true,
    *   cascade={ "persist", "refresh", "remove" })
    * @ORM\JoinColumn(nullable=false)

@@ -119,8 +119,8 @@ class Unit {
     }
   }
 
-  public function __toString() {
-    return $this->getSymbol();
+  public function write($value, $locale) {
+    return "$value ".$this->getSymbol($locale);
   }
 
   public function isMain() {

@@ -7,7 +7,7 @@ use AppBundle\Exception\UnitException;
 use AppBundle\Service\DimensionsFactory;
 use AppBundle\Entity\UrlKey;
 use AppBundle\Entity\Product\Product;
-use AppBundle\Entity\QuantityPattern\Scalar;
+use AppBundle\Entity\QuantityPattern\Value\Scalar;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ItemRepository")
@@ -33,7 +33,7 @@ class Item {
 
   /**
    * @ORM\OneToOne(
-   *   targetEntity="AppBundle\Entity\QuantityPattern\Scalar",
+   *   targetEntity="AppBundle\Entity\QuantityPattern\Value\Scalar",
    *   orphanRemoval=true,
    *   cascade={ "persist", "refresh", "remove" })
    * @ORM\JoinColumn(nullable=false)

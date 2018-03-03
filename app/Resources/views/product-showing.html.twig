@@ -36,7 +36,7 @@
       <div class="col">
         <div class="box mb-2 mt-2">
           <form>
-            <p class="price">{{ product.cost }}</p>
+            <p class="price">{{ product.cost.write(currentlocale) }}</p>
             <p class="text-center">
               <button type="submit" class="btn btn-template-outlined">
                 <i class="fa fa-shopping-cart"></i>
