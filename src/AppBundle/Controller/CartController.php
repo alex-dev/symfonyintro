@@ -22,8 +22,9 @@ class CartController extends Controller {
   public function showAction(Request $request, Session $session, OrderFactory $factory, M $manager) {
     $data = [];
     foreach ($manager->getRepository('AppBundle\Entity\Item')->findAll() as $item) {
-      $data[] = $item->getProduct()->getKey();
+      $data[] = ['key' => $item->getProduct()->getKey(), 'quantity' => rand(0, 5)];
     }
+    $data = array_filter($data, function ($item) { return $item['quantity'] > 0; });
     
     return $this->render('cart-showing.html.twig', [
       'order' => $factory($data)

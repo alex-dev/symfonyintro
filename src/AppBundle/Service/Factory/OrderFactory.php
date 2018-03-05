@@ -17,10 +17,18 @@ final class OrderFactory extends AbstractFactory {
   }
 
   public function __invoke(array $keys) {
+    $keys_ = array_map(function ($key) { return $key['key']; }, $keys);
+    $combinedKeys = array_combine(
+      $keys_, array_map(function ($item) { return $item['quantity']; }, $keys));
+    $items = $this->repository->findItemsCostProductByKeys($keys_);
+    $combinedItems = array_combine(array_map(function ($item) {
+      return $item->getProduct()->getKey();
+    }, $items), $items);
+
     return new Order(
-      array_map(function ($item) {
-        return new OrderItem($item->getProduct(), $item->getCost());
-      }, $this->repository->findItemsCostProductByKeys($keys)),
+      array_map(function ($item, $quantity) {
+        return new OrderItem($item->getProduct(), $item->getCost(), $quantity);
+      }, array_values($combinedItems), array_values($combinedKeys)),
       $this->calculator);
   }
 }

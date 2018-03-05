@@ -13,6 +13,8 @@ use AppBundle\Entity\QuantityPattern\Unit\UnitTranslation;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\QuantityPattern\UnitRepository")
+ * @ORM\InheritanceType("SINGLE_TABLE")
+ * @ORM\DiscriminatorColumn(name="discriminator", type="string", length=50)
  * @ORM\Table(
  *   uniqueConstraints={
  *     @ORM\UniqueConstraint(name="UK_QuantityUnit_key", columns={ "`key`" })

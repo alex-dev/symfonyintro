@@ -5,6 +5,16 @@ use AppBundle\Entity\QuantityPattern\Value\Scalar;
 use AppBundle\Entity\Product\Product;
 
 class OrderItem {
+  protected $quantity;
+
+  public function getQuantity() {
+    $this->quantity;
+  }
+
+  public function setQuantity($value) {
+    $this->quantity = $value;
+  }
+
   protected $product;
 
   public function getProduct() {
@@ -29,7 +39,8 @@ class OrderItem {
     }
   }
   
-  public function __construct(Product $product, Scalar $cost) {
+  public function __construct(Product $product, Scalar $cost, $quantity) {
+    $this->setQuantity($quantity);
     $this->setProduct($product);
     $this->cost = $cost;
   }
