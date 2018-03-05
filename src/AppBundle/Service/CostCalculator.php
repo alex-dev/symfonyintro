@@ -14,13 +14,24 @@ final class CostCalculator {
    * and products themselves.
    */
   public function __invoke(array $items, $user = null) {
+    $cost = array_reduce(
+      array_slice($items, 1),
+      function ($carry, $item) { return $carry->add($item->getCost()); },
+      $items[0]->getCost());
+    $shipping = new Scalar($items[0]->getCost()->getUnit(), 0);
+    $taxes = [
+      'TPS' => $cost->multiplyByConstant(0.05),
+      'TVQ' => $cost->multiplyByConstant(0.09975)
+    ];
+
     return [
-      'cost' => array_reduce(
-        array_slice($items, 1),
-        function ($carry, $item) { return $carry->add($item->getCost()); },
-        $items[0]->getCost()),
-      'shipping' => new Scalar($items[0]->getCost()->getUnit(), 0),
-      'taxes' => new Scalar($items[0]->getCost()->getUnit(), 0)
+      'cost' => $cost,
+      'shipping' => $shipping,
+      'taxes' => $taxes,
+      'total' => $cost->add($shipping)->add(array_reduce(
+        $taxes,
+        function ($carry, $item) { return $carry->add($item); },
+        new Scalar($items[0]->getCost()->getUnit(), 0)))
     ];
   }
 }

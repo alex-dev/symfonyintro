@@ -14,6 +14,7 @@
 {%- endblock %}
 
 {% block body -%}
+  {%- set cost = order.cost -%}
   <div class="container">
     <div class="row bar">
       <div class="col-lg-3">
@@ -24,22 +25,34 @@
             <div class="table-responsive">
               <table class="table">
                 <tbody>
-                  {%- set cost = order.cost -%}
                   <tr>
                     <td>order.subtotal</td>
-                    <th>{{ cost.cost.write(currentlocale) }}</th>
+                    <th>
+                      {{- cost.cost.write(currentlocale) -}}
+                    </th>
                   </tr>
                   <tr>
                     <td>order.shipping</td>
-                    <th>{{ cost.shipping.write(currentlocale) }}</th>
+                    <th>
+                      {{- cost.shipping.write(currentlocale) -}}
+                    </th>
                   </tr>
+                  {%- for name, tax in cost.taxes -%}
                   <tr>
-                    <td>order.taxes</td>
-                    <th>{{ cost.taxes.write(currentlocale) }}</th>
+                    <td>
+                    {# TPS, TVQ #}
+                      {{- name | trans({}, 'messages', currentlocale) -}}
+                    </td>
+                    <th>
+                      {{- tax.write(currentlocale) -}}
+                    </th>
                   </tr>
+                  {%- endfor -%}
                   <tr class="total">
                     <td>Total</td>
-                    <th>{{ cost.cost.add(cost.shipping).add(cost.taxes).write(currentlocale) }}</th>
+                    <th>
+                      {{- cost.total.write(currentlocale) -}}
+                    </th>
                   </tr>
                 </tbody>
               </table>
@@ -48,7 +61,7 @@
         </div>
         <div id="basket" class="col">
           <div class="box mt-0 pb-0 no-horizontal-padding">
-            <form method="post" action="shop-checkout1.html">
+            <form method="post" action="">
               <div class="table-responsive">
                 <table class="table">
                   <thead>
@@ -82,47 +95,81 @@
                     </tr>
                   </thead>
                   <tbody>
-                        <tr>
-                          <td><a href="#"><img src="img/detailsquare.jpg" alt="White Blouse Armani" class="img-fluid"></a></td>
-                          <td><a href="#">White Blouse Armani</a></td>
+                    {%- for item in order.items -%}
+                      <tr>
+                        <td>
+                          <a href="{{ path('show_product', { 'type': item.product | product_kind, 'key': item.product.key })}}">
+                            <img src="{{ asset("databasemedia/#{ item.product.mainimage }.png") }}" alt="{{ 'product.image' | trans({}, 'messages', currentlocale) }}" class="img-fluid"/>
+                          </a>
+                        </td>
+                        <td>
+                          <a href="{{ path('show_product', { 'type': item.product | product_kind, 'key': item.product.key })}}">
+                            {{- item.product.translate(currentlocale).name -}}
+                          </a>
+                        </td>
+                        <td>
+                          <input type="number" value="{{ item.quantity }}" class="form-control"/>
+                        </td>
+                        <td>
+                          {{- item.cost.write(currentlocale) -}}
+                        </td>
+                        {#<td>
+                          {{- item.cost.write(currentlocale) -}}
+                        </td>#}
+                        <td>
+                          {{- item.cost.multiplyByConstant(item.quantity).write(currentlocale) -}}
+                        </td>
                           <td>
-                            <input type="number" value="2" class="form-control">
+                            <button type="submit" class="btn btn-secondary">
+                              <i class="fa fa-trash-o"></i>
+                            </button>
                           </td>
-                          <td>$123.00</td>
-                          <td>$0.00</td>
-                          <td>$246.00</td>
-                          <td><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                        </tr>
-                        <tr>
-                          <td><a href="#"><img src="img/basketsquare.jpg" alt="Black Blouse Armani" class="img-fluid"></a></td>
-                          <td><a href="#">Black Blouse Armani</a></td>
-                          <td>
-                            <input type="number" value="1" class="form-control">
-                          </td>
-                          <td>$200.00</td>
-                          <td>$0.00</td>
-                          <td>$200.00</td>
-                          <td><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                        </tr>
+                      </tr>
+                    {%- endfor -%}
                   </tbody>
-                      <tfoot>
-                        <tr>
-                          <th colspan="5">Total</th>
-                          <th colspan="2">$446.00</th>
-                        </tr>
-                      </tfoot>
+                  <tfoot>
+                    <tr>
+                      <th colspan="5">
+                        {%- trans from 'messages' into currentlocale -%}
+                          total
+                        {%- endtrans -%}
+                      </th>
+                      <th colspan="2">
+                        {{- cost.cost.write(currentlocale) -}}
+                      </th>
+                    </tr>
+                  </tfoot>
                 </table>
+                </div>
+                <div class="box-footer d-flex justify-content-between align-items-center">
+                  <div class="left-col">
+                    <a href="{{ path('list_products') }}" class="btn btn-secondary mt-0">
+                      <i class="fa fa-chevron-left"></i>
+                      {%- trans from 'messages' into currentlocale -%}
+                        continue.shopping
+                      {%- endtrans -%}
+                    </a>
                   </div>
-                  <div class="box-footer d-flex justify-content-between align-items-center">
-                    <div class="left-col"><a href="shop-category.html" class="btn btn-secondary mt-0"><i class="fa fa-chevron-left"></i> Continue shopping</a></div>
-                    <div class="right-col">
-                      <button class="btn btn-secondary"><i class="fa fa-refresh"></i> Update cart</button>
-                      <button type="submit" class="btn btn-template-outlined">Proceed to checkout <i class="fa fa-chevron-right"></i></button>
-                    </div>
+                  <div class="right-col">
+                    <button type="submit" class="btn btn-secondary">
+                      <i class="fa fa-refresh"></i>
+                      {%- trans from 'messages' into currentlocale -%}
+                        cart.update
+                      {%- endtrans -%}
+                    </button>
+                    <button type="submit" class="btn btn-template-outlined">
+                      {%- trans from 'messages' into currentlocale -%}
+                        checkout
+                      {%- endtrans -%}
+                      <i class="fa fa-chevron-right"></i>
+                    </button>
                   </div>
-                </form>
-              </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
 {%- endblock %}

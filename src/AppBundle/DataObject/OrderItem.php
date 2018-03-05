@@ -8,7 +8,7 @@ class OrderItem {
   protected $quantity;
 
   public function getQuantity() {
-    $this->quantity;
+    return $this->quantity;
   }
 
   public function setQuantity($value) {
