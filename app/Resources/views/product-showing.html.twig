@@ -8,8 +8,8 @@
   {%- include 'snippets/heading.html.twig' with {
     current: product.product.translate(currentlocale).name,
     items: {
-      'product.our': path('list_products', {'_locale': currentlocale }),
-      'menu.memory': path('list_memories', {'_locale': currentlocale })
+      'product.our': path('list_products'),
+      'menu.memory': path('list_memories')
     }
   } only -%}
 {%- endblock %}
@@ -19,14 +19,14 @@
     <div id="productMain" class="row">
       <div class="col-sm-6 col-md-4 d-flex flex-column justify-content-center">
         <div data-slider-id="product-image" class="owl-carousel shop-detail-carousel">
-          {%- for image in product.images -%}
+          {%- for image in product.product.images -%}
             <div>
               <img src="{{ asset("databasemedia/#{ image }.png") }}" alt="{{ 'product.image' | trans({}, 'messages', currentlocale) }}" class="img-fluid"/>
             </div>
           {%- endfor -%}
         </div>
         <div data-slider-id="product-image" class="owl-thumbs row">
-          {%- for image in product.images -%}
+          {%- for image in product.product.images -%}
             <button class="owl-thumb-item col-4 col-md-3">
               <img src="{{ asset("databasemedia/#{ image }.png") }}" alt="{{ 'product.image' | trans({}, 'messages', currentlocale) }}" class="img-fluid"/>
             </button>

@@ -1,4 +1,4 @@
-{% set currentlocale = app.request.get('_locale') %}
+{% set currentlocale = app.request.locale %}
 
 <header class="nav-holder make-sticky">
   <div id="navbar" role="navigation" class="navbar navbar-expand-lg">
@@ -21,8 +21,8 @@
               <b class="caret"></b>
             </a>
             {%- include 'dropdowns/menu.html.twig' with { 'options': {
-              'menu.all': path('list_products', { '_locale': currentlocale }),
-              'menu.memory': path('list_memories', { '_locale': currentlocale })
+              'menu.all': path('list_products'),
+              'menu.memory': path('list_memories')
               }} only -%}
             {#
               'Processor': path('list_product_type', { '_locale': currentlocale, 'type': 'processors' }),
@@ -31,7 +31,7 @@
             #}
           </li>
           <li class="nav-item">
-          <a href="{{ path('about', {'_locale': currentlocale}) }}">
+          <a href="{{ path('about') }}">
             {%- trans from 'menus' into currentlocale -%}
               about.us
             {%- endtrans -%}

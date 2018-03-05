@@ -41,12 +41,31 @@ services:
         tags:
             - { name: 'console.command', command: 'app:update-currencies' }
 
+    AppBundle\Database\NamingStrategy:
+        public: true
+
+    AppBundle\Repository\ItemRepository:
+        factory: 
+            - '@Doctrine\ORM\EntityManagerInterface'
+            - getRepository
+        arguments:
+            - 'AppBundle\Entity\Item'
+
+
     AppBundle\Service\:
         resource: '../../src/AppBundle/Service/*'
 
     AppBundle\Service\Factory\ClientAPIFactory:
         arguments: 
             - '%api.param.timeout%'
+
+    AppBundle\Subscriber\:
+        resource: '../../src/AppBundle/Subscriber/*'
+
+    AppBundle\Subscriber\LocaleSubscriber:
+        arguments:
+            $default: '%app.locale%'
+            $accepted: '%app.locales%'
 
     AppBundle\Twig\:
         resource: '../../src/AppBundle/Twig/*'
@@ -56,7 +75,3 @@ services:
     AppBundle\Twig\ProductExtension:
         arguments: 
             - '%app.routes.memory%'
-
-    AppBundle\Database\NamingStrategy:
-        public: true
-    

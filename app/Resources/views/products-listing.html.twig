@@ -32,17 +32,15 @@
                 <div class="product">
                   <div class="image">
                       <a href="{{ path('show_product', {
-                        '_locale': currentlocale,
                         'type': product.product | product_kind,
                         'key': product.product.key
                       }) }}" onclick="popup(this.href, '{{ product.product.translate(currentlocale).name }}'); return false;">
-                        <img src="{{ asset("databasemedia/#{ product.mainimage }.png") }}" alt="{{ 'product.image' | trans({}, 'messages', currentlocale) }}" class="img-fluid"/>
+                        <img src="{{ asset("databasemedia/#{ product.product.mainimage }.png") }}" alt="{{ 'product.image' | trans({}, 'messages', currentlocale) }}" class="img-fluid"/>
                     </a>
                   </div>
                   <div class="text">
                     <h3 class="h5">
                       <a data-target="#loading-modal" href="{{ path('show_product', {
-                        '_locale': currentlocale,
                         'type': product.product | product_kind,
                         'key': product.product.key
                       }) }}" onclick="popup(this.href, '{{ product.product.translate(currentlocale).name }}'); return false;">

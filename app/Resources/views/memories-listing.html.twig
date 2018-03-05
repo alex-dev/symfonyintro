@@ -3,7 +3,7 @@
 {% block heading -%}
   {%- include 'snippets/heading.html.twig' with {
     current: 'menu.memory',
-    items: { 'product.our': path('list_products', {'_locale': currentlocale }) }
+    items: { 'product.our': path('list_products') }
   } only -%}
 {%- endblock %}
 

@@ -3,7 +3,7 @@ namespace AppBundle\Service\Factory;
 
 use AppBundle\Entity\QuantityPattern\Unit\Dimension;
 use AppBundle\Entity\QuantityPattern\Unit\Unit;
-use AppBundle\Repository\UnitRepository;
+use AppBundle\Repository\QuantityPattern\UnitRepository;
 use AppBundle\Service\Factory\AbstractFactory;
 
 final class DimensionsFactory extends AbstractFactory {
@@ -17,6 +17,6 @@ final class DimensionsFactory extends AbstractFactory {
    * @return array<Dimension> representing Dimension combination
    */
   public function __invoke($value) {
-    return $this->repository->findBy(['`key`'=>$value])->getDimensions();
+    return $this->repository->findByKey($value)->getDimensions();
   }
 }

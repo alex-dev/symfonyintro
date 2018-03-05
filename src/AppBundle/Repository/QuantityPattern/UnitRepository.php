@@ -12,10 +12,16 @@ final class UnitRepository extends EntityRepository {
     parent::__construct($manager, $class);
   }
 
-  public function findCurrencies() {
-    $builder = $this->createQueryBuilder('u')
-      ->join('u.converter', 'c', 'WITH', 'c INSTANCE OF '.self::moneyConverter);
+  public function findByKey($key) {
+    return $this->createQueryBuilder('u')
+      ->where('u.key = :key')
+      ->setParameters('key', $key)
+      ->getQuery()->getResult();
+  }
 
-    return $builder->getQuery()->getResult();
+  public function findCurrencies() {
+    return $this->createQueryBuilder('u')
+      ->join('u.converter', 'c', 'WITH', 'c INSTANCE OF '.self::moneyConverter)
+      ->getQuery()->getResult();
   }
 }

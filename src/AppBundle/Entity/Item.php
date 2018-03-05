@@ -4,8 +4,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Exception\UnitException;
-use AppBundle\Service\DimensionsFactory;
-use AppBundle\Entity\UrlKey;
+use AppBundle\Service\Factory\DimensionsFactory;
 use AppBundle\Entity\Product\Product;
 use AppBundle\Entity\QuantityPattern\Value\Scalar;
 
@@ -27,7 +26,7 @@ class Item {
     return $this->product;
   }
 
-  public function setProduct(Product $value) {
+  protected function setProduct(Product $value) {
     $this->product = $value;
   }
 
@@ -60,32 +59,11 @@ class Item {
   public function setCount($value) {
     $this->count = $value;
   }
-
-  /**
-   * @ORM\OneToMany(
-   *   targetEntity="AppBundle\Entity\Image",
-   *   mappedBy="product")
-   */
-  protected $images;
-  
-  public function getImages() {
-    return $this->images;
-  }
-
-  public function setImages(array $value) {
-    $this->images = new ArrayCollection($value);
-  }
-
-  public function getMainImage() {
-    return $this->getImages()->filter(function ($item) {
-      return $item->isMain();
-    })[0];
-  }
   
   public function __construct(Product $product, Scalar $cost, $count, DimensionsFactory $factory) {
     $this->setProduct($product);
     $this->setCount($count);
-    $this->setCost_($size, $factory('cad'));
+    $this->setCost_($cost, $factory('cad'));
   }
 
   protected function setCost_(Scalar $value, $dimensions) {

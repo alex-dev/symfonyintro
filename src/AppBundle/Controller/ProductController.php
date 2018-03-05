@@ -1,15 +1,15 @@
 <?php
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\ORM\EntityManagerInterface as Manager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\CustomException\InvalidRangeSliderValueException;
-use AppBundle\Type\UUID;
 use AppBundle\Entity\QuantityPattern\Scalar;
+use AppBundle\Type\UUID;
 
 class ProductController extends Controller {
   const unit = 'AppBundle\Entity\QuantityPattern\Unit\Unit';
@@ -20,17 +20,10 @@ class ProductController extends Controller {
   const memoryarch = 'AppBundle\Entity\Architecture\MemoryArchitecture';
 
   /**
-   * @Route(
-   *   "/",
-   *   name="default_list_products",
-   *   defaults={ "_locale"="%app.locale%" })
-   * @Route(
-   *   "/{_locale}/",
-   *   name="list_products",
-   *   requirements={ "_locale"="%app.locales%" })
+   * @Route("/", name="list_products")
    * @Method({ "GET" })
    */
-  public function listProducts(EntityManagerInterface $manager, Request $request) {
+  public function listProductsAction(Manager $manager, Request $request) {
     $page = ($request->query->get('page') ?: 1) - 1;
     $manufacturers = $this->convertParamToUUIDList($request->query->get('manufacturers'));
 
@@ -43,17 +36,10 @@ class ProductController extends Controller {
   }
 
   /**
-   * @Route(
-   *   "/%app.routes.memory%/",
-   *   name="default_list_memories",
-   *   defaults={ "_locale"="%app.locale%" })
-   * @Route(
-   *   "/{_locale}/%app.routes.memory%/",
-   *   name="list_memories",
-   *   requirements={ "_locale"="%app.locales%" })
+   * @Route("/%app.routes.memory%/", name="list_memories")
    * @Method({ "GET" })
    */
-  public function listMemories(EntityManagerInterface $manager, Request $request) {
+  public function listMemoriesAction(Manager $manager, Request $request) {
     $page = ($request->query->get('page') ?: 1) - 1;
     $manufacturers = $this->convertParamToUUIDList($request->query->get('manufacturers'));
     $architectures = $this->convertParamToUUIDList($request->query->get('architectures'));
@@ -84,22 +70,17 @@ class ProductController extends Controller {
   /**
    * @Route(
    *   "/{type}/{key}",
-   *   name="default_show_product",
-   *   requirements={ "type"="%app.routes.types%" },
-   *   defaults={ "_locale"="%app.locale%" })
-   * @Route(
-   *   "/{_locale}/{type}/{key}",
    *   name="show_product",
-   *   requirements={ "_locale"="%app.locales%", "type"="%app.routes.types%" })
+   *   requirements={ "type"="%app.routes.types%" })
    * @Method({ "GET" })
    */
-  public function showProduct(EntityManagerInterface $manager, $type, $key) {
+  public function showProductAction(Manager $manager, $type, $key) {
     if ($type == $this->container->getParameter('app.routes.memory')) {
       return $this->showMemory($manager, UUID::createFromString($key));
     }
   }
 
-  private function showMemory(EntityManagerInterface $manager, UUID $key) {
+  private function showMemory(Manager $manager, UUID $key) {
     return $this->render('memory-showing.html.twig', [
       'product'=>$manager->getRepository(self::item)->findByKey($key)
     ]);

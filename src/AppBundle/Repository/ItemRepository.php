@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use AppBundle\Entity\Product\Product;
 use AppBundle\Type\UUID;
 
 final class ItemRepository extends EntityRepository {
@@ -101,5 +102,25 @@ final class ItemRepository extends EntityRepository {
     }
 
     return $results;
+  }
+
+/////////////////////////////
+ /* public function findItemCostProductByKey(UUID $key) {
+    return $this->createQueryBuilder('i')
+    ->addSelect('c')->join('i.cost', 'c')
+    ->addSelect('p')->join('i.product', 'p', 'WITH', 'p.key = :key')
+    ->setParameter('key', $key->toHex())
+    ->getQuery()->getResult();
+  }*/
+  
+  public function findItemsCostProductByKeys(array $keys) {
+    return $this->createQueryBuilder('i')
+      ->addSelect('c')->join('i.cost', 'c')
+      ->addSelect('u')->join('c.unit', 'u')
+      ->addSelect('p')->join('i.product', 'p', 'WITH', 'p.key IN (:keys)')
+      ->setParameter(
+        'keys',
+        array_map(function (UUID $key) { return $key->toHex(); }, $keys))
+      ->getQuery()->getResult();
   }
 }

@@ -47,6 +47,22 @@ class Scalar extends Value {
     return $this->getValue() < $other->convert($this->getUnit())->getValue();
   }
 
+  public function add(Scalar $other) {
+    return new Scalar($this->getUnit(), $this->getValue() + $other->convert($this->getUnit())->getValue());
+  }
+
+  public function substract(Scalar $other) {
+    return new Scalar($this->getUnit(), $this->getValue() - $other->convert($this->getUnit())->getValue());
+  }
+
+  public function multiplyByConstant($constant) {
+    return new Scalar($this->getUnit(), $this->getValue() * $constant);
+  }
+
+  public function divideByConstant($constant) {
+    return new Scalar($this->getUnit(), $this->getValue() / $constant);
+  }
+
   protected function convert_(Unit $to, callable $converter) {
     return new Scalar($to, $converter($this->getValue()));
   }

@@ -5,9 +5,9 @@
 {% endif %}
 {% set route_params = app.request.get('_route_params') %}
 
-<select class="bs-select" onchange="redirect(event)">
+<select class="bs-select" onchange="redirect(event, '{{ path(route, route_params) }}', '{{ path('update_locale') }}')">
   {%- for locale in locales | split('|') | sort -%}
-    <option value="{{ path(route, route_params | merge({ '_locale': locale })) }}" {{ locale == currentlocale ? 'selected' : '' }}>
+    <option value="{{ locale }}" {{ locale == currentlocale ? 'selected' : '' }}>
       {{- locale[:2] | trans({}, 'locales', currentlocale) }} - {{ locale[3:] | trans({}, 'locales', currentlocale) -}}
     </option>
   {%- endfor -%}

@@ -64,6 +64,27 @@ abstract class Product extends UrlKey {
     $this->manufacturer = $manufacturer;
   }
 
+  /**
+   * @ORM\OneToMany(
+   *   targetEntity="AppBundle\Entity\Image",
+   *   mappedBy="product")
+   */
+  protected $images;
+  
+  public function getImages() {
+    return $this->images;
+  }
+
+  public function setImages(array $value) {
+    $this->images = new ArrayCollection($value);
+  }
+
+  public function getMainImage() {
+    return $this->getImages()->filter(function ($item) {
+      return $item->isMain();
+    })[0];
+  }
+
   public function getName($locale) {
     return $this->translate($locale)->getName();
   }

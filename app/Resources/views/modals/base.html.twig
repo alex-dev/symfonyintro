@@ -1,4 +1,4 @@
-{% set currentlocale = app.request.get('_locale') %}
+{% set currentlocale = app.request.locale %}
 
 <div id="{% block modalid -%}{%- endblock %}" tabindex="{%- block tabindex -%}{%- endblock %}" role="dialog" aria-labelledby="login-modalLabel" aria-hidden="true" class="modal fade">
   <div role="document" class="modal-dialog">

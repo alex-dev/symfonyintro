@@ -1,10 +1,11 @@
 <?php
 namespace AppBundle\Type;
 
+use Serializable;
 use Appbundle\CustomException\UUIDException;
 
 final class UUID {
-  const regex = '/^\{?((?:[0-9A-F]{8}-[0-9A-F]{4}-[1-5][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12})|(?:[0-9A-F]{12}[1-5][0-9A-F]{3}[89AB][0-9A-F]{15}))\}?$/i';  
+  const regex = '/^{?((?:[0-9A-F]{8}-[0-9A-F]{4}-[1-5][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12})|(?:[0-9A-F]{12}[1-5][0-9A-F]{3}[89AB][0-9A-F]{15}))}?$/i';  
 
   private $value;
 
@@ -27,6 +28,14 @@ final class UUID {
    */
   public function toHex() {
     return pack('H*', str_replace('-', '', $this->value));
+  }
+
+  public function serialize() {
+    return serialize($this->value);
+  }
+
+  public function userialize($data) {
+    $this->value = unserialize($data);
   }
 
   private function __construct($value) {
