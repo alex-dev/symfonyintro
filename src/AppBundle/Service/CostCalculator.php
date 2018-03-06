@@ -16,8 +16,11 @@ final class CostCalculator {
   public function __invoke(array $items, $user = null) {
     $cost = array_reduce(
       array_slice($items, 1),
-      function ($carry, $item) { return $carry->add($item->getCost()); },
-      $items[0]->getCost());
+      function ($carry, $item) { 
+        return $carry->add(
+          $item->getCost()->multiplyByConstant($item->getQuantity())); 
+      },
+      $items[0]->getCost()->multiplyByConstant($items[0]->getQuantity()));
     $shipping = new Scalar($items[0]->getCost()->getUnit(), 0);
     $taxes = [
       'TPS' => $cost->multiplyByConstant(0.05),

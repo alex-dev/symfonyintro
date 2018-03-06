@@ -30,4 +30,40 @@ class CartController extends Controller {
       'order' => $factory($data)
     ]);
   }
+
+  /**
+   * @Route("/append/{item}", name="add_to_cart")
+   * @Method({ "POST" })
+   */
+  public function addAction() {
+
+  }
+
+  /**
+   * @Route("/remove/", name="empty_cart")
+   * @Method({ "POST" })
+   */
+  public function removeAllAction() {
+
+  }
+
+  /**
+   * @Route("/remove/{item}/", name="remove_from_cart")
+   * @Method({ "POST" })
+   */
+  public function removeAction() {
+
+  }
+
+  /**
+   * @Route(
+   *   "/update/{type}",
+   *   name="update_cart",
+   *   requirements={ "type"="checkout|update" },
+   *   defaults={ "type"="update" })
+   * @Method({ "POST" })
+   */
+  public function refreshAction() {
+
+  }
 }

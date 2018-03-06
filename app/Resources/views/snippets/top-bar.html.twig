@@ -3,19 +3,26 @@
 <div class="top-bar">
   <div class="container">
     <div class="row d-flex align-items-center">
-      <div class="col-9 col-lg-10">
+      <div class="col-8 col-lg-9">
         {%- include 'dropdowns/locale.html.twig' only -%}
       </div>
       <div class="col justify-content-md-end">
-        <div class="login row">
-          <a href="#" data-toggle="modal" data-target="#login-modal" class="login-btn">
-            <i class="fa fa-sign-in"></i>
-            <span class="d-none d-md-inline-block">
-              {%- trans from 'messages' into currentlocale -%}
-                login.sign
-              {%- endtrans -%}
-            </span>
-          </a>
+        <div class="row">
+          <div class="col-1">
+            <a href="{{ path('show_cart') }}">
+              <i class="fa fa-shopping-cart"></i>
+            </a>
+          </div>
+          <div class="col">
+            <a href="#" data-toggle="modal" data-target="#login-modal" class="login-btn">
+              <i class="fa fa-sign-in"></i>
+              <span class="d-none d-md-inline-block">
+                {%- trans from 'messages' into currentlocale -%}
+                  login.sign
+                {%- endtrans -%}
+              </span>
+            </a>
+          </div>
         </div>
       </div>
     </div>

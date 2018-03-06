@@ -1,0 +1,44 @@
+{% set currentlocale = app.request.locale %}
+
+<div id="order-summary" class="box mt-0 mb-4 p-0">
+  <div class="box-header mt-0 mb-0">
+    <h3 class="mb-0">order.summary</h3>
+  </div>
+  <div class="table-responsive">
+    <table class="table">
+      <tbody>
+        <tr>
+          <td>order.subtotal</td>
+          <th>
+            {{- cost.cost.write(currentlocale) -}}
+          </th>
+        </tr>
+        <tr>
+          <td>order.shipping</td>
+          <th>
+            {{- cost.shipping.write(currentlocale) -}}
+          </th>
+        </tr>
+        {%- for name, tax in cost.taxes -%}
+        <tr>
+          <td>
+          {# TPS, TVQ #}
+            {{- name | trans({}, 'messages', currentlocale) -}}
+          </td>
+          <th>
+            {{- tax.write(currentlocale) -}}
+          </th>
+        </tr>
+        {%- endfor -%}
+      </tbody>
+      <tfoot>
+        <tr class="total">
+          <td>Total</td>
+          <th>
+            {{- cost.total.write(currentlocale) -}}
+          </th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

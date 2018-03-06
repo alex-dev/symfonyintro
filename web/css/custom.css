@@ -15,3 +15,7 @@
 .image {
   min-height: 0% !important;
 }
+
+tr.total {
+  font-size: 1rem !important;
+}

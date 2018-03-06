@@ -38,7 +38,9 @@
           <form>
             <p class="price">{{ product.cost.write(currentlocale) }}</p>
             <p class="text-center">
-              <button type="submit" class="btn btn-template-outlined">
+              <button type="submit" formaction="{{
+                path('add_to_cart', { item: product.product.key })
+              }}" formmethod="POST" class="btn btn-template-outlined">
                 <i class="fa fa-shopping-cart"></i>
                 {%- trans from 'messages' into currentlocale -%}
                   cart.add
