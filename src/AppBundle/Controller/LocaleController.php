@@ -16,6 +16,6 @@ class LocaleController extends Controller {
   public function postAction(Request $request, Session $session) {
     $session->set('_locale', $request->request->get('locale'));
 
-    return $this->redirectToRoute($request->request->get('origin'));
+    return $this->redirect($request->headers->get('referer'));    
   }
 }

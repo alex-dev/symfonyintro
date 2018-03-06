@@ -74,7 +74,7 @@
                             </a>
                           </td>
                           <td>
-                            <input type="number" min="0" value="{{ item.quantity }}" class="form-control"/>
+                            <input type="number" name="cartitems[{{ item.product.key }}]" min="0" value="{{ item.quantity }}" class="form-control"/>
                           </td>
                           <td>
                             {{- item.cost.write(currentlocale) -}}
