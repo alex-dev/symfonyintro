@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use Doctrine\ORM\EntityManagerInterface as M;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,15 +18,9 @@ class CartController extends Controller {
    * @Route("/", name="show_cart")
    * @Method({ "GET" })
    */
-  public function showAction(Request $request, Session $session, OrderFactory $factory, M $manager) {
-    $data = [];
-    foreach ($manager->getRepository('AppBundle\Entity\Item')->findAll() as $item) {
-      $data[] = ['key' => $item->getProduct()->getKey(), 'quantity' => rand(0, 5)];
-    }
-    $data = array_filter($data, function ($item) { return $item['quantity'] > 1; });
-    
+  public function showAction(Session $session, OrderFactory $factory) {
     return $this->render('cart-showing.html.twig', [
-      'order' => $factory($data)
+      'order' => $factory($session->get('cart'))
     ]);
   }
 
@@ -35,7 +28,7 @@ class CartController extends Controller {
    * @Route("/append/{item}", name="add_to_cart")
    * @Method({ "POST" })
    */
-  public function addAction() {
+  public function addAction(Session $session) {
 
   }
 
@@ -43,15 +36,16 @@ class CartController extends Controller {
    * @Route("/remove/", name="empty_cart")
    * @Method({ "POST" })
    */
-  public function removeAllAction() {
-
+  public function removeAllAction(Session $session) {
+    $session->remove('cart');
+    return $this->redirectToRoute('show_cart');
   }
 
   /**
    * @Route("/remove/{item}/", name="remove_from_cart")
    * @Method({ "POST" })
    */
-  public function removeAction() {
+  public function removeAction(Session $session) {
 
   }
 
@@ -63,7 +57,7 @@ class CartController extends Controller {
    *   defaults={ "type"="update" })
    * @Method({ "POST" })
    */
-  public function refreshAction() {
+  public function refreshAction(Session $session) {
 
   }
 }

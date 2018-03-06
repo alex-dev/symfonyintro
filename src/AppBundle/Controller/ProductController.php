@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\CustomException\InvalidRangeSliderValueException;
-use AppBundle\Entity\QuantityPattern\Scalar;
+use AppBundle\Entity\QuantityPattern\Value\Scalar;
 use AppBundle\Type\UUID;
 
 class ProductController extends Controller {
