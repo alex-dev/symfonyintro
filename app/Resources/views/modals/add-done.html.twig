@@ -4,7 +4,7 @@
 
 {% block body -%}
   {%- trans with {
-    item: product.name(currentlocale)
+    '%item%': item.translate(currentlocale).name
   } from 'messages' into currentlocale -%}
     cart.add.done.long
   {%- endtrans -%}
