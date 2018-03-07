@@ -24,3 +24,4 @@ Problèmes connus:
   - La traduction est temporairement inutilisable dû à un problème de redirection. Usage du dropdown va causer un 500. Un reload va reloader la page dans la locale demandée.
   - L'ensemble des entités / modèles doit être retravaillé.
   - <form> should use <button type="submit">
+  - Le backdrop dans les modals empilés ne se comporte pas comme il le devrait.
