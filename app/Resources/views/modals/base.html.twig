@@ -1,10 +1,10 @@
 {% set currentlocale = app.request.locale %}
 
-<div id="{% block modalid -%}{%- endblock %}" tabindex="{%- block tabindex -%}{%- endblock %}" role="dialog" aria-labelledby="login-modalLabel" aria-hidden="true" class="modal fade">
+<div id="{% block modalid -%}{%- endblock %}" tabindex="-1" role="dialog" aria-labelledby="{{ block('modalid') }}Label" aria-hidden="true" class="modal fade">
   <div role="document" class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 id="login-modalLabel" class="modal-title">
+        <h4 id="{{ block('modalid') }}Label" class="modal-title">
           {%- block title -%}{%- endblock -%}
         </h4>
         <button type="button" data-dismiss="modal" aria-label="Close" class="close">
@@ -13,6 +13,9 @@
       </div>
       <div class="modal-body">
         {%- block body -%}{%- endblock -%}
+      </div>
+      <div class="modal-footer">
+        {%- block footer -%}{%- endblock -%}
       </div>
     </div>
   </div>

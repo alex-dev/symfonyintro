@@ -1,0 +1,23 @@
+{% extends 'modals/base.html.twig' %}
+
+{% block modalid -%}add-failed-modal{%- endblock %}
+
+{% block title -%}
+  {%- trans from 'messages' into currentlocale -%}
+    cart.add.failed
+  {%- endtrans -%}
+{%- endblock %}
+
+{% block body -%}
+  {%- trans from 'messages' into currentlocale -%}
+    cart.add.failed.long
+  {%- endtrans -%}
+{%- endblock %}
+
+{% block footer -%}
+  <button data-dismiss="modal" class="btn">
+    {%- trans from 'messages' into currentlocale -%}
+      modal.close
+    {%- endtrans -%}
+  </button>
+{%- endblock %}

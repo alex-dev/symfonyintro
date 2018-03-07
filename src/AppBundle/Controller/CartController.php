@@ -31,19 +31,19 @@ class CartController extends Controller {
   }
 
   /**
-   * @Route("/append/{item}", name="add_to_cart")
+   * @Route("/append/", name="add_to_cart")
    * @Method({ "POST" })
    */
-  public function addAction(Session $session, Request $request, $item) {
+  public function addAction(Session $session, Request $request) {
     $data = $session->get('cart') ?: [];
     $arr = array_map(function ($item) { return $item['key']; }, $data);
     $arr = array_combine(array_values($arr), array_keys($arr));
 
-    if (key_exists($item, $arr)) {
-      $data[$arr[$item]]['quantity']++;
+    if (key_exists($request->request->get('item'), $arr)) {
+      $data[$arr[$request->request->get('item')]]['quantity']++;
     } else {
       $data[] = [
-        'key' => $item,
+        'key' => $request->request->get('item'),
         'quantity' => 1
       ];
     }
@@ -58,7 +58,7 @@ class CartController extends Controller {
    */
   public function removeAllAction(Session $session, Request $request) {
     $session->remove('cart');
-    return $this->redirect($session->get('referer'));
+    return $this->redirect($request->headers->get('referer'));    
   }
 
   /**
@@ -68,7 +68,7 @@ class CartController extends Controller {
   public function removeAction(Session $session, Request $request, $item) {
     $session->set('cart', array_filter(
       $session->get('cart'),
-      function ($key) use ($item) { return $key['key'] == $item; }));
+      function ($key) use ($item) { return $key['key'] != $item; }));
 
     return $this->redirect($request->headers->get('referer'));    
   }

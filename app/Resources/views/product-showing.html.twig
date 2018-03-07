@@ -4,6 +4,10 @@
   {{- product.product.translate(currentlocale).name -}}
 {%- endblock %}
 
+{% block scripts -%}
+  <script defer src="{{ asset('js/add-to-cart.js') }}"></script>
+{%- endblock %}
+
 {% block heading -%}
   {%- include 'snippets/heading.html.twig' with {
     current: product.product.translate(currentlocale).name,
@@ -35,22 +39,18 @@
       </div>
       <div class="col">
         <div class="box mb-2 mt-2">
-          <form>
-            <p class="price">{{ product.cost.write(currentlocale) }}</p>
-            <p class="text-center">
-              <button type="submit" formaction="{{
-                path('add_to_cart', { item: product.product.key })
-              }}" formmethod="POST" class="btn btn-template-outlined">
-                <i class="fa fa-shopping-cart"></i>
-                {%- trans from 'messages' into currentlocale -%}
-                  cart.add
-                {%- endtrans -%}
-              </button>
-              <button type="submit" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-default">
-                <i class="fa fa-heart-o"></i>
-              </button>
-            </p>
-          </form>
+          <p class="price">{{ product.cost.write(currentlocale) }}</p>
+          <p class="text-center">
+            <button onclick="addToCart('{{ path('add_to_cart') }}', '{{ product.product.key }}')" class="btn btn-template-outlined">
+              <i class="fa fa-shopping-cart"></i>
+              {%- trans from 'messages' into currentlocale -%}
+                cart.add
+              {%- endtrans -%}
+            </button>
+            <button type="submit" data-toggle="tooltip" data-placement="top" title="Add to wishlist" class="btn btn-default">
+              <i class="fa fa-heart-o"></i>
+            </button>
+          </p>
         </div>
       </div>
     </div>
@@ -66,4 +66,9 @@
       </ul>
     </div>
   </div>
+{%- endblock %}
+
+{% block modals -%}
+  {%- include 'modals/add-done.html.twig' -%}
+  {%- include 'modals/add-failed.html.twig' -%}
 {%- endblock %}

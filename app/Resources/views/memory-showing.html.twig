@@ -12,32 +12,28 @@
         {%- trans from 'messages' into currentlocale -%}
           manufacturer
         {%- endtrans -%}
-      </span>
-      : {{ product.product.manufacturer.name }}
+      </span>: {{ product.product.manufacturer.name -}}
     </li>
     <li>
       <span>
         {%- trans from 'messages' into currentlocale -%}
           architecture
         {%- endtrans -%}
-      </span>
-      : {{ product.product.architecture.translate(currentlocale).name }}
+      </span>: {{ product.product.architecture.translate(currentlocale).name -}}
     </li>
     <li>
       <span>
         {%- trans from 'messages' into currentlocale -%}
           size
         {%- endtrans -%}
-      </span>
-      : {{ product.product.size.write(currentlocale) }}
+      </span>: {{ product.product.size.write(currentlocale) -}}
     </li>
     <li>
       <span>
         {%- trans from 'messages' into currentlocale -%}
           frequency
         {%- endtrans -%}
-      </span>
-      : {{ product.product.frequency.write(currentlocale) }}
+      </span>: {{ product.product.frequency.write(currentlocale) -}}
     </li>
   </ul>
 {%- endblock -%}
