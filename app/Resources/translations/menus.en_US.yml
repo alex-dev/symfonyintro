@@ -1,4 +1,5 @@
 product.our: 'Our products'
 about.us: 'About us'
-menu.all: 'All'
-menu.memory: 'Memories'
+menu.all: All
+menu.memory: Memories
+cart: 'Your cart'

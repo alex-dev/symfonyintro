@@ -1,11 +1,11 @@
-details: 'Details'
-manufacturer: 'Manufacturer'
-architecture: 'Architecture'
-size: 'Size'
-frequency: 'Frequency'
+details: Details
+manufacturer: Manufacturer
+architecture: Architecture
+size: Size
+frequency: Frequency
 login.customer: 'Customer login'
-email: 'Email'
-password: 'Password'
+email: Email
+password: Password
 login: 'Log in'
 register.not: 'Not registered yet?'
 register.now: 'Register now.'
@@ -13,14 +13,28 @@ product.details: 'Product details'
 product.image: 'Product image'
 cart.add: 'Add to cart'
 item.none.found: 'No items matching your search criterias was found.'
-menu: 'Menu'
-clear: 'Clear'
-apply: 'Apply'
-filters: 'Filters'
-manufacturers: 'Manufacturers'
-architectures: 'Architectures'
+menu: Menu
+clear: Clear
+apply: Apply
+filters: Filters
+manufacturers: Manufacturers
+architectures: Architectures
 size.unit.gb: 'Size (GB)'
 frequency.unit.mhz: 'Frequency (MHz)'
 template.designed: 'Template design by %theme_author%.'
 nav.toggle: 'Toggle navigation'
 login.sign: 'Sign in'
+cart.is.empty: 'Your cart is empty. Please do shop.'
+product: Produit
+quantity: Quantity
+unitprice: 'Unit price'
+total: Total
+continue.shopping: 'Go back to shopping'
+cart.empty: 'Emtpy cart'
+cart.update: 'Update cart'
+checkout: Checkout
+cart.add.done.long: '%item% has been added to cart.'
+modal.close: Close
+cart.add.failed.long: "%item% couldn't be added to cart."
+TPS: TPS
+TVQ: TVQ

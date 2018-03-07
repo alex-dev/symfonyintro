@@ -1,26 +1,40 @@
-details: 'Détails'
-manufacturer: 'Manufacturier'
-architecture: 'Architecture'
-size: 'Capacité'
-frequency: 'Fréquence'
-login.customer: 'Connectez-vous'
-email: 'E-mail'
+details: Détails
+manufacturer: Manufacturier
+architecture: Architecture
+size: Capacité
+frequency: Fréquence
+login.customer: Connectez-vous
+email: E-mail
 password: 'Mot de passe'
-login: 'Connexion'
+login: Connexion
 register.not: 'Pas encore enregistré?'
-register.now: 'Enregistrez-vous.'
+register.now: Enregistrez-vous.
 product.details: 'Détails du produit'
 product.image: 'Image du produit'
 cart.add: 'Ajouter au panier'
-item.none.found: "Aucun produit correspondant à vos critères de recherche n'a pu être touvé."
-menu: 'Menu'
-clear: 'Vider'
-apply: 'Appliquer'
-filters: 'Filtrer'
-manufacturers: 'Manufacturiers'
-architectures: 'Architectures'
+item.none.found: 'Aucun produit correspondant à vos critères de recherche n''a pu être touvé.'
+menu: Menu
+clear: Vider
+apply: Appliquer
+filters: Filtrer
+manufacturers: Manufacturiers
+architectures: Architectures
 size.unit.gb: 'Capacité (GB)'
 frequency.unit.mhz: 'Fréquence (MHz)'
 template.designed: 'Modèle fait par %theme_author%.'
 nav.toggle: 'Ouvrir le menu de navigation'
-login.sign: 'Connectez-vous'
+login.sign: Connectez-vous
+cart.is.empty: "Votre panier est vide. N'hésitez pas à magasiner."
+product: Produit
+quantity: Quantité
+unitprice: 'Prix unitaire'
+total: Total
+continue.shopping: 'Retour à la boutique'
+cart.empty: 'Vider'
+cart.update: 'Mettre à jour'
+checkout: 'Passer à la commande'
+cart.add.done.long: '%item% a été ajouté à votre panier.'
+modal.close: Fermer
+cart.add.failed.long: "%item% n'a pas pu être ajouté à votre panier."
+TPS: TPS
+TVQ: TVQ

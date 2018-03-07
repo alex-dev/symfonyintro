@@ -2,14 +2,10 @@
 
 {% block modalid -%}add-done-modal{%- endblock %}
 
-{% block title -%}
-  {%- trans from 'messages' into currentlocale -%}
-    cart.add.done
-  {%- endtrans -%}
-{%- endblock %}
-
 {% block body -%}
-  {%- trans from 'messages' into currentlocale -%}
+  {%- trans with {
+    item: product.name(currentlocale)
+  } from 'messages' into currentlocale -%}
     cart.add.done.long
   {%- endtrans -%}
 {%- endblock %}

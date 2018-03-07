@@ -69,6 +69,6 @@
 {%- endblock %}
 
 {% block modals -%}
-  {%- include 'modals/add-done.html.twig' -%}
-  {%- include 'modals/add-failed.html.twig' -%}
+  {%- include 'modals/add-done.html.twig' with { item: product.product } only -%}
+  {%- include 'modals/add-failed.html.twig' with { item: product.product } only -%}
 {%- endblock %}
