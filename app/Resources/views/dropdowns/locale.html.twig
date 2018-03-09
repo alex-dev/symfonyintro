@@ -6,7 +6,7 @@
 {% set route_params = app.request.get('_route_params') %}
 
 <form action="{{ path('update_locale') }}" method="POST">
-  <select class="bs-select" onchange="this.form.submit();">
+  <select name="locale" class="bs-select" onchange="this.form.submit();">
     {%- for locale in locales | split('|') | sort -%}
       <option value="{{ locale }}" {{ locale == currentlocale ? 'selected' : '' }}>
         {{- locale[:2] | trans({}, 'locales', currentlocale) }} - {{ locale[3:] | trans({}, 'locales', currentlocale) -}}
