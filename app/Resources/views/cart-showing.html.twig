@@ -62,7 +62,7 @@
                           {%- trans from 'messages' into currentlocale -%}
                             discount
                           {%- endtrans -%}
-                        </th>#}
+                        </th> #}
                         <th colspan="2">
                           {%- trans from 'messages' into currentlocale -%}
                             total
@@ -89,9 +89,9 @@
                           <td>
                             {{- item.cost.write(currentlocale) -}}
                           </td>
-                          {#<td>
+                          {# <td>
                             {{- item.cost.write(currentlocale) -}}
-                          </td>#}
+                          </td> #}
                           <td>
                             {{- item.cost.multiplyByConstant(item.quantity).write(currentlocale) -}}
                           </td>
@@ -107,7 +107,7 @@
                     </tbody>
                     <tfoot>
                       <tr>
-                        {#<th colspan="5">#}
+                        {# <th colspan="5"> #}
                         <th colspan="4">
                           {%- trans from 'messages' into currentlocale -%}
                             total
@@ -119,43 +119,42 @@
                       </tr>
                     </tfoot>
                   </table>
+                </div>
+                <div class="box-footer d-flex justify-content-between align-items-center">
+                  <div class="left-col">
+                    <a href="{{ path('list_products') }}" class="btn btn-secondary mt-0">
+                      <i class="fa fa-chevron-left"></i>
+                      {%- trans from 'messages' into currentlocale -%}
+                        continue.shopping
+                      {%- endtrans -%}
+                    </a>
                   </div>
-                  <div class="box-footer d-flex justify-content-between align-items-center">
-                    <div class="left-col">
-                      <a href="{{ path('list_products') }}" class="btn btn-secondary mt-0">
-                        <i class="fa fa-chevron-left"></i>
-                        {%- trans from 'messages' into currentlocale -%}
-                          continue.shopping
-                        {%- endtrans -%}
-                      </a>
-                    </div>
-                    <div class="right-col">
-                      <button type="submit" formaction="{{ path('empty_cart') }}" formmethod="post" class="btn btn-secondary">
-                        <i class="fa fa-trash-o"></i>
-                        {%- trans from 'messages' into currentlocale -%}
-                          cart.empty
-                        {%- endtrans -%}
-                      </button>
-                      <button type="submit" formaction="{{
-                        path('update_cart', { type: 'update' })
-                      }}" formmethod="post" class="btn btn-secondary">
-                        <i class="fa fa-refresh"></i>
-                        {%- trans from 'messages' into currentlocale -%}
-                          cart.update
-                        {%- endtrans -%}
-                      </button>
-                      <button type="submit" formaction="{{
-                        path('update_cart', { type: 'checkout' })
-                      }}" formmethod="post" class="btn btn-template-outlined">
-                        {%- trans from 'messages' into currentlocale -%}
-                          checkout
-                        {%- endtrans -%}
-                        <i class="fa fa-chevron-right"></i>
-                      </button>
-                    </div>
+                  <div class="right-col">
+                    <button type="submit" formaction="{{ path('empty_cart') }}" formmethod="post" class="btn btn-secondary">
+                      <i class="fa fa-trash-o"></i>
+                      {%- trans from 'messages' into currentlocale -%}
+                        cart.empty
+                      {%- endtrans -%}
+                    </button>
+                    <button type="submit" formaction="{{
+                      path('update_cart', { type: 'update' })
+                    }}" formmethod="post" class="btn btn-secondary">
+                      <i class="fa fa-refresh"></i>
+                      {%- trans from 'messages' into currentlocale -%}
+                        cart.update
+                      {%- endtrans -%}
+                    </button>
+                    <button type="submit" formaction="{{
+                      path('update_cart', { type: 'checkout' })
+                    }}" formmethod="post" class="btn btn-template-outlined">
+                      {%- trans from 'messages' into currentlocale -%}
+                        checkout
+                      {%- endtrans -%}
+                      <i class="fa fa-chevron-right"></i>
+                    </button>
                   </div>
-                </form>
-              </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
