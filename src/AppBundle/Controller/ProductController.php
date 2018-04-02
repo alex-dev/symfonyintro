@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 use Doctrine\ORM\EntityManagerInterface as Manager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,6 +12,9 @@ use AppBundle\CustomException\InvalidRangeSliderValueException;
 use AppBundle\Entity\QuantityPattern\Value\Scalar;
 use AppBundle\Type\UUID;
 
+/**
+ * @Security("is_granted('IS_AUTHENTICATED_ANONYMOUSLY')")
+ */
 class ProductController extends Controller {
   const unit = 'AppBundle\Entity\QuantityPattern\Unit\Unit';
   const manufacturer = 'AppBundle\Entity\Manufacturer';

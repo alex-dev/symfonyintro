@@ -27,7 +27,9 @@
       {%- include 'snippets/footer.html.twig' only -%}
     </div>
     {%- block modals -%}{%- endblock -%}
-    {%- include 'modals/login.html.twig' only -%}
+    {%- if not is_granted('IS_AUTHENTICATED_FULLY') -%}
+      {%- include 'modals/login.html.twig' only -%}
+    {%- endif -%}
   </body>
 </html>
 

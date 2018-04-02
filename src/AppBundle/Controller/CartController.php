@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface as Session;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,6 +14,7 @@ use AppBundle\Type\UUID;
 
 /**
  * @Route("/account/cart")
+ * @Security("is_granted('IS_AUTHENTICATED_ANONYMOUSLY')")
  */
 class CartController extends Controller {
   /**

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title -%}
+  {%- trans from 'menus' into currentlocale -%}
+    {%- if is_granted('IS_AUTHENTICATED_FULLY') -%}
+      account.data
+    {%- else -%}
+      account.register
+    {%- endif -%}
+  {%- endtrans -%}
+{%- endblock %}
+
+{% block heading -%}
+  {%- include 'snippets/heading.html.twig' with {
+    current: is_granted('IS_AUTHENTICATED_FULLY') ? 'account.data' : 'account.register',
+    items: { }
+  } only -%}
+{%- endblock %}
+
+{% block body -%}
+  Doing stuff!!!
+{%- endblock %}

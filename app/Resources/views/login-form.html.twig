@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title -%}
+  {%- trans from 'menus' into currentlocale -%}
+    login
+  {%- endtrans -%}
+{%- endblock %}
+
+{% block heading -%}
+  {%- include 'snippets/heading.html.twig' with {
+    current: 'login',
+    items: { }
+  } only -%}
+{%- endblock %}
+
+{% block body -%}
+  <div class="container">
+    {%- include 'snippets/login.html.twig' with { username: username, error: error } only -%}
+  </div>
+{%- endblock %}

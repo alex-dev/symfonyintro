@@ -26,3 +26,4 @@ Problèmes connus:
   * Le backdrop dans les modals empilés ne se comporte pas comme il le devrait.
   * order-summary.html.twig n'est pas traduit.
   * Les champs de la table du panier sont trop petits.
+  * Address n'est pas normalisée et plutôtt mal traduite.
