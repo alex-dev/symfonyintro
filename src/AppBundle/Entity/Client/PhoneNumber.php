@@ -19,11 +19,7 @@ class PhoneNumber {
    */
   protected $value;
 
-  public function getValue() {
-    return $this->value;
-  }
-
   public function __toString() {
-    return $this->getvalue();
+    return $this->value;
   }
 }

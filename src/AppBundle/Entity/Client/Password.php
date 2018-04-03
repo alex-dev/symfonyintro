@@ -28,16 +28,26 @@ class Password {
    */
   protected $value;
 
+  /**
+   * @Assert\IdenticalTo(propertyPath="value", message="password.unconfirmed")
+   */
+  protected $confirm;
+
   public function getPassword() {
-    return $this->value;
+    if ($this->value === $this->confirm || $this->confirm == null) {
+      return $this->value;
+    } else {
+      throw new PasswordException();
+    }
   }
 
   public function setPassword($value) {
     $this->value = $value;
   }
 
-  public function __construct($salt, $password) {
+  public function __construct($salt, $password, $confirm = null) {
     $this->setSalt($salt);
     $this->setPassword($password);
+    $this->confirm = $confirm;
   }
 }

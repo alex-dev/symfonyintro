@@ -15,8 +15,6 @@
 
 {% block body -%}
   <div class="container">
-    <div class="row bar">
-      {%- include 'snippets/login.html.twig' with { username: username, error: error } only -%}
-    </div>
+    {%- include 'snippets/login.html.twig' with { username: username, error: error } only -%}
   </div>
 {%- endblock %}

@@ -18,11 +18,7 @@ class Email {
    */
   protected $value;
 
-  public function getValue() {
-    return $this->value;
-  }
-
   public function __toString() {
-    return $this->getValue();
+    return $this->value;
   }
 }

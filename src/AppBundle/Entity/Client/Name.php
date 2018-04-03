@@ -17,7 +17,7 @@ class Name {
    */
   protected $firstName;
 
-  public function getFirst() {
+  public function getFirstName() {
     return $this->firstName;
   }
 
@@ -28,7 +28,7 @@ class Name {
    */
   protected $lastName;
 
-  public function getLast() {
+  public function getLastName() {
     return $this->lastName;
   }
 }
