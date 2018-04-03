@@ -29,9 +29,8 @@
       register.not
     {%- endtrans -%}
   </p>
-  {# customer-register.html #}
   <p>
-    <a href="#">
+    <a href="{{ path('register_get') }}">
       <strong>
         {%- trans from 'messages' into currentlocale -%}
           register.now

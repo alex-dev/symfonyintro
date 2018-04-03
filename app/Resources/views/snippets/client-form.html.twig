@@ -1,0 +1,48 @@
+{% set currentlocale = app.request.locale %}
+
+{# TODO: Activate validation #}
+{{dump(form)}}
+{{- form_start(form, {'attr': {'novalidate': 'novalidate'}}) -}}
+{#  {%- if is_granted('IS_AUTHENTICATED_FULLY') -%}
+    {%- do form.username.setRendered -%}
+    {%- do form.password.setRendered -%}
+  {%- else -%}
+    <h3>
+      {%- trans from 'messages' into currentlocale -%}
+        account.connection.data
+      {%- endtrans -%}
+    </h3>
+    <div class="form-group">
+      {{- form_errors(form.username) -}}
+      {{- form_label(form.username) -}}
+      {{- form_widget(form.username) -}}
+    </div>
+    <div class="form-group">
+      {{- form_errors(form.password.value) -}}
+      {{- form_label(form.password.value) -}}
+      {{- form_widget(form.password.value) -}}
+    </div>
+    <div class="form-group">
+      {{- form_errors(form.password.confirm) -}}
+      {{- form_label(form.password.confim) -}}
+      {{- form_widget(form.password.confim) -}}
+    </div>
+  {%- endif -%}
+  <div class="form-group">
+    {{- form_errors(form.name.first) -}}
+    {{- form_label(form.name.first) -}}
+    {{- form_widget(form.name.first) -}}
+  </div>
+  <div class="form-group">
+    {{- form_errors(form.name.last) -}}
+    {{- form_label(form.name.last) -}}
+    {{- form_widget(form.name.last) -}}
+  </div>#}
+
+  <button type="submit" class="btn btn-sm btn-template-outlined">
+    <!--<i class="fa fa-pencil"></i>-->
+    {%- trans from 'messages' into currentlocale -%}
+      submit
+    {%- endtrans -%}
+  </button>
+{{- form_end(form) -}}

@@ -59,11 +59,11 @@ class Address {
     return $this->postalCode;
   }
 
-  public function getAllProvinceIds() {
+  public static function getAllProvinceIds() {
     return array_keys(getAllProvinces('en_CA'));
   }
 
-  public function getAllProvinces($locale) {
+  public static function getAllProvinces($locale) {
     return [
       'AB' => 'Alberta',
       'BC' => $locale == 'fr_CA' ? 'Colombie-Britannique' : 'British Columbia',

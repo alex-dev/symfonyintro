@@ -63,6 +63,10 @@ class Client implements EquatableInterface, UserInterface, \Serializable{
     }
   }
 
+  public function setPassword($password) {
+    $this->password = $password;
+  }
+
   /**
    * @ORM\Embedded(class="Email")
    * @Assert\Valid
@@ -78,6 +82,10 @@ class Client implements EquatableInterface, UserInterface, \Serializable{
    * @Assert\Valid
    */
   protected $phone;
+
+  public function getPhone() {
+    return $this->phone;
+  }
 
   /**
    * @ORM\Embedded(class="Name")
@@ -109,6 +117,14 @@ class Client implements EquatableInterface, UserInterface, \Serializable{
     return $this->getUsername() == $user->getUsername()
       && $this->getPassword() == $user->getPassword()
       && $this->getSalt() == $user->getSalt();
+  }
+
+  public function __construct() {
+    $this->address = new Address();
+    $this->email = new Email();
+    $this->name = new Name();
+    $this->phone = new PhoneNumber();
+    $this->password = new Password(null, null);
   }
 
   public function serialize()

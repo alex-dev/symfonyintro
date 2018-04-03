@@ -2,13 +2,13 @@
 
 {% block title -%}
   {%- trans from 'menus' into currentlocale -%}
-    login
+    account.register
   {%- endtrans -%}
 {%- endblock %}
 
 {% block heading -%}
   {%- include 'snippets/heading.html.twig' with {
-    current: 'login',
+    current: 'account.register',
     items: { }
   } only -%}
 {%- endblock %}
@@ -16,7 +16,7 @@
 {% block body -%}
   <div class="container">
     <div class="row bar">
-      {%- include 'snippets/login.html.twig' with { username: username, error: error } only -%}
+      {%- include 'snippets/client-form.html.twig' with { form: user } only -%}
     </div>
   </div>
 {%- endblock %}
