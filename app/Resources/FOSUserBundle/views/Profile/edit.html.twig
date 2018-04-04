@@ -1,0 +1,18 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% block title -%}
+  {%- trans from 'menus' into currentlocale -%}
+    account.data.change
+  {%- endtrans -%}
+{%- endblock %}
+
+{% block heading -%}
+  {%- include 'snippets/heading.html.twig' with {
+    current: 'account.data.change',
+    items: { }
+  } only -%}
+{%- endblock %}
+
+{% block fos_user_content %}
+  {% include "@FOSUser/Profile/edit_content.html.twig" %}
+{% endblock fos_user_content %}

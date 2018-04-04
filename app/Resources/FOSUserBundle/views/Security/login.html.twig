@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends "@FOSUser/layout.html.twig" %}
 
 {% block title -%}
   {%- trans from 'menus' into currentlocale -%}
@@ -13,10 +13,6 @@
   } only -%}
 {%- endblock %}
 
-{% block body -%}
-  <div class="container">
-    <div class="row bar">
-      {%- include 'snippets/login.html.twig' with { username: username, error: error } only -%}
-    </div>
-  </div>
-{%- endblock %}
+{% block fos_user_content -%}
+  {{- include('@FOSUser/Security/login_content.html.twig') -}}
+{%- endblock fos_user_content %}

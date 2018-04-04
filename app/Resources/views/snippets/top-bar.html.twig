@@ -14,7 +14,7 @@
             </a>
           </div>
           <div class="col">
-            {%- if is_granted('IS_AUTHENTICATED_FULLY') -%}
+            {%- if is_granted('IS_AUTHENTICATED_REMEMBERED') -%}
               <a href="javascript: void(0)" data-toggle="dropdown" class="dropdown-toggle">
                 {%- trans from 'menus' into currentlocale -%}
                   account
@@ -22,32 +22,42 @@
                 <b class="caret"></b>
               </a>
               <ul class="dropdown-menu">
-                  <li class="dropdown-item">
-                    <a href="#" class="nav-link">
-                      <span class="d-none d-md-inline-block">
-                        {%- trans from 'messages' into currentlocale -%}
-                          account.data
-                        {%- endtrans -%}
-                      &nbsp;</span>
-                      <i class="fa fa-cog"></i>
-                    </a>
-                  </li>
-                  <li class="dropdown-item">
-                    <a href="{{ path('logout') }}" class="nav-link">
-                      <span class="d-none d-md-inline-block">
-                        {%- trans from 'messages' into currentlocale -%}
-                          logout
-                        {%- endtrans -%}
-                      &nbsp;</span>
-                      <i class="fa fa-sign-out"></i>
-                    </a>
-                  </li>
+                <li class="dropdown-item">
+                  <a href="{{ path('fos_user_profile_edit') }}" class="nav-link">
+                    <span class="d-none d-md-inline-block">
+                      {%- trans from 'menus' into currentlocale -%}
+                        account.data.change
+                      {%- endtrans -%}
+                    &nbsp;</span>
+                    <i class="fa fa-cog"></i>
+                  </a>
+                </li>
+                <li class="dropdown-item">
+                  <a href="{{ path('fos_user_change_password') }}" class="nav-link">
+                    <span class="d-none d-md-inline-block">
+                      {%- trans from 'menus' into currentlocale -%}
+                        account.password.change
+                      {%- endtrans -%}
+                    &nbsp;</span>
+                    <!--<i class="fa fa-cog"></i>-->
+                  </a>
+                </li>
+                <li class="dropdown-item">
+                  <a href="{{ path('fos_user_security_logout') }}" class="nav-link">
+                    <span class="d-none d-md-inline-block">
+                      {%- trans from 'menus' into currentlocale -%}
+                        logout
+                      {%- endtrans -%}
+                    &nbsp;</span>
+                    <i class="fa fa-sign-out"></i>
+                  </a>
+                </li>
               </ul>
             {%- else -%}
-              <a href="#" data-toggle="modal" data-target="#login-modal" class="login-btn">
+              <a href="{{ path('fos_user_security_login') }}" class="login-btn nav-link">
                 <i class="fa fa-sign-in"></i>
                 <span class="d-none d-md-inline-block">
-                  {%- trans from 'messages' into currentlocale -%}
+                  {%- trans from 'menus' into currentlocale -%}
                     login.sign
                   {%- endtrans -%}
                 </span>

@@ -11,23 +11,27 @@ class Address {
   const civic_length = 15;
   const city_length = 15;
   const province_length = 2;
-  const postal_length = 6;
+  const postal_length = 7;
 
   /**
-   * @ORM\Column(type="string", length=Address::civic_length)
-   * @Assert\Length(min=2, max=15, minMessage="civic.tooshort", maxMessage="civic.toolong")
-   * @Assert\NotBlank(message="civic.blank")
+   * @ORM\Column(name="civicNumberAndRoad", type="string", length=Address::civic_length)
+   * @Assert\Length(min=2, max=15, minMessage="civic.tooshort", maxMessage="civic.toolong", groups={ "App" })
+   * @Assert\NotBlank(message="civic.blank", groups={ "App" })
    */
-  protected $civicNumberAndRoad;
+  protected $civic;
 
   public function getCivic() {
-    return $this->civicNumberAndRoad;
+    return $this->civic;
+  }
+
+  public function setCivic($value) {
+    $this->civic = $value;
   }
 
   /**
    * @ORM\Column(type="string", length=Address::city_length)
-   * @Assert\Length(min=2, max=15, minMessage="city.tooshort", maxMessage="city.toolong")
-   * @Assert\NotBlank(message="city.blank")
+   * @Assert\Length(min=2, max=15, minMessage="city.tooshort", maxMessage="city.toolong", groups={ "App" })
+   * @Assert\NotBlank(message="city.blank", groups={ "App" })
    */
   protected $city;
 
@@ -35,10 +39,14 @@ class Address {
     return $this->city;
   }
 
+  public function setCity($value) {
+    $this->city = $value;
+  }
+
   /**
    * @ORM\Column(type="string", length=Address::province_length)
-   * @Assert\Choice(callback="getAllProvincesIds", message="province.notChoice")
-   * @Assert\NotBlank(message="province.blank")
+   * @Assert\Choice(callback="getAllProvincesIds", message="province.notChoice", groups={ "App" })
+   * @Assert\NotBlank(message="province.blank", groups={ "App" })
    */
   protected $province;
 
@@ -46,12 +54,17 @@ class Address {
     return $this->province;
   }
 
+  public function setProvince($value) {
+    $this->province = $value;
+  }
+
   /**
    * @ORM\Column(type="string", length=Address::postal_length)
    * @Assert\Regex(
    *   pattern="/^[A-CEGHJ-NPR-TV-Za-ceghj-npr-tv-z][0-9][A-CEGHJ-NPR-TV-Za-ceghj-npr-tv-z] ?[0-9][A-CEGHJ-NPR-TV-Za-ceghj-npr-tv-z][0-9]$/",
-   *   message="postal.invalid")
-   * @Assert\NotBlank(message="postal.blank")
+   *   message="postal.invalid",
+   *   groups={ "App" })
+   * @Assert\NotBlank(message="postal.blank", groups={ "App" })
    */
   protected $postalCode;
 
@@ -59,8 +72,12 @@ class Address {
     return $this->postalCode;
   }
 
-  public static function getAllProvinceIds() {
-    return array_keys(getAllProvinces('en_CA'));
+  public function setPostalCode($value) {
+    $this->postalCode = $value;
+  }
+
+  public static function getAllProvincesIds() {
+    return array_keys(self::getAllProvinces('en_CA'));
   }
 
   public static function getAllProvinces($locale) {

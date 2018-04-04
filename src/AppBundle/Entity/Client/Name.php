@@ -12,23 +12,31 @@ class Name {
 
   /**
    * @ORM\Column(type="string", length=Name::name_length)
-   * @Assert\Length(min=2, max=15, minMessage="firstname.tooshort", maxMessage="firstname.toolong")
-   * @Assert\NotBlank(message="firstname.blank")
+   * @Assert\Length(min=2, max=15, minMessage="firstname.tooshort", maxMessage="firstname.toolong", groups={ "App" })
+   * @Assert\NotBlank(message="firstname.blank", groups={ "App" })
    */
   protected $firstName;
 
-  public function getFirst() {
+  public function getFirstName() {
     return $this->firstName;
+  }
+
+  public function setFirstName($value) {
+    $this->firstName = $value;
   }
 
   /**
    * @ORM\Column(type="string", length=Name::name_length)
-   * @Assert\Length(min=2, max=15, minMessage="lastname.tooshort", maxMessage="lastname.toolong")
-   * @Assert\NotBlank(message="lastname.blank")
+   * @Assert\Length(min=2, max=15, minMessage="lastname.tooshort", maxMessage="lastname.toolong", groups={ "App" })
+   * @Assert\NotBlank(message="lastname.blank", groups={ "App" })
    */
   protected $lastName;
 
-  public function getLast() {
+  public function getLastName() {
     return $this->lastName;
+  }
+
+  public function setLastName($value) {
+    $this->lastName = $value;
   }
 }

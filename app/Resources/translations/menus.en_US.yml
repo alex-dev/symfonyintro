@@ -3,3 +3,8 @@ about.us: 'About us'
 menu.all: All
 menu.memory: Memories
 cart: 'Your cart'
+account: Profile
+account.data.change: 'Edit profile'
+account.password.change: 'Change password'
+logout: Logout
+login.sign: Login
