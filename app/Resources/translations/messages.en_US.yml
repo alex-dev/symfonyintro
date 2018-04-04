@@ -35,6 +35,6 @@ cart.update: 'Update cart'
 checkout: Checkout
 cart.add.done.long: '%item% has been added to the cart.'
 modal.close: Close
-cart.add.failed.long: "%item% couldn't be added to the cart."
+cart.add.failed.long: '%item% couldn''t be added to the cart.'
 TPS: TPS
 TVQ: TVQ

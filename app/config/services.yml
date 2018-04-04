@@ -44,6 +44,16 @@ services:
     AppBundle\Database\NamingStrategy:
         public: true
 
+    AppBundle\Form\AddressType:
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: form.type }
+
+    AppBundle\Form\RegistrationType:
+        tags:
+            - { name: form.type, alias: app_user_registration }
+
     AppBundle\Repository\ItemRepository:
         factory: 
             - '@Doctrine\ORM\EntityManagerInterface'

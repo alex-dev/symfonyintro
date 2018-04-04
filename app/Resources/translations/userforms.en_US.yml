@@ -1,0 +1,9 @@
+phone: 'Phone number'
+address.name: Address
+address.civic: 'Civic number and road'
+address.city: City
+address.province: Province
+address.postal: 'Postal code'
+name.name: Name
+name.first: 'First name'
+name.last: 'Last name'

@@ -1,0 +1,50 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="col">
+  {%- if not error is null -%}
+    <div class="alert alert-danger">
+      {{- error.messageKey | trans(error.messageData, 'security', currentlocale) -}}
+    </div>
+  {%- endif -%}
+  <form action="{{ path('fos_user_security_check') }}" method="post">
+    {% if csrf_token %}
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+    {% endif %}
+    <div class="form-group">
+      <input type="text" id="email_modal" name="_username" class="form-control" required value="{{ last_username }}" placeholder="{{ 'security.login.username'|trans }}" autocomplete="username" />
+    </div>
+    <div class="form-group">
+      <input type="password" id="password" name="_password" class="form-control" required placeholder="{{ 'security.login.password'|trans }}" autocomplete="current-password" />
+    </div>
+    <div class="text-center">
+      <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+      <label for="remember_me">&nbsp;{{ 'security.login.remember_me'|trans }}</label>
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-template-outlined">
+        <i class="fa fa-sign-in"></i>
+        <span>
+          {%- trans -%}
+            security.login.submit
+          {%- endtrans -%}
+        </span>
+      </button>
+    </div>
+  </form>
+  <div class="text-center text-muted">
+    <p>
+      {%- trans from 'messages' into currentlocale -%}
+        register.not
+      {%- endtrans -%}
+    </p>
+    <p>
+      <a href="{{ path('fos_user_registration_register') }}">
+        <strong>
+          {%- trans from 'messages' into currentlocale -%}
+            register.now
+          {%- endtrans -%}
+        </strong>
+      </a>
+    </p>    
+  </div>
+</div>

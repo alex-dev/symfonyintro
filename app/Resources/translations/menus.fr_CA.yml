@@ -3,3 +3,8 @@ about.us: 'À propos de nous'
 menu.all: 'Tous nos produits'
 menu.memory: Mémoires
 cart: 'Votre panier'
+account: Profil
+account.data.change: 'Modifier votre profil'
+account.password.change: 'Changer votre mot de passe'
+logout: 'Déconnectez-vous'
+login.sign: 'Connectez-vous'

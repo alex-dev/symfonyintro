@@ -60,5 +60,26 @@ doctrine:
         naming_strategy: AppBundle\Database\NamingStrategy
         auto_mapping: true
 
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: AppBundle\Entity\Client\Client
+    service:
+        mailer: fos_user.mailer.twig_swift
+    from_email:
+        address: "%mailer_user%"
+        sender_name: "%mailer_user%"
+    registration:
+        form:
+            type: AppBundle\Form\RegistrationType
+            validation_groups: ['App', 'AppRegistration', 'Default']
+    profile:
+        form:
+            type: AppBundle\Form\ProfileType
+            validation_groups: ['App', 'AppProfile', 'Default']
+    change_password:
+        form:
+            validation_groups: ['AppChangePassword', 'Default']
+
 knp_doctrine_behaviors:
     translatable: true

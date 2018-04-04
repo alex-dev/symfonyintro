@@ -1,0 +1,18 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% block title -%}
+  {%- trans from 'menus' into currentlocale -%}
+    registration.do
+  {%- endtrans -%}
+{%- endblock %}
+
+{% block heading -%}
+  {%- include 'snippets/heading.html.twig' with {
+    current: 'registration.do',
+    items: { }
+  } only -%}
+{%- endblock %}
+
+{% block fos_user_content -%}
+  {%- include "@FOSUser/Registration/register_content.html.twig" -%}
+{%- endblock fos_user_content %}

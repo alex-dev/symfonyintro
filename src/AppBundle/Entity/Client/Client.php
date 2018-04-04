@@ -3,25 +3,26 @@ namespace AppBundle\Entity\Client;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Component\Security\Core\User\EquatableInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use FOS\UserBundle\Model\User;
+use AppBundle\CustomException\PhoneException;
 use AppBundle\Entity\Client\Address;
-use AppBundle\Entity\Client\Email;
 use AppBundle\Entity\Client\Name;
-use AppBundle\Entity\Client\PhoneNumber;
-use AppBundle\Entity\Client\Password;
 
 /**
  * @ORM\Entity
- * @ORM\Table(
- *   uniqueConstraints={
- *     @ORM\UniqueConstraint(name="UK_Clients_username", columns={ "username" })
- *   })
+ * @ORM\AttributeOverrides({
+ *   @ORM\AttributeOverride(name="username", column=@ORM\Column(type="string", length=Client::username_length)),
+ *   @ORM\AttributeOverride(name="usernameCanonical", column=@ORM\Column(name="username_canonical", type="string", length=Client::username_length, unique=true)),
+ *   @ORM\AttributeOverride(name="username", column=@ORM\Column(type="string", length=Client::username_length))
+ * })
  * @UniqueEntity("username")
  */
-class Client implements EquatableInterface, UserInterface, \Serializable{
+class Client extends User {
   const username_length = 15;
+  const phone_length = 15;
+  const phone_pattern = 
+  "/(?:(?:\+1)|1)?[-( ]?\d{3}[-) ]?[2-9]\d{2}[- ]?\d{4}/";
 
   /**
    * @ORM\Id
@@ -31,53 +32,22 @@ class Client implements EquatableInterface, UserInterface, \Serializable{
   protected $id;
 
   /**
-   * @ORM\Column(type="string", length=Client::username_length)
-   * @Assert\Length(min=2, max=15, minMessage="username.tooshort", maxMessage="username.toolong")
-   * @Assert\NotBlank(message="username.blank")
-   */
-  protected $username;
-
-  public function getUsername() {
-    return $this->username;
-  }
-
-  /**
-   * @ORM\Embedded(class="Password")
-   * @Assert\Valid
-   */
-  protected $password;
-
-  public function getPassword() {
-    if ($this->password == null) {
-      return null;
-    } else {
-      return $this->password->getPassword();
-    }
-  }
-
-  public function getSalt() {
-    if ($this->password == null) {
-      return null;
-    } else {
-      return $this->password->getSalt();
-    }
-  }
-
-  /**
-   * @ORM\Embedded(class="Email")
-   * @Assert\Valid
-   */
-  protected $email;
-
-  public function getEmail() {
-    return $this->email;
-  }
-
-  /**
-   * @ORM\Embedded(class="PhoneNumber")
-   * @Assert\Valid
+   * @ORM\Column(type="string", length=Client::phone_length)
+   * @Assert\Regex(
+   *   pattern=Client::phone_pattern,
+   *   message="phone.invalid",
+   *   groups={ "App" })
+   * @Assert\NotBlank(message="phone.blank", groups={ "App" })
    */
   protected $phone;
+
+  public function getPhone() {
+    return $this->phone;
+  }
+
+  public function setPhone($value) {
+    $this->phone = $value;
+  }
 
   /**
    * @ORM\Embedded(class="Name")
@@ -87,6 +57,10 @@ class Client implements EquatableInterface, UserInterface, \Serializable{
 
   public function getName() {
     return $this->name;
+  }
+
+  public function setName(Name $value) {
+    $this->name = $value;
   }
 
   /**
@@ -99,36 +73,11 @@ class Client implements EquatableInterface, UserInterface, \Serializable{
     return $this->address;
   }
 
-  public function getRoles() {
-    return ['ROLE_USER'];
+  public function setAddress(Address $value) {
+    $this->address = $value;
   }
 
-  public function eraseCredentials() { }
-
-  public function isEqualTo(UserInterface $user) {
-    return $this->getUsername() == $user->getUsername()
-      && $this->getPassword() == $user->getPassword()
-      && $this->getSalt() == $user->getSalt();
-  }
-
-  public function serialize()
-  {
-    return serialize([
-      $this->id,
-      $this->getUsername(),
-      $this->getPassword(),
-      $this->getSalt(),
-    ]);
-  }
-
-  public function unserialize($serialized)
-  {
-    list (
-      $this->id,
-      $this->username,
-      $password,
-      $salt
-    ) = unserialize($serialized);
-    $this->password = new Password($salt, $password);
+  public function __construct() {
+    parent::__construct();
   }
 }

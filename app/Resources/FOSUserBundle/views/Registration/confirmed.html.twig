@@ -1,0 +1,22 @@
+{% extends "@FOSUser/layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block title -%}
+  {%- trans from 'menus' into currentlocale -%}
+    registration.email.confirmed
+  {%- endtrans -%}
+{%- endblock %}
+
+{% block heading -%}
+  {%- include 'snippets/heading.html.twig' with {
+    current: 'registration.email.confirmed',
+    items: { }
+  } only -%}
+{%- endblock %}
+
+{% block fos_user_content -%}
+  <p>{{ 'registration.confirmed' | trans({'%username%': user.username}) }}</p>
+  {%- if targetUrl -%}
+    <p><a href="{{ targetUrl }}">{{ 'registration.back' | trans }}</a></p>
+  {%- endif -%}
+{%- endblock fos_user_content %}
