@@ -61,6 +61,12 @@ services:
         arguments:
             - 'AppBundle\Entity\Item'
 
+    AppBundle\Repository\OrderRepository:
+        factory: 
+            - '@Doctrine\ORM\EntityManagerInterface'
+            - getRepository
+        arguments:
+            - 'AppBundle\Entity\Order\Order'
 
     AppBundle\Service\:
         resource: '../../src/AppBundle/Service/*'
@@ -68,6 +74,10 @@ services:
     AppBundle\Service\Factory\ClientAPIFactory:
         arguments: 
             - '%api.param.timeout%'
+
+    AppBundle\Service\Factory\OrderFactory:
+        arguments: 
+            $orderRepository: '@AppBundle\Repository\OrderRepository'
 
     AppBundle\Subscriber\:
         resource: '../../src/AppBundle/Subscriber/*'

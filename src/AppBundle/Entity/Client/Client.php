@@ -8,6 +8,7 @@ use FOS\UserBundle\Model\User;
 use AppBundle\CustomException\PhoneException;
 use AppBundle\Entity\Client\Address;
 use AppBundle\Entity\Client\Name;
+use AppBundle\Entity\Order\Order;
 
 /**
  * @ORM\Entity
@@ -21,8 +22,7 @@ use AppBundle\Entity\Client\Name;
 class Client extends User {
   const username_length = 15;
   const phone_length = 15;
-  const phone_pattern = 
-  "/(?:(?:\+1)|1)?[-( ]?\d{3}[-) ]?[2-9]\d{2}[- ]?\d{4}/";
+  const phone_pattern = "/(?:(?:\+1)|1)?[-( ]?\d{3}[-) ]?[2-9]\d{2}[- ]?\d{4}/";
 
   /**
    * @ORM\Id
@@ -75,6 +75,19 @@ class Client extends User {
 
   public function setAddress(Address $value) {
     $this->address = $value;
+  }
+
+  /**
+   * 
+   */
+  protected $orders;
+
+  public function getOrders() {
+    return $this->orders;
+  }
+
+  public function addOrder() {
+    
   }
 
   public function __construct() {

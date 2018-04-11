@@ -9,19 +9,35 @@ use AppBundle\Service\Factory\AbstractFactory;
 
 final class OrderFactory extends AbstractFactory {
   private $calculator;
-  private $repository;
+  private $itemRepository;
+  private $orderRepository;
 
-  public function __construct(CostCalculator $calculator, ItemRepository $repository) {
+  public function __construct(CostCalculator $calculator, ItemRepository $itemRepository, $orderRepository) {
     $this->calculator = $calculator;
-    $this->repository = $repository;
+    $this->itemRepository = $itemRepository;
+    $this->orderRepository = $orderRepository;
   }
 
-  public function __invoke(array $keys) {
+  public function __invoke(array $keys) { return $this->createFromSession($keys); }
+
+  public function getFromRepositoryByKey($key) {
+    $data = $this->orderRepository->findOneByKey($key->toHex());
+    $data->setCalculator($this->calculator);
+    return $data;
+  }
+
+  public function getFromRepositoryByClient(Client $client) {
+    $data = $this->orderRepository->findByClient($client);
+    array_walk($data, function ($item) { $item->setCalculator($this->calculator); });
+    return $data;
+  }
+
+  public function createFromSession(array $keys) {
     if (count($keys > 0)) {
       $keys_ = array_map(function ($key) { return $key['key']; }, $keys);
       $combinedKeys = array_combine(
         $keys_, array_map(function ($item) { return $item['quantity']; }, $keys));
-      $items = $this->repository->findItemsCostProductByKeys($keys_);
+      $items = $this->itemRepository->findItemsCostProductByKeys($keys_);
       $combinedItems = array_combine(array_map(function ($item) {
         return $item->getProduct()->getKey();
       }, $items), $items);
