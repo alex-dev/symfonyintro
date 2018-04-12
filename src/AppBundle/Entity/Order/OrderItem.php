@@ -3,8 +3,8 @@ namespace AppBundle\Entity\Order;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use AppBundle\Entity\Order\Order;
-use AppBundle\Entity\Product\Product;
+use AppBundle\Entity\Order\Orderrr;
+use AppBundle\Entity\Product\Produuct;
 use AppBundle\Entity\QuantityPattern\Value\Scalar;
 
 /**
@@ -13,7 +13,7 @@ use AppBundle\Entity\QuantityPattern\Value\Scalar;
  *   uniqueConstraints={
  *     @ORM\UniqueConstraint(name="UK_OrderItems_product_order", columns={ "product", "order" })
  *   })
- * @UniqueEntity("product", "order")
+ * @UniqueEntity(fields={ "product", "order" })
  */
 class OrderItem {
   /**
@@ -25,7 +25,6 @@ class OrderItem {
 
   /**
    * @ORM\ManyToOne(targetEntity="Order", inversedBy="items")
-   * @ORM\JoinColumn(name="order", referencedColumnName="id")
    */
   protected $order;
 
@@ -51,7 +50,7 @@ class OrderItem {
   }
 
   /**
-   * @ORN\Column(type="int", options={ "unsigned": true})
+   * @ORM\Column(type="integer", options={ "unsigned": true})
    */
   protected $quantity;
   
@@ -89,4 +88,3 @@ class OrderItem {
     $this->cost = $cost;
   }
 }
-

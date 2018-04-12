@@ -33,7 +33,7 @@ class Order extends UrlKey {
   protected $id;
 
   /**
-   * @ORM\OneToMany(targetEntity="OrderItem", mappedBy="order")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Client\Client")
    */
   protected $client;
 

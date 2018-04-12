@@ -78,7 +78,7 @@ class Client extends User {
   }
 
   /**
-   * 
+   * @ORM\OneToMany(targetEntity="AppBundle\Entity\Order\Order", mappedBy="client")
    */
   protected $orders;
 
