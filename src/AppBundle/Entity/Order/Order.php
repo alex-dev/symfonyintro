@@ -72,7 +72,7 @@ class Order extends UrlKey {
    */
   public function getCost() {
     $temp = $this->calculator;
-    return $temp($this->getItems());
+    return $temp($this->getItems()->toArray());
   }
 
   public function __construct(array $items, CostCalculator $calculator) {

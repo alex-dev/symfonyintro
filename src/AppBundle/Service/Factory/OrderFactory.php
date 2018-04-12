@@ -1,8 +1,8 @@
 <?php
 namespace AppBundle\Service\Factory;
 
-use AppBundle\DataObject\OrderItem;
-use AppBundle\DataObject\Order;
+use AppBundle\Entity\Order\OrderItem;
+use AppBundle\Entity\Order\Order;
 use AppBundle\Repository\ItemRepository;
 use AppBundle\Service\CostCalculator;
 use AppBundle\Service\Factory\AbstractFactory;

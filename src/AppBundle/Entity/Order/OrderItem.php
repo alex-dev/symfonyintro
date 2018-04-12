@@ -3,8 +3,8 @@ namespace AppBundle\Entity\Order;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use AppBundle\Entity\Order\Orderrr;
-use AppBundle\Entity\Product\Produuct;
+use AppBundle\Entity\Order\Order;
+use AppBundle\Entity\Product\Product;
 use AppBundle\Entity\QuantityPattern\Value\Scalar;
 
 /**
