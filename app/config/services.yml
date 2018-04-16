@@ -68,6 +68,12 @@ services:
         arguments:
             - 'AppBundle\Entity\Order\Order'
 
+    AppBundle\Security\Voter\:
+        resource: '../../src/AppBundle/Security/Voter/*'
+        public: true
+        tags: 
+            - 'security.voter'
+
     AppBundle\Service\:
         resource: '../../src/AppBundle/Service/*'
 

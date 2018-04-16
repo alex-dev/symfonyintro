@@ -33,6 +33,11 @@ class Order extends UrlKey {
   protected $id;
 
   /**
+   * Not Implemented
+   */
+  protected $stripeToken;
+
+  /**
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Client\Client")
    */
   protected $client;
@@ -51,7 +56,7 @@ class Order extends UrlKey {
   protected $items;
 
   public function getItems() {
-    return $this->items;
+    return $this->items->toArray();
   }
 
   public function addItem(OrderItem $value) {
@@ -72,10 +77,11 @@ class Order extends UrlKey {
    */
   public function getCost() {
     $temp = $this->calculator;
-    return $temp($this->getItems()->toArray());
+    return $temp($this->getItems());
   }
 
   public function __construct(array $items, CostCalculator $calculator) {
+    parent::__construct();
     $this->setCalculator($calculator);
     $this->setItems($items);
   }

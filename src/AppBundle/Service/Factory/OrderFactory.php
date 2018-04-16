@@ -37,11 +37,12 @@ final class OrderFactory extends AbstractFactory {
       $keys_ = array_map(function ($key) { return $key['key']; }, $keys);
       $combinedKeys = array_combine(
         $keys_, array_map(function ($item) { return $item['quantity']; }, $keys));
-      $items = $this->itemRepository->findItemsCostProductByKeys($keys_);
+      $items = $this->itemRepository->findItemsByProductKeys($keys_);
       $combinedItems = array_combine(array_map(function ($item) {
         return $item->getProduct()->getKey();
       }, $items), $items);
   
+      //May need to copy Scalar rather than just reference it if Doctrine doesn't auto copy.
       return new Order(
         array_map(function ($item, $quantity) {
           return new OrderItem($item->getProduct(), $item->getCost(), $quantity);

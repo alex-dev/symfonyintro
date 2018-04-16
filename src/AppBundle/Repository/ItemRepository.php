@@ -113,7 +113,7 @@ final class ItemRepository extends EntityRepository {
     ->getQuery()->getResult();
   }*/
   
-  public function findItemsCostProductByKeys(array $keys) {
+  public function findItemsByProductKeys(array $keys) {
     return $this->createQueryBuilder('i')
       ->addSelect('c')->join('i.cost', 'c')
       ->addSelect('u')->join('c.unit', 'u')

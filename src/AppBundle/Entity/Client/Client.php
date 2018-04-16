@@ -83,11 +83,16 @@ class Client extends User {
   protected $orders;
 
   public function getOrders() {
-    return $this->orders;
+    return $this->orders->toArray();
   }
 
-  public function addOrder() {
-    
+  public function addOrder(Order $value) {
+    if ($this->orders == null) {
+      $this->orders = new ArrayCollection();
+    }
+
+    $value->setClient($this);
+    $this->orders->add($value);
   }
 
   public function __construct() {
