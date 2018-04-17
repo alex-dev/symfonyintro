@@ -18,7 +18,7 @@ final class OrderFactory extends AbstractFactory {
     $this->orderRepository = $orderRepository;
   }
 
-  public function __invoke(array $keys) { return $this->createFromSession($keys); }
+  public function __invoke(array $keys, $client) { return $this->createFromSession($keys, $client); }
 
   public function getFromRepositoryByKey($key) {
     $data = $this->orderRepository->findOneByKey($key->toHex());
@@ -32,7 +32,7 @@ final class OrderFactory extends AbstractFactory {
     return $data;
   }
 
-  public function createFromSession(array $keys) {
+  public function createFromSession(array $keys, $client) {
     if (count($keys > 0)) {
       $keys_ = array_map(function ($key) { return $key['key']; }, $keys);
       $combinedKeys = array_combine(
@@ -47,6 +47,7 @@ final class OrderFactory extends AbstractFactory {
         array_map(function ($item, $quantity) {
           return new OrderItem($item->getProduct(), $item->getCost(), $quantity);
         }, array_values($combinedItems), array_values($combinedKeys)),
+        $client,
         $this->calculator);
     } else {
       return new Order([], $this->calculator);

@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface as Session;
 use Symfony\Component\Routing\Annotation\Route;
+use AppBundle\Entity\Order\Order;
 use AppBundle\Service\Factory\OrderFactory;
 use AppBundle\Type\UUID;
 
@@ -62,25 +63,37 @@ class OrderController extends Controller {
   public function createPostAction(Request $request, Session $session, OrderFactory $factory, Manager $manager) {
     // TODO: Validate stripes token here. Redirect if invalid.
     $order = $this->makeOrderFromSession($session->get('cart') ?: [], $factory);
-
+    
     // TODO: Add stripes token to order here.
 
     $manager->persist($order);
     
-    $products = $manager->getRepository(self::item)->findItemsByProductKeys(
-      array_map(function ($item) { return $item->getProduct()->getKey(); }, $order)
-    );
-
-    foreach ($products as $product) {
-      $orderitem = array_filter($order, function ($item) use ($product) {
-        return $item->getProduct()->getKey() == $product->getProduct()->getKey();
-      })[0];
-      $product->setCount($product->getCount() - $orderitem->getQuantity());
-    }
+    $this->updateInventory($this->getProductsFromOrder($manager, $order), $order, function ($item, $order) {
+      return $item->getCount() - $order->getQuantity();
+    });
 
     $manager->flush();
 
     return $this->redirectToRoute('show_order', ['key' => $order->getKey()]);
+  }
+  
+  /**
+   * @Route("/cancel/{key}", name="order_cancel")
+   * @Method({ "POST" })
+   */
+  public function cancelAction($key, OrderFactory $factory, Manager $manager) {
+    $order = $factory->getFromRepositoryByKey(UUID::createFromString($key));
+    $this->denyAccessUnlessGranted('view', $order);
+
+    $order->cancel();
+
+    $this->updateInventory($this->getProductsFromOrder($manager, $order), $order, function ($item, $order) {
+      return $item->getCount() + $order->getQuantity();
+    });
+
+    $manager->flush();
+
+    return $this->redirectToRoute('list_orders');
   }
 
   private function makeOrderFromSession($data, OrderFactory $factory) {
@@ -88,6 +101,22 @@ class OrderController extends Controller {
       array_map(function ($item) { return [
         'key' => UUID::createfromString($item['key']),
         'quantity' => $item['quantity'],
-      ]; }, $data));
+      ]; }, $data),
+      $client);
+  }
+
+  private function updateInventory(array $products, Order $order, callable $operation) {
+    foreach ($products as $product) {
+      $orderitem = array_filter($order, function ($item) use ($product) {
+        return $item->getProduct()->getKey() == $product->getProduct()->getKey();
+      })[0];
+      $product->setCount($operation($product, $orderitem));
+    }
+  }
+
+  private function getProductsFromOrder(Manager $manager, Order $order) {
+    return $manager->getRepository(self::item)->findItemsByProductKeys(
+      array_map(function ($item) { return $item->getProduct()->getKey(); }, $order)
+    );
   }
 }

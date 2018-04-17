@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title -%}
+  {%- trans from 'menus' into currentlocale -%}
+    order.showing
+  {%- endtrans -%}
+{%- endblock %}
+
+{% block heading -%}
+  {%- include 'snippets/heading.html.twig' with {
+    current: 'order.showing',
+    items: { 'order.listing': path('') }
+  } only -%}
+{%- endblock %}
+
+{% block body -%}
+
+{%- endblock %}

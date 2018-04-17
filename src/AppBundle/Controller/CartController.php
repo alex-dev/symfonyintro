@@ -99,7 +99,7 @@ class CartController extends Controller {
       case 'update':
         return $this->redirect($request->headers->get('referer'));    
       case 'checkout':
-        return $this->redirect($request->headers->get('referer'));    
+        return $this->redirectToRoute('order_cart_form');    
     }
   }
 }

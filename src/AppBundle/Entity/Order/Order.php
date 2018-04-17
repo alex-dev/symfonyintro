@@ -19,6 +19,9 @@ use AppBundle\Type\UUID;
  * @UniqueEntity("key")
  */
 class Order extends UrlKey {
+  const valid = 'valid';
+  const cancelled = 'cancelled';
+
   protected $calculator;
 
   public function setCalculator(CostCalculator $value) {
@@ -36,6 +39,11 @@ class Order extends UrlKey {
    * Not Implemented
    */
   protected $stripeToken;
+
+  /**
+   * @ORM\Column(type="string", length=20)
+   */
+  protected $state;
 
   /**
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Client\Client")
@@ -80,10 +88,20 @@ class Order extends UrlKey {
     return $temp($this->getItems());
   }
 
-  public function __construct(array $items, CostCalculator $calculator) {
+  public function __construct(array $items, Client $client, CostCalculator $calculator) {
     parent::__construct();
+    $this->state = self::valid;
     $this->setCalculator($calculator);
     $this->setItems($items);
+    $this->setClient($client);
+  }
+
+  public function isCancelled() {
+    return $state == self::cancelled;
+  }
+
+  public function cancel() {
+    $state = self::cancelled;
   }
 }
 
