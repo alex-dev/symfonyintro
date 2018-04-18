@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'order-showing-base.html.twig' %}
 
 {% block title -%}
   {%- trans from 'menus' into currentlocale -%}
@@ -13,6 +13,8 @@
   } only -%}
 {%- endblock %}
 
-{% block body -%}
-
+{% block sidebar -%}
+  <form action="{{ path('order_cart_post') }}" method="post">
+    <button type="submit">order.order</button>
+  </form>
 {%- endblock %}

@@ -22,6 +22,5 @@ class Version20180305154902 extends AbstractMigration
   public function postUp(Schema $schema) {
     $this->connection->exec("UPDATE QuantityUnits SET discriminator = 'currency' WHERE id IN (24, 25)");
     $this->connection->exec("ALTER TABLE QuantityUnits CHANGE discriminator discriminator VARCHAR(50) NOT NULL");
-    
   }
 }

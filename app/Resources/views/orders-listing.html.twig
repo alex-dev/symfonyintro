@@ -6,6 +6,11 @@
   {%- endtrans -%}
 {%- endblock %}
 
+{%- block scripts %}
+  <script defer src="{{ asset('vendor/moment.js/moment-with-locale.js') }}"></script>
+  <script defer src="{{ asset('js/moment-initialize.js') }}"></script>
+{% endblock -%}
+
 {% block heading -%}
   {%- include 'snippets/heading.html.twig' with {
     current: 'order.listing',
@@ -14,5 +19,11 @@
 {%- endblock %}
 
 {% block body -%}
-
+  <div class="container">
+    <div class="row bar">
+      <div class="col">
+        {%- include 'snippets/orders-listing.html.twig' with { orders: orders } only -%}
+      </div>
+    </div>
+  </div>
 {%- endblock %}

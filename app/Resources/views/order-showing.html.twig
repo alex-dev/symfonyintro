@@ -1,10 +1,21 @@
-{% extends 'base.html.twig' %}
+{% extends 'order-showing-base.html.twig' %}
 
 {% block title -%}
   {%- trans from 'menus' into currentlocale -%}
     order.showing
   {%- endtrans -%}
 {%- endblock %}
+
+{%- block scripts %}
+  <script defer src="{{ asset('vendor/moment.js/moment-with-locale.js') }}"></script>
+  <script defer src="{{ asset('js/moment-initialize.js') }}"></script>
+  <script defer src="{{ asset('js/moment-interval-handler.js') }}"
+    data-time="{{ order.date | date('Y-m-d\TH:i:s.vP', false) }}"
+    data-time-to-cancel-label="{{ order.timetocancel | trans() }}"
+    data-cancel-label="{{ order.cancel | trans() }}"
+    data-action="{{ path('order_cancel', { 'key': order.key }) }}">
+  </script>
+{% endblock -%}
 
 {% block heading -%}
   {%- include 'snippets/heading.html.twig' with {
@@ -13,6 +24,9 @@
   } only -%}
 {%- endblock %}
 
-{% block body -%}
-
+{% block sidebar -%}
+  <div class="row">
+    <span>order.date:&nbsp;</span>
+    <span class="date">{{- order.date | date('Y-m-d\TH:i:s.vP', false) -}}</span>
+  </div>
 {%- endblock %}

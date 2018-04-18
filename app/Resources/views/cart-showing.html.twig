@@ -32,7 +32,7 @@
         </div>
       {%- else -%}
         <div class="col-lg-3">
-          {%- include 'snippets/order-summary.html.twig' with { cost: order.cost } only -%}
+          {%- include 'snippets/order-summary.html.twig' with { order: order } only -%}
         </div>
         <div class="col">
           <div id="basket">

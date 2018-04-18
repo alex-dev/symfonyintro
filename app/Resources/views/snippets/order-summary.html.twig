@@ -6,6 +6,8 @@
   </div>
   <div class="table-responsive">
     <table class="table">
+      {%- block details -%}{%- endblock -%}
+      {%- set cost = order.cost -%}
       <tbody>
         <tr>
           <td>order.subtotal</td>
@@ -22,7 +24,6 @@
         {%- for name, tax in cost.taxes -%}
         <tr>
           <td>
-          {# TPS, TVQ #}
             {{- name | trans({}, 'messages', currentlocale) -}}
           </td>
           <th>

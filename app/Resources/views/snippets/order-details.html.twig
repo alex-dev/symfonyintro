@@ -1,0 +1,27 @@
+{% extends 'snippets/order-summary.html.twig' %}
+
+{% block details -%}
+  <tbody>
+    {%- for item in order.items -%}
+      <tr>
+        <td>
+          <a href="{{ path('show_product', { 'type': item.product | product_kind, 'key': item.product.key })}}">
+            {{- item.product.translate(currentlocale).name -}}
+          </a>
+        </td>
+        <td>
+          {{- item.quantity -}}
+        </td>
+        <td>
+          {{- item.cost.write(currentlocale) -}}
+        </td>
+        {# <td>
+          {{- item.cost.write(currentlocale) -}}
+        </td> #}
+        <td>
+          {{- item.cost.multiplyByConstant(item.quantity).write(currentlocale) -}}
+        </td>
+      </tr>
+    {%- endfor -%}
+  </tbody>
+{%- endblock %}
