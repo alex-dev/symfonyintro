@@ -8,6 +8,7 @@ use AppBundle\Entity\Order\Order;
 
 class OrderVoter extends Voter {
   const VIEW = 'view';
+  const CANCEL = 'cancel';
 
   private $aclManager;
 
@@ -20,8 +21,23 @@ class OrderVoter extends Voter {
   }
 
   protected function voteOnAttribute($attribute, $subject, TokenInterface $token) {
-    return $this->aclManager->decide($token, ['ROLE_ADMIN'])
-      || ($subject->getClient()->getUsername() == $token->getUser()->getUsername()
-        && in_array($subject->getKey(), array_map(function($item) { return $item->getKey(); }, $token->getUser()->getOrders())));
+    switch($attribute) {
+      case self::VIEW:
+        return $this->aclManager->decide($token, ['ROLE_ADMIN']) || $this->voteOnView($subject, $token->getUser());
+      case self:CANCEL:
+        return $this->aclManager->decide($token, ['ROLE_ADMIN']) || $this->voteOnCancel($subject, $token->getUser());
+      default:
+        return $this->aclManager->decide($token, ['ROLE_ADMIN']);
+    }
+  }
+
+  private function voteOnView($subject, $user) {
+    return $subject->getClient()->getUsername() == $user->getUsername()
+        && in_array($subject->getKey(), array_map(function($item) { return $item->getKey(); }, $user->getOrders()));
+  }
+
+  private function voteOnCancel($subject, $user) {
+    $interval = $subject->getDate()->diff(new \DateTime);
+    return $interval->days + $interval->h / 24 + $interval->m / (60 * 24) + $interval->s / (60 * 60 * 24) >= 2;
   }
 }

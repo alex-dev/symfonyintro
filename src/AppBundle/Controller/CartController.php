@@ -1,5 +1,4 @@
 <?php
-
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -85,7 +84,6 @@ class CartController extends Controller {
    */
   public function refreshAction(Session $session, Request $request, $type) {
     $data = $request->request->get('cartitems');
-    var_dump($data);
     $session->set('cart', array_filter(
       array_map(function ($item) use ($data) {
         return [

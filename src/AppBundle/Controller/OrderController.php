@@ -1,5 +1,4 @@
 <?php
-
 namespace AppBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface as Manager;
@@ -83,7 +82,7 @@ class OrderController extends Controller {
    */
   public function cancelAction($key, OrderFactory $factory, Manager $manager) {
     $order = $factory->getFromRepositoryByKey(UUID::createFromString($key));
-    $this->denyAccessUnlessGranted('view', $order);
+    $this->denyAccessUnlessGranted('cancel', $order);
 
     $order->cancel();
 

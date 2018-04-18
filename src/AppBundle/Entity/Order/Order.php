@@ -7,6 +7,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\UrlKey;
 use AppBundle\Entity\Client\Client;
 use AppBundle\Entity\Order\OrderItem;
+use AppBundle\Entity\Order\State;
 use AppBundle\Service\CostCalculator;
 use AppBundle\Type\UUID;
 
@@ -19,9 +20,6 @@ use AppBundle\Type\UUID;
  * @UniqueEntity("key")
  */
 class Order extends UrlKey {
-  const valid = 'valid';
-  const cancelled = 'cancelled';
-
   protected $calculator;
 
   public function setCalculator(CostCalculator $value) {
@@ -44,6 +42,15 @@ class Order extends UrlKey {
    * @ORM\Column(type="string", length=20)
    */
   protected $state;
+
+  /**
+   * @ORM\Column(type="datetime")
+   */
+  protected $date;
+  
+  public function getDate() {
+    return $this->date;
+  }
 
   /**
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Client\Client")
@@ -90,18 +97,19 @@ class Order extends UrlKey {
 
   public function __construct(array $items, Client $client, CostCalculator $calculator) {
     parent::__construct();
-    $this->state = self::valid;
+    $this->state = State::valid;
+    $this->date = new \DateTime();
     $this->setCalculator($calculator);
     $this->setItems($items);
     $this->setClient($client);
   }
 
   public function isCancelled() {
-    return $state == self::cancelled;
+    return $state == State::cancelled;
   }
 
   public function cancel() {
-    $state = self::cancelled;
+    $state = State::cancelled;
   }
 }
 
