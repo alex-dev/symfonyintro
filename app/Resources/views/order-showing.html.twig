@@ -10,7 +10,7 @@
   <script defer src="{{ asset('vendor/moment.js/moment-with-locales.js') }}"></script>
   <script defer src="{{ asset('js/moment-initialize.js') }}"></script>
   <script defer src="{{ asset('js/moment-interval-handler.js') }}"
-    data-time="{{ order.date | date('Y-m-d\TH:i:s.vP', false) }}"
+    data-time="{{ order.date | date('Y-m-d\\TH:i:sP', false) }}"
     data-time-to-cancel-label="{{ 'order.timetocancel' | trans() }}"
     data-cancel-label="{{ 'order.cancel' | trans() }}"
     data-action="{{ path('order_cancel', { 'key': order.key }) }}">
@@ -27,6 +27,6 @@
 {% block sidebar -%}
   <div class="row">
     <span>order.date:&nbsp;</span>
-    <span class="date">{{- order.date | date('Y-m-d\TH:i:s.vP', false) -}}</span>
+    <span class="date">{{- order.date | date('Y-m-d\\TH:i:sP', false) -}}</span>
   </div>
 {%- endblock %}

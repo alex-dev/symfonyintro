@@ -1,4 +1,13 @@
+const datestring = document.currentScript.getAttribute('data-time');
+const action = document.currentScript.getAttribute('data-action');
+const labels = {
+  text: document.currentScript.getAttribute('data-time-to-cancel-label'),
+  button: document.currentScript.getAttribute('data-cancel-label')
+};
+
 function frameUpdate(date) {
+  const date = moment.utc(datestring);
+
   if (date.diff(moment.utc(), 'days') >= 2) {
     $('#data-interval').remove();
     $('#data-cancel').remove();
@@ -15,13 +24,6 @@ function frameUpdate(date) {
 }
 
 $(() => {
-  const date = moment.utc(document.currentScript.getAttribute('data-time'));
-  const action = document.currentScript.getAttribute('data-action');
-  const labels = {
-    text: document.currentScript.getAttribute('data-time-to-cancel-label'),
-    button: document.currentScript.getAttribute('data-cancel-label')
-  };
-
   if (date.diff(moment.utc(), 'days') < 2) {
     $('#sidebar-data').append(`
       <div id="data-interval" class="row">
