@@ -20,6 +20,6 @@ class Version20180403224137 extends AbstractMigration
   }
 
   public function postUp(Schema $schema) {
-    $this->connection->exec("INSERT INTO Clients(username, username_canonical, email, email_canonical, enabled, password, phone, name_firstName, name_lastName, address_civicNumberAndRoad, address_city, address_province, address_postalCode) VALUE ('user', 'user', '1237801@cstj.qc.ca', '1237801@cstj.qc.ca', TRUE, '12345', '4504381580', 'Alexandre', 'Parent', '480 fournier', 'St-Jerome', 'QC', 'J7Z4V2')");
+    $this->connection->exec('INSERT INTO Clients(username, username_canonical, email, email_canonical, enabled, password, roles, phone, name_firstName, name_lastName, address_civicNumberAndRoad, address_city, address_province, address_postalCode) VALUE (\'user\', \'user\', \'1237801@cstj.qc.ca\', \'1237801@cstj.qc.ca\', TRUE, \'$2a$12$ERjyfN8r.5l22GLALi9fzOk44CWW/retOfl2iCLw1gZGDZ4hVuHyK\', \'a:0:{}\', \'4504381580\', \'Alexandre\', \'Parent\', \'480 fournier\', \'St-Jerome\', \'QC\', \'J7Z4V2\')');
   }
 }

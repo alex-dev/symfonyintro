@@ -1,42 +1,47 @@
 {% set currentlocale = app.request.locale %}
 
 <!-- Remove #order-summary when #order-listing is done. -->
-<div id="order-summary" class="box mt-0 mb-4 p-0">
-  <div class="box-header mt-0 mb-0">
-    <h3 class="mb-0">order.listing</h3>
+{%- if orders is empty -%}
+  <div class="box mt-0 pb-0">
+    {%- trans from 'messages' into currentlocale -%}
+      order.has.none
+    {%- endtrans -%}
   </div>
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>
-            order.key
-          </th>
-          <th>
-            order.date
-          </th>
-          <th>
-            order.state
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {%- for order in orders -%}
+{%- else -%}
+  <div id="order-summary" class="box mt-0 mb-4 p-0">
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
           <tr>
-            <td>
-              <a href="{{ path('show_order', { 'key': order.key })}}">
-                {{- order.key -}}
-              </a>
-            </td>
-            <td class="date">
-              {{- order.date | date('Y-m-d\TH:i:s.vP', false) -}}
-            </td>
-            <td>
-              {{- order.state -}}
-            </td>
+            <th>
+              order.key
+            </th>
+            <th>
+              order.date
+            </th>
+            <th>
+              order.state
+            </th>
           </tr>
-        {%- endfor -%}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {%- for order in orders -%}
+            <tr>
+              <td>
+                <a href="{{ path('show_order', { 'key': order.key })}}">
+                  {{- order.key -}}
+                </a>
+              </td>
+              <td class="date">
+                {{- order.date | date('Y-m-d\TH:i:s.vP', false) -}}
+              </td>
+              <td>
+                {{- order.state -}}
+              </td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
+{%- endif -%}

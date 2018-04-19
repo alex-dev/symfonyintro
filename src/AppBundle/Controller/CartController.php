@@ -26,8 +26,8 @@ class CartController extends Controller {
         array_map(function ($item) { return [
           'key' => UUID::createfromString($item['key']),
           'quantity' => $item['quantity'],
-        ]; },
-        $session->get('cart') ?: []))
+        ]; }, $session->get('cart') ?: []),
+        $this->getUser())
     ]);
   }
 

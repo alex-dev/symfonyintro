@@ -25,6 +25,7 @@ class OrderItem {
 
   /**
    * @ORM\ManyToOne(targetEntity="Order", inversedBy="items")
+   * @ORM\JoinColumn(name="`order`", nullable=false)
    */
   protected $order;
 
@@ -38,6 +39,7 @@ class OrderItem {
 
   /**
    * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Product\Product")
+   * @ORM\JoinColumn(nullable=false)
    */
   protected $product;
 

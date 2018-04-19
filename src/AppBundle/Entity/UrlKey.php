@@ -22,6 +22,6 @@ abstract class UrlKey {
   }
   
   public function __construct() {
-    $this->setKey(new UUID());
+    $this->setKey(UUID::create());
   }
 }

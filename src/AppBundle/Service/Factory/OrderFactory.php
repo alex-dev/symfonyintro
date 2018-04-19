@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Service\Factory;
 
+use AppBundle\Entity\Client\Client;
 use AppBundle\Entity\Order\OrderItem;
 use AppBundle\Entity\Order\Order;
 use AppBundle\Repository\ItemRepository;
@@ -21,7 +22,7 @@ final class OrderFactory extends AbstractFactory {
   public function __invoke(array $keys, $client) { return $this->createFromSession($keys, $client); }
 
   public function getFromRepositoryByKey($key) {
-    $data = $this->orderRepository->findOneByKey($key->toHex());
+    $data = $this->orderRepository->findOneByKey($key);
     $data->setCalculator($this->calculator);
     return $data;
   }

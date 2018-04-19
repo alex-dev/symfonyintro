@@ -2,9 +2,10 @@
 namespace AppBundle\Type;
 
 use Serializable;
-use Appbundle\CustomException\UUIDException;
+use AppBundle\CustomException\UUIDException;
 
 final class UUID {
+  const pattern = '^{?((?:[0-9A-F]{8}-[0-9A-F]{4}-[1-5][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12})|(?:[0-9A-F]{12}[1-5][0-9A-F]{3}[89AB][0-9A-F]{15}))}?$';
   const regex = '/^{?((?:[0-9A-F]{8}-[0-9A-F]{4}-[1-5][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12})|(?:[0-9A-F]{12}[1-5][0-9A-F]{3}[89AB][0-9A-F]{15}))}?$/i';  
 
   private $value;
@@ -61,7 +62,7 @@ final class UUID {
     if ($temp !== 0 && $temp !== 1) {
       throw new Exception('Unknown error.');
     } else if (count($matches) === 0) {
-      throw new UUIDException("$hash is not a valid UUID.");
+      throw new UUIDException("$value is not a valid UUID.");
     } else {
       return new UUID(mb_strtoupper($matches[1]));
     }

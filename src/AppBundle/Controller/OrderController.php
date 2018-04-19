@@ -31,7 +31,7 @@ class OrderController extends Controller {
   }
 
   /**
-   * @Route("/{key}/", name="show_order")
+   * @Route("/{key}/", name="show_order", requirements={ "key": AppBundle\Type\UUID::pattern })
    * @Method({ "GET" })
    */
   public function showAction($key, OrderFactory $factory) {
@@ -101,12 +101,12 @@ class OrderController extends Controller {
         'key' => UUID::createfromString($item['key']),
         'quantity' => $item['quantity'],
       ]; }, $data),
-      $client);
+      $this->getUser());
   }
 
   private function updateInventory(array $products, Order $order, callable $operation) {
     foreach ($products as $product) {
-      $orderitem = array_filter($order, function ($item) use ($product) {
+      $orderitem = array_filter($order->getItems(), function ($item) use ($product) {
         return $item->getProduct()->getKey() == $product->getProduct()->getKey();
       })[0];
       $product->setCount($operation($product, $orderitem));
@@ -115,7 +115,7 @@ class OrderController extends Controller {
 
   private function getProductsFromOrder(Manager $manager, Order $order) {
     return $manager->getRepository(self::item)->findItemsByProductKeys(
-      array_map(function ($item) { return $item->getProduct()->getKey(); }, $order)
+      array_map(function ($item) { return $item->getProduct()->getKey(); }, $order->getItems())
     );
   }
 }

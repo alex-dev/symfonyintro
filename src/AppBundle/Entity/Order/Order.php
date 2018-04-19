@@ -53,7 +53,8 @@ class Order extends UrlKey {
   }
 
   /**
-   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Client\Client")
+   * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Client\Client", inversedBy="orders")
+   * @ORM\JoinColumn(nullable=false)
    */
   protected $client;
 
@@ -62,11 +63,11 @@ class Order extends UrlKey {
   }
 
   protected function setClient(Client $value) {
-    $this->client = $client;
+    $this->client = $value;
   }
 
   /**
-   * @ORM\OneToMany(targetEntity="OrderItem", mappedBy="order")
+   * @ORM\OneToMany(targetEntity="OrderItem", mappedBy="order", cascade={ "persist" })
    */
   protected $items;
 

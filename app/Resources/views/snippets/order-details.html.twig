@@ -1,27 +1,98 @@
-{% extends 'snippets/order-summary.html.twig' %}
+{% set currentlocale = app.request.locale %}
 
-{% block details -%}
-  <tbody>
-    {%- for item in order.items -%}
-      <tr>
-        <td>
-          <a href="{{ path('show_product', { 'type': item.product | product_kind, 'key': item.product.key })}}">
-            {{- item.product.translate(currentlocale).name -}}
-          </a>
-        </td>
-        <td>
-          {{- item.quantity -}}
-        </td>
-        <td>
-          {{- item.cost.write(currentlocale) -}}
-        </td>
-        {# <td>
-          {{- item.cost.write(currentlocale) -}}
-        </td> #}
-        <td>
-          {{- item.cost.multiplyByConstant(item.quantity).write(currentlocale) -}}
-        </td>
-      </tr>
-    {%- endfor -%}
-  </tbody>
-{%- endblock %}
+<div id="order-summary" class="box mt-0 mb-4 p-0">
+  <div class="box-header mt-0 mb-0">
+    <h3 class="mb-0">order.summary</h3>
+  </div>
+  {%- block details -%}{%- endblock -%}
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>
+            {%- trans from 'messages' into currentlocale -%}
+              product
+            {%- endtrans -%}
+          </th>
+          <th>
+            {%- trans from 'messages' into currentlocale -%}
+              quantity
+            {%- endtrans -%}
+          </th>
+          <th>
+            {%- trans from 'messages' into currentlocale -%}
+              unitprice
+            {%- endtrans -%}
+          </th>
+          {# To be implemented later
+          <th>
+            {%- trans from 'messages' into currentlocale -%}
+              discount
+            {%- endtrans -%}
+          </th> #}
+          <th>
+            {%- trans from 'messages' into currentlocale -%}
+              total
+            {%- endtrans -%}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for item in order.items -%}
+          <tr>
+            <td>
+              <a href="{{ path('show_product', { 'type': item.product | product_kind, 'key': item.product.key })}}">
+                {{- item.product.translate(currentlocale).name -}}
+              </a>
+            </td>
+            <td>
+              {{- item.quantity -}}
+            </td>
+            <td>
+              {{- item.cost.write(currentlocale) -}}
+            </td>
+            {# <td>
+              {{- item.cost.write(currentlocale) -}}
+            </td> #}
+            <td>
+              {{- item.cost.multiplyByConstant(item.quantity).write(currentlocale) -}}
+            </td>
+          </tr>
+        {%- endfor -%}
+      </tbody>
+      {%- set cost = order.cost -%}
+      <tbody>
+        <tr>
+          <td colspan="3">order.subtotal</td>
+          <th>
+            {{- cost.cost.write(currentlocale) -}}
+          </th>
+        </tr>
+        <tr>
+          <td colspan="3">order.shipping</td>
+          <th>
+            {{- cost.shipping.write(currentlocale) -}}
+          </th>
+        </tr>
+        {%- for name, tax in cost.taxes -%}
+        <tr>
+          <td colspan="3">
+            {{- name | trans({}, 'messages', currentlocale) -}}
+          </td>
+          <th>
+            {{- tax.write(currentlocale) -}}
+          </th>
+        </tr>
+        {%- endfor -%}
+      </tbody>
+      <tfoot>
+        <tr class="total">
+          <td colspan="3">Total</td>
+          <th>
+            {{- cost.total.write(currentlocale) -}}
+          </th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
