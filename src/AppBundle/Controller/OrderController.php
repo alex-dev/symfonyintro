@@ -71,6 +71,7 @@ class OrderController extends Controller {
       return $item->getCount() - $order->getQuantity();
     });
 
+    $session->remove('cart');
     $manager->flush();
 
     return $this->redirectToRoute('show_order', ['key' => $order->getKey()]);
@@ -106,10 +107,10 @@ class OrderController extends Controller {
 
   private function updateInventory(array $products, Order $order, callable $operation) {
     foreach ($products as $product) {
-      $orderitem = array_filter($order->getItems(), function ($item) use ($product) {
+      $items = array_filter($order->getItems(), function ($item) use ($product) {
         return $item->getProduct()->getKey() == $product->getProduct()->getKey();
-      })[0];
-      $product->setCount($operation($product, $orderitem));
+      });
+      $product->setCount($operation($product, array_pop($items)));
     }
   }
 

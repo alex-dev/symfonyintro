@@ -11,7 +11,7 @@ use AppBundle\Entity\QuantityPattern\Value\Scalar;
  * @ORM\Entity
  * @ORM\Table(
  *   uniqueConstraints={
- *     @ORM\UniqueConstraint(name="UK_OrderItems_product_order", columns={ "product", "order" })
+ *     @ORM\UniqueConstraint(name="UK_OrderItems_product_order", columns={ "product", "`order`" })
  *   })
  * @UniqueEntity(fields={ "product", "order" })
  */
