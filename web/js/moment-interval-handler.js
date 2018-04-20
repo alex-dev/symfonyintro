@@ -1,37 +1,39 @@
 const datestring = document.currentScript.getAttribute('data-time');
 const action = document.currentScript.getAttribute('data-action');
-const labels = {
-  text: document.currentScript.getAttribute('data-time-to-cancel-label'),
-  button: document.currentScript.getAttribute('data-cancel-label')
-};
+const label = document.currentScript.getAttribute('data-cancel-label');
 
 function frameUpdate(date) {
-  const date = moment.utc(datestring);
+  const limit = moment(date).add(2, 'days');
+  const bounds = [
+    { bound: { value: 24, unit: 'hours' }, timeout: { value: 1, unit: 'hour' } },
+    { bound: { value: 1, unit: 'hours' }, timeout: { value: 1, unit: 'minute' } },
+    { bound: { value: 0, unit: 'seconds' }, timeout: { value: 1, unit: 'second' } },
+    undefined
+  ];
 
-  if (date.diff(moment.utc(), 'days') >= 2) {
-    $('#data-interval').remove();
-    $('#data-cancel').remove();
-  } else {
-    let nextFrame;
-    
-    {
-      nextFrame = moment.duration(15, 'seconds');
-      $('data-interval-value').text(date.diff(moment.utc(), 'seconds'));  
+  for (bound of bounds) {
+    if (!bound) {
+      $('#data-interval').remove();
+      $('#data-cancel').remove();  
+    } else if (limit.diff(moment.utc(), bound.bound.unit) >= bound.bound.value) {
+      $('#data-interval-value').text(moment.duration(limit.diff(moment.utc())).humanize(true));
+      setTimeout(
+        () => frameUpdate(date),
+        moment.duration(bound.timeout.value, bound.timeout.unit).as('milliseconds'));      
+      break;
     }
-
-    setTimeout(() => frameUpdate(date), nextFrame.as('milliseconds'));
   }
 }
 
 $(() => {
+  const date = moment.utc(datestring);
   if (date.diff(moment.utc(), 'days') < 2) {
     $('#sidebar-data').append(`
-      <div id="data-interval" class="row">
-        ${labels.text}:&nbsp;<span id="data-interval-value"></span>
-      </div>
       <div id="data-cancel" class="row">
         <form action="${action}" method="post">
-          <button type="submit">${labels.button}</button>
+          <button type="submit" class="btn btn-sm btn-template-outlined">
+            ${label}:&nbsp;<span id="data-interval-value"></span>
+          </button>
         </form>
       </div>
     `);

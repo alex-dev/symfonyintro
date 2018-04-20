@@ -15,7 +15,7 @@
           </div>
           <div class="col">
             {%- if is_granted('IS_AUTHENTICATED_REMEMBERED') -%}
-              <a href="javascript: void(0)" data-toggle="dropdown" class="dropdown-toggle">
+              <a href="javascript: void(0)" data-toggle="dropdown" class="dropdown-toggle nav-link">
                 {%- trans from 'menus' into currentlocale -%}
                   account
                 {%- endtrans -%}
@@ -23,7 +23,7 @@
               </a>
               <ul class="dropdown-menu">
                 <li class="dropdown-item">
-                  <a href="{{ path('list_orders') }}" class="nav-link">
+                  <a href="{{ path('list_orders') }}" class="nav-link d-inline-block">
                     <span class="d-none d-md-inline-block">
                       {%- trans from 'menus' into currentlocale -%}
                         order.listing

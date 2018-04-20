@@ -4,6 +4,7 @@ namespace AppBundle\Service\Factory;
 use AppBundle\Entity\Client\Client;
 use AppBundle\Entity\Order\OrderItem;
 use AppBundle\Entity\Order\Order;
+use AppBundle\Entity\Order\State;
 use AppBundle\Repository\ItemRepository;
 use AppBundle\Service\CostCalculator;
 use AppBundle\Service\Factory\AbstractFactory;
@@ -28,7 +29,7 @@ final class OrderFactory extends AbstractFactory {
   }
 
   public function getFromRepositoryByClient(Client $client) {
-    $data = $this->orderRepository->findByClient($client);
+    $data = $this->orderRepository->findBy(['client' => $client, 'state' => State::valid]);
     array_walk($data, function ($item) { $item->setCalculator($this->calculator); });
     return $data;
   }

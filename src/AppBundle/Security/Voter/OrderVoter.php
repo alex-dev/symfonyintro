@@ -17,14 +17,14 @@ class OrderVoter extends Voter {
   }
 
   protected function supports($attribute, $subject) {
-    return in_array($attribute, [self::VIEW]) && $subject instanceof Order;
+    return in_array($attribute, [self::VIEW, self::CANCEL]) && $subject instanceof Order;
   }
 
   protected function voteOnAttribute($attribute, $subject, TokenInterface $token) {
     switch($attribute) {
       case self::VIEW:
         return $this->aclManager->decide($token, ['ROLE_ADMIN']) || $this->voteOnView($subject, $token->getUser());
-      case self:CANCEL:
+      case self::CANCEL:
         return $this->aclManager->decide($token, ['ROLE_ADMIN']) || $this->voteOnCancel($subject, $token->getUser());
       default:
         return $this->aclManager->decide($token, ['ROLE_ADMIN']);
@@ -37,7 +37,7 @@ class OrderVoter extends Voter {
   }
 
   private function voteOnCancel($subject, $user) {
-    $interval = $subject->getDate()->diff(new \DateTime);
-    return $interval->days + $interval->h / 24 + $interval->m / (60 * 24) + $interval->s / (60 * 60 * 24) >= 2;
+    $interval = (new \DateTime)->diff($subject->getDate());
+    return ($interval->days + $interval->h / 24 + $interval->m / (60 * 24) + $interval->s / (60 * 60 * 24)) < 2;
   }
 }

@@ -20,7 +20,7 @@
               order.date
             </th>
             <th>
-              order.state
+              order.cost
             </th>
           </tr>
         </thead>
@@ -36,7 +36,7 @@
                 {{- order.date | date('Y-m-d\\TH:i:sP', false) -}}
               </td>
               <td>
-                {{- order.state -}}
+                {{- order.cost.total.write(currentlocale) -}}
               </td>
             </tr>
           {%- endfor -%}

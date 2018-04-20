@@ -43,6 +43,10 @@ class Order extends UrlKey {
    */
   protected $state;
 
+  public function getState() {
+    return $this->state;
+  }
+
   /**
    * @ORM\Column(type="datetime")
    */
@@ -106,11 +110,11 @@ class Order extends UrlKey {
   }
 
   public function isCancelled() {
-    return $state == State::cancelled;
+    return $this->state == State::cancelled;
   }
 
   public function cancel() {
-    $state = State::cancelled;
+    $this->state = State::cancelled;
   }
 }
 
