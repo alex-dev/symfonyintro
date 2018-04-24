@@ -30,7 +30,7 @@ final class OrderFactory extends AbstractFactory {
   }
 
   public function getFromRepositoryByClient(Client $client) {
-    $data = $this->orderRepository->findBy(['client' => $client, 'state' => State::valid], ['date' => 'ASC']);
+    $data = $this->orderRepository->findBy(['client' => $client, 'state' => State::valid], ['date' => 'DESC']);
     array_walk($data, function ($item) { $item->setCalculator($this->calculator); });
     return $data;
   }

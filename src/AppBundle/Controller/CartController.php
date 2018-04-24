@@ -21,7 +21,6 @@ class CartController extends Controller {
    * @Method({ "GET" })
    */
   public function showAction(Session $session, OrderFactory $factory) {
-    var_dump($session->get('cart')); echo '<br>';
     return $this->render('cart-showing.html.twig', [
       'order' => $factory(
         array_map(function ($item) { return [

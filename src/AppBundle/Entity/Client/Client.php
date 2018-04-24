@@ -33,6 +33,19 @@ class Client extends User {
   protected $id;
 
   /**
+   * @ORM\Column(type="string", unique=true)
+   */
+  protected $stripeId;
+
+  public function getStripeId() {
+    return $this->stripeId;
+  }
+
+  public function setDtripeId($value) {
+    $this->stripeId = $value;
+  }
+
+  /**
    * @ORM\Column(type="string", length=Client::phone_length)
    * @Assert\Regex(
    *   pattern=Client::phone_pattern,

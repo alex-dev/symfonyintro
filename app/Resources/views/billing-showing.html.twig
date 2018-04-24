@@ -14,7 +14,17 @@
 {%- endblock %}
 
 {% block sidebar -%}
-  <form action="{{ path('order_cart_post') }}" method="post">
-    <button type="submit">order.order</button>
-  </form>
+  <div class="row">
+    <form action="{{ path('order_cart_post') }}" method="post">
+      {%- set cost = order.cost -%}
+      <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="pk_test_ZVZFLIOvs8VSCETp9d3D0utD"
+        data-amount="{{ cost.total.value * 100 }}"
+        data-currency="{{ cost.total.unit.key }}"
+        data-email="{{ order.client.email }}"
+        data-name="{{ companyname }}"
+        data-locale="{{ currentlocale}}">
+      </script>
+    </form>
+  </div>
 {%- endblock %}

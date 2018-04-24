@@ -29,7 +29,7 @@
 
 {% block sidebar -%}
   {%- if not order.isCancelled -%}
-    <div class="row">
+    <div id="sidebar-data" class="row">
       <span>order.date:&nbsp;</span>
       <span class="date">{{- order.date | date('Y-m-d\\TH:i:sP', false) -}}</span>
     </div>

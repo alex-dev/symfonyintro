@@ -29,7 +29,7 @@ function frameUpdate(date) {
 $(() => {
   const date = moment.utc(datestring);
   if (date.diff(moment.utc(), 'days') < 2) {
-    $('#sidebar-data').append(`
+    $('#sidebar-data').parent().append(`
       <div id="data-cancel" class="row">
         <form action="${action}" method="post">
           <button type="submit" class="btn btn-sm btn-template-outlined">

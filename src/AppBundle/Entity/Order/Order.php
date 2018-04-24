@@ -15,7 +15,8 @@ use AppBundle\Type\UUID;
  * @ORM\Entity
  * @ORM\Table(
  *   uniqueConstraints={
- *     @ORM\UniqueConstraint(name="UK_Orders_key", columns={ "`key`" })
+ *     @ORM\UniqueConstraint(name="UK_Orders_key", columns={ "`key`" }),
+ *     @ORM\UniqueConstraint(name="UK_Orders_stripeToken", columns={ "stripeToken" })
  *   })
  * @UniqueEntity("key")
  */
@@ -34,9 +35,17 @@ class Order extends UrlKey {
   protected $id;
 
   /**
-   * Not Implemented
+   * @ORM\Column(type="string")
    */
   protected $stripeToken;
+
+  public function getStripeToken() {
+    return $this->stripeToken;
+  }
+
+  public function setStripeToken($value) {
+    $this->stripeToken = $value;
+  }
 
   /**
    * @ORM\Column(type="string", length=20)

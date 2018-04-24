@@ -8,6 +8,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface as Session;
 use Symfony\Component\Routing\Annotation\Route;
+use Stripe\Charge;
+use Stripe\Customer;
+use Stripe\Error\Base;
+use Stripe\Refund;
 use AppBundle\Entity\Order\Order;
 use AppBundle\Service\Factory\OrderFactory;
 use AppBundle\Type\UUID;
@@ -60,13 +64,27 @@ class OrderController extends Controller {
    * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
    */
   public function createPostAction(Request $request, Session $session, OrderFactory $factory, Manager $manager) {
-    // TODO: Validate stripes token here. Redirect if invalid.
     $order = $this->makeOrderFromSession($session->get('cart') ?: [], $factory);
-    
-    // TODO: Add stripes token to order here.
+    $token = $request->request->get('stripeToken');
 
     $manager->persist($order);
     
+    if (!$this->getUser()->getStripeId()) {
+      try {
+        $this->createCustomer($this->getUser(), $token);
+      } catch (Base $exception) {
+        $session->getFlashBag()->add('stripe-client', "$exception");
+        $this->redirectToRoute('order_cart_form');
+      }  
+    }
+
+    try {
+      $this->charge($order);      
+    } catch (Base $exception) {
+      $session->getFlashBag()->add('stripe-charge', "$exception");
+      $this->redirectToRoute('order_cart_form');
+    }
+ 
     $this->updateInventory($this->getProductsFromOrder($manager, $order), $order, function ($item, $order) {
       return $item->getCount() - $order->getQuantity();
     });
@@ -85,6 +103,13 @@ class OrderController extends Controller {
     $order = $factory->getFromRepositoryByKey(UUID::createFromString($key));
     $this->denyAccessUnlessGranted('cancel', $order);
 
+    try {
+      $this->refund($order);      
+    } catch (Base $exception) {
+      $session->getFlashBag()->add('stripe-refund', "$exception");
+      $this->redirectToRoute('show_order', ['key' => $order->getKey()]);
+    }
+
     $order->cancel();
 
     $this->updateInventory($this->getProductsFromOrder($manager, $order), $order, function ($item, $order) {
@@ -96,11 +121,30 @@ class OrderController extends Controller {
     return $this->redirectToRoute('list_orders');
   }
 
+  private function createCustomer($client, $token) {
+    $customer = Customer::create(['email' => $client->email, 'source' => $token]);
+    $client->setStripeId($customer->id);
+  }
+
+  private function charge($order) {
+    $cost = $order->getCost();
+    $charge = Charge::create([
+      'cutomer' => $order->getClient()->getStripeId(),
+      'amount' => $cost->getValue() * 100,
+      'currency' => $cost->getKey()
+    ]);
+    $order->setStripeToken($charge->id);
+  }
+
+  private function refund($order) {
+    Refund::create(['charge' => $order->getStripeToken(), 'reason' => 'User cancellation']);
+  }
+
   private function makeOrderFromSession($data, OrderFactory $factory) {
     return $factory(
       array_map(function ($item) { return [
         'key' => UUID::createfromString($item['key']),
-        'quantity' => $item['quantity'],
+        'quantity' => $item['quantity']
       ]; }, $data),
       $this->getUser());
   }

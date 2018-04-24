@@ -17,11 +17,11 @@ class RegistrationListener implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return [FOSUserEvents::PROFILE_EDIT_SUCCESS => 'onRegistrationSuccess'];
+        return [FOSUserEvents::REGISTRATION_SUCCESS  => 'onRegistrationSuccess'];
     }
 
     public function onRegistrationSuccess(FormEvent $event)
-    {
+    {      
         $event->setResponse(new RedirectResponse($this->router->generate('list_products')));
     }
 }
