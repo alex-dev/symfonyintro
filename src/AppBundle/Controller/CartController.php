@@ -21,6 +21,7 @@ class CartController extends Controller {
    * @Method({ "GET" })
    */
   public function showAction(Session $session, OrderFactory $factory) {
+    var_dump($session->get('cart')); echo '<br>';
     return $this->render('cart-showing.html.twig', [
       'order' => $factory(
         array_map(function ($item) { return [
@@ -92,7 +93,7 @@ class CartController extends Controller {
         ];
       }, $session->get('cart')),
       function($item) { return $item['quantity'] > 0; }));
-
+    
     switch ($type) {
       case 'update':
         return $this->redirect($request->headers->get('referer'));    

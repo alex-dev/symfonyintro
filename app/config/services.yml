@@ -23,6 +23,13 @@ services:
         arguments: 
             - '%api.fixer.uri%'
 
+    DefaultData\PriceUnit:
+        factory:
+            - '@AppBundle\Repository\UnitRepository'
+            - 'findOneByKey'
+        arguments:
+            - 'CAD'
+
     AppBundle\Controller\:
         resource: '../../src/AppBundle/Controller/*'
         public: true
@@ -68,6 +75,13 @@ services:
         arguments:
             - 'AppBundle\Entity\Order\Order'
 
+    AppBundle\Repository\UnitRepository:
+        factory: 
+            - '@Doctrine\ORM\EntityManagerInterface'
+            - getRepository
+        arguments:
+            - 'AppBundle\Entity\QuantityPattern\Unit\Unit'
+
     AppBundle\Security\Voter\:
         resource: '../../src/AppBundle/Security/Voter/*'
         public: true
@@ -76,6 +90,10 @@ services:
 
     AppBundle\Service\:
         resource: '../../src/AppBundle/Service/*'
+
+    AppBundle\Service\CostCalculator:
+        arguments:
+            $unit: '@DefaultData\PriceUnit'
 
     AppBundle\Service\Factory\ClientAPIFactory:
         arguments: 

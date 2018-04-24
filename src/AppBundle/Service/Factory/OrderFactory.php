@@ -5,6 +5,7 @@ use AppBundle\Entity\Client\Client;
 use AppBundle\Entity\Order\OrderItem;
 use AppBundle\Entity\Order\Order;
 use AppBundle\Entity\Order\State;
+use AppBundle\Entity\QuantityPattern\Value\Scalar;
 use AppBundle\Repository\ItemRepository;
 use AppBundle\Service\CostCalculator;
 use AppBundle\Service\Factory\AbstractFactory;
@@ -29,7 +30,7 @@ final class OrderFactory extends AbstractFactory {
   }
 
   public function getFromRepositoryByClient(Client $client) {
-    $data = $this->orderRepository->findBy(['client' => $client, 'state' => State::valid]);
+    $data = $this->orderRepository->findBy(['client' => $client, 'state' => State::valid], ['date' => 'ASC']);
     array_walk($data, function ($item) { $item->setCalculator($this->calculator); });
     return $data;
   }
@@ -44,11 +45,12 @@ final class OrderFactory extends AbstractFactory {
         return $item->getProduct()->getKey();
       }, $items), $items);
   
-      //May need to copy Scalar rather than just reference it if Doctrine doesn't auto copy.
       return new Order(
-        array_map(function ($item, $quantity) {
-          return new OrderItem($item->getProduct(), $item->getCost(), $quantity);
-        }, array_values($combinedItems), array_values($combinedKeys)),
+        array_map(function ($key) use ($combinedItems, $combinedKeys) {
+          $item = $combinedItems[$key->toString()];
+          $cost = new Scalar($item->getCost()->getUnit(), $item->getCost()->getValue());
+          return new OrderItem($item->getProduct(), $cost, $combinedKeys[$key->toString()]);
+        }, $keys_),
         $client,
         $this->calculator);
     } else {
