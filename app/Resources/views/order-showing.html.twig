@@ -28,6 +28,11 @@
 {%- endblock %}
 
 {% block sidebar -%}
+  {%- for message in app.flashes('stripe-refund') -%}
+    <div class="row alert alert-error">
+      {{- message -}}
+    </div>
+  {%- endfor -%}
   {%- if not order.isCancelled -%}
     <div id="sidebar-data" class="row">
       <span>order.date:&nbsp;</span>

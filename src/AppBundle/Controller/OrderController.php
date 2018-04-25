@@ -67,24 +67,14 @@ class OrderController extends Controller {
     $order = $this->makeOrderFromSession($session->get('cart') ?: [], $factory);
     $token = $request->request->get('stripeToken');
 
-    $manager->persist($order);
-    
-    if (!$this->getUser()->getStripeId()) {
-      try {
-        $this->createCustomer($this->getUser(), $token);
-      } catch (Base $exception) {
-        $session->getFlashBag()->add('stripe-client', "$exception");
-        $this->redirectToRoute('order_cart_form');
-      }  
-    }
-
     try {
-      $this->charge($order);      
+      $this->charge($order, $token);      
     } catch (Base $exception) {
-      $session->getFlashBag()->add('stripe-charge', "$exception");
-      $this->redirectToRoute('order_cart_form');
+      $session->getFlashBag()->add('stripe-charge', $exception->getMessage());
+      return $this->redirectToRoute('order_cart_form');
     }
- 
+    
+    $manager->persist($order);
     $this->updateInventory($this->getProductsFromOrder($manager, $order), $order, function ($item, $order) {
       return $item->getCount() - $order->getQuantity();
     });
@@ -99,15 +89,15 @@ class OrderController extends Controller {
    * @Route("/cancel/{key}", name="order_cancel")
    * @Method({ "POST" })
    */
-  public function cancelAction($key, OrderFactory $factory, Manager $manager) {
+  public function cancelAction($key, Session $session, OrderFactory $factory, Manager $manager) {
     $order = $factory->getFromRepositoryByKey(UUID::createFromString($key));
     $this->denyAccessUnlessGranted('cancel', $order);
 
     try {
       $this->refund($order);      
     } catch (Base $exception) {
-      $session->getFlashBag()->add('stripe-refund', "$exception");
-      $this->redirectToRoute('show_order', ['key' => $order->getKey()]);
+      $session->getFlashBag()->add('stripe-refund', $exception->getMessage());
+      return $this->redirectToRoute('show_order', ['key' => $order->getKey()]);
     }
 
     $order->cancel();
@@ -121,23 +111,18 @@ class OrderController extends Controller {
     return $this->redirectToRoute('list_orders');
   }
 
-  private function createCustomer($client, $token) {
-    $customer = Customer::create(['email' => $client->email, 'source' => $token]);
-    $client->setStripeId($customer->id);
-  }
-
-  private function charge($order) {
+  private function charge($order, $token) {
     $cost = $order->getCost();
     $charge = Charge::create([
-      'cutomer' => $order->getClient()->getStripeId(),
-      'amount' => $cost->getValue() * 100,
-      'currency' => $cost->getKey()
+      'source' => $token,
+      'amount' => round($cost['total']->getValue() * 100),
+      'currency' => $cost['total']->getUnit()->getKey()
     ]);
     $order->setStripeToken($charge->id);
   }
 
   private function refund($order) {
-    Refund::create(['charge' => $order->getStripeToken(), 'reason' => 'User cancellation']);
+    Refund::create(['charge' => $order->getStripeToken(), 'reason' => 'requested_by_customer']);
   }
 
   private function makeOrderFromSession($data, OrderFactory $factory) {
