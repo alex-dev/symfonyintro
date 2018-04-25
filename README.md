@@ -34,3 +34,4 @@ Problèmes connus:
   * Les champs de la table du panier sont trop petits.
   * Address n'est pas normalisée et plutôt mal traduite.
   * Les numéros de téléphone ne sont pas formattés.
+  * Les traductions sont passablement manquantes dans les dernières itérations.
