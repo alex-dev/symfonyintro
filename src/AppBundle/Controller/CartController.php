@@ -20,14 +20,14 @@ class CartController extends Controller {
    * @Route("/", name="show_cart")
    * @Method({ "GET" })
    */
-  public function showAction(Session $session, OrderFactory $factory) {
+  public function showAction(Session $session, OrderFactory $factory, Securyt) {
     return $this->render('cart-showing.html.twig', [
       'order' => $factory(
         array_map(function ($item) { return [
           'key' => UUID::createfromString($item['key']),
           'quantity' => $item['quantity'],
         ]; }, $session->get('cart') ?: []),
-        $this->getUser())
+        $this->isGranted('IS_AUTHENTICATED_FULLY') ? $this->getUser() : null)
     ]);
   }
 
