@@ -1,3 +1,8 @@
+Utilisateurs:
+  * administrator; 12345;
+  * aparent; 12345;
+  * amartel; 12345;
+
 Installation:
   1. Ouvrir un CLI dans le répertoire racine du projet.
   2. Exécuter "composer install".
@@ -35,3 +40,4 @@ Problèmes connus:
   * Address n'est pas normalisée et plutôt mal traduite.
   * Les numéros de téléphone ne sont pas formattés.
   * Les traductions sont passablement manquantes dans les dernières itérations.
+  * Sur la page des manufacturiers, l'édition force qu'il n'y aie qu'une seule valeur, et dans la DB, et dans le formulaire pour un id. Comme les update/insert sont faits séquentiellement le 'swap' de deux valeurs va provoquer une erreur SQL.

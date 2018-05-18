@@ -20,7 +20,7 @@ class CartController extends Controller {
    * @Route("/", name="show_cart")
    * @Method({ "GET" })
    */
-  public function showAction(Session $session, OrderFactory $factory, Securyt) {
+  public function showAction(Session $session, OrderFactory $factory) {
     return $this->render('cart-showing.html.twig', [
       'order' => $factory(
         array_map(function ($item) { return [

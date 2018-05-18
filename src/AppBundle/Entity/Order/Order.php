@@ -75,7 +75,7 @@ class Order extends UrlKey {
     return $this->client;
   }
 
-  protected function setClient(Client $value) {
+  protected function setClient(Client $value = null) {
     $this->client = $value;
   }
 
@@ -109,7 +109,7 @@ class Order extends UrlKey {
     return $temp($this->getItems());
   }
 
-  public function __construct(array $items, Client $client, CostCalculator $calculator) {
+  public function __construct(array $items, Client $client = null, CostCalculator $calculator) {
     parent::__construct();
     $this->state = State::valid;
     $this->date = new \DateTime();

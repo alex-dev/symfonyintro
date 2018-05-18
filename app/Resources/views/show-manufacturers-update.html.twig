@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title -%}
+  {%- trans from 'menus' into currentlocale -%}
+    show.manufacturers
+  {%- endtrans -%}
+{%- endblock %}
+
+{% block scripts -%}
+  <script defer src="{{ asset('js/collection-type-add.js') }}"></script>
+{%- endblock %}
+
+{% block heading -%}
+  {%- include 'snippets/heading.html.twig' with {
+    current: 'manufacturers.listing',
+    items:{ 'admin': path('show_admin_menu') }
+  } only -%}
+{%- endblock %}
+
+{% block body -%}
+  <div class="container">
+    <div class="row bar">
+      <div class="box mt-0 pb-0 no-horizontal-padding">
+        <form action="{{ path('update_manufacturers') }}" method="POST">
+          <ul id="collection" data-index="0" data-prototype="{{ '<input type="text" name="manufacturers[__name__]" class="form-control" />' | escape }}">
+            {%- for manufacturer in manufacturers -%}
+              <li>
+                <input type="text" name="manufacturers[{{ manufacturer.key }}]" value="{{ manufacturer.name }}" class="form-control" />
+              </li>
+            {%- endfor -%}
+          </ul>
+          <div class="box-footer d-flex justify-content-between align-items-center">
+            <div class="left-col">
+              <button type="button" onclick="add('#collection');" class="btn btn-secondary">
+                manufacturer.add
+              </button>
+            </div>
+            <div class="right-col">
+              <button type="submit" class="btn btn-template-outlined">
+                update
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{%- endblock %}

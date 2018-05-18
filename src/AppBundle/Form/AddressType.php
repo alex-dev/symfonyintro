@@ -14,7 +14,7 @@ class AddressType extends AbstractType
   private $locale;
 
   public function __construct(RequestStack $request) {
-    $locale = $request->getCurrentRequest()->getLocale();
+    $this->locale = $request->getCurrentRequest()->getLocale();
   }
 
   public function buildForm(FormBuilderInterface $builder, array $options)
@@ -40,7 +40,7 @@ class AddressType extends AbstractType
 
   public function getBlockPrefix()
   {
-    return 'name';
+    return 'address';
   }
 
   public function configureOptions(OptionsResolver $resolver) {

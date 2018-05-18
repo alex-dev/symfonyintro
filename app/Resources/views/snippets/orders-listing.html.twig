@@ -16,12 +16,22 @@
             <th>
               order.key
             </th>
+            {%- if admin -%}
+              <th>
+                order.client.username
+              </th>
+            {%- endif -%}
             <th>
               order.date
             </th>
             <th>
               order.cost
             </th>
+            {%- if admin -%}
+              <th>
+                order.state
+              </th>
+            {%- endif -%}
           </tr>
         </thead>
         <tbody>
@@ -32,12 +42,22 @@
                   {{- order.key -}}
                 </a>
               </td>
+              {%- if admin -%}
+                <td>
+                  {{- order.client.username -}}
+                </td>
+              {%- endif -%}
               <td class="date">
                 {{- order.date | date('Y-m-d\\TH:i:sP', false) -}}
               </td>
               <td>
                 {{- order.cost.total.write(currentlocale) -}}
               </td>
+              {%- if admin -%}
+                <td>
+                  {{- order.state -}}
+                </td>
+              {%- endif -%}
             </tr>
           {%- endfor -%}
         </tbody>

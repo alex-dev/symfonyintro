@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title -%}
+  {%- trans from 'menus' into currentlocale -%}
+    about.us
+  {%- endtrans -%}
+{%- endblock %}
+
+{% block heading -%}
+  {%- include 'snippets/heading.html.twig' with { current: 'admin', items: { } } only -%}
+{%- endblock %}
+
+{% block body -%}
+  <div class="container">
+    <div class="row bar">
+      <div class="col-6 col-md-3">
+        <a href="{{ path('show_inventory_full') }}" class="btn btn-secondary mt-0">
+          inventory.full
+        </a>
+      </div>
+      <div class="col-6 col-md-3">
+        <a href="{{ path('show_inventory_backorder') }}" class="btn btn-secondary mt-0">
+          inventory.backorder
+        </a>
+      </div>
+      <div class="col-6 col-md-3">
+        <a href="{{ path('show_manufacturers_admin') }}" class="btn btn-secondary mt-0">
+          list.manufacturers
+        </a>
+      </div>
+      <div class="col-6 col-md-3">
+        <a href="{{ path('show_orders_admin') }}" class="btn btn-secondary mt-0">
+          list.orders
+        </a>
+      </div>
+    </div>
+  </div>
+{%- endblock %}

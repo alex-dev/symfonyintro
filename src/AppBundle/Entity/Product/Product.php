@@ -4,7 +4,9 @@ namespace AppBundle\Entity\Product;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Knp\DoctrineBehaviors\Model\Translatable\Translatable;
+use AppBundle\CustomException\NotImplementedException;
 use AppBundle\Repository\ProductRepository;
 use AppBundle\Entity\UrlKey;
 use AppBundle\Entity\Manufacturer;
@@ -37,6 +39,8 @@ abstract class Product extends UrlKey {
 
   /**
    * @ORM\Column(type="string", length=Product::code_length)
+   * @Assert\Length(max=Product::code_length, maxMessage="product.code.toolong", groups={ "App" })
+   * @Assert\NotBlank(message="product.code.blank", groups={ "App" })
    */
   protected $code;
 
@@ -53,6 +57,7 @@ abstract class Product extends UrlKey {
    *   targetEntity="AppBundle\Entity\Manufacturer",
    *   cascade={ "persist", "refresh" })
    * @ORM\JoinColumn(nullable=false)
+   * @Assert\NotNull(message="product.manufacturer.null", groups={ "App" })
    */
   protected $manufacturer;
 
@@ -72,15 +77,24 @@ abstract class Product extends UrlKey {
   protected $images;
   
   public function getImages() {
-    return $this->images;
+    return $this->images->toArray();
   }
 
   public function setImages(array $value) {
     $this->images = new ArrayCollection($value);
   }
 
+  public function addImage(Image $image) {
+    $image->setProduct($this);
+    $this->images->add($image);
+  }
+
+  public function removeImage(Image $image) {
+    throw new NotImplementedException();
+  }
+
   public function getMainImage() {
-    return $this->getImages()->filter(function ($item) {
+    return $this->images->filter(function ($item) {
       return $item->isMain();
     })[0];
   }

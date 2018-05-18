@@ -5,30 +5,17 @@ namespace Application\Migrations;
 use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
 
-/**
- * Auto-generated Migration: Please modify to your needs!
- */
 class Version20180424164811 extends AbstractMigration
 {
-    /**
-     * @param Schema $schema
-     */
-    public function up(Schema $schema)
-    {
-        // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+  public function up(Schema $schema)
+  {
+    $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+    $this->addSql('CREATE UNIQUE INDEX UK_Orders_stripeToken ON orders (stripeToken)');
+  }
 
-        $this->addSql('CREATE UNIQUE INDEX UK_Orders_stripeToken ON orders (stripeToken)');
-    }
-
-    /**
-     * @param Schema $schema
-     */
-    public function down(Schema $schema)
-    {
-        // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
-        $this->addSql('DROP INDEX UK_Orders_stripeToken ON Orders');
-    }
+  public function down(Schema $schema)
+  {
+    $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
+    $this->addSql('DROP INDEX UK_Orders_stripeToken ON Orders');
+  }
 }

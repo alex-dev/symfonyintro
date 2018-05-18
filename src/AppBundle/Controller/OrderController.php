@@ -30,7 +30,8 @@ class OrderController extends Controller {
    */
   public function listAction(OrderFactory $factory) {
     return $this->render('orders-listing.html.twig', [
-      'orders' => $factory->getFromRepositoryByClient($this->getUser())
+      'orders' => $factory->getFromRepositoryByClient($this->getUser()),
+      'admin' => false
     ]);
   }
 

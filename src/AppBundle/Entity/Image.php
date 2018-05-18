@@ -34,6 +34,10 @@ class Image {
    */
   protected $product;
   
+  public function setProduct($product) {
+    $this->product = $product;
+  }
+
   /**
    * @ORM\Column(type="string", length=Image::filename_length)
    */
@@ -43,7 +47,7 @@ class Image {
     return $this->filename;
   }
 
-  protected function setFilename($value) {
+  public function setFilename($value) {
     if (mb_strlen($value) > self::filename_length) {
       throw new LengthException("$value must be less then ".self::filename_length." characters long.");
     } else {
@@ -60,7 +64,11 @@ class Image {
     return $this->main;
   }
 
-  protected function setIsMain($value) {
+  public function getIsMain() {
+    return $this->main;
+  }
+
+  public function setIsMain($value) {
     $this->main = $value;
   }
 

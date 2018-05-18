@@ -3,6 +3,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Exception\UnitException;
 use AppBundle\Service\Factory\DimensionsFactory;
 use AppBundle\Entity\Product\Product;
@@ -13,6 +14,8 @@ use AppBundle\Entity\QuantityPattern\Value\Scalar;
  * @ORM\Table
  */
 class Item {
+  const currencyUnit = 'cad';
+
   /**
    * @ORM\Id
    * @ORM\OneToOne(
@@ -48,7 +51,7 @@ class Item {
   }
 
   /**
-   * @ORM\Column(type="bigint", options={ "unsigned": true })
+   * @ORM\Column(type="integer")
    */
   protected $count;
 
@@ -59,11 +62,25 @@ class Item {
   public function setCount($value) {
     $this->count = $value;
   }
-  
-  public function __construct(Product $product, Scalar $cost, $count, DimensionsFactory $factory) {
+
+  /**
+   * @ORM\Column(type="integer")
+   */
+  protected $minimalCount;
+
+  public function getMinimalCount() {
+    return $this->minimalCount;
+  }
+
+  public function setMinimalCount($value) {
+    $this->minimalCount = $value;
+  }
+
+  public function __construct(Product $product, Scalar $cost, $count, $minimalCount, DimensionsFactory $factory) {
     $this->setProduct($product);
     $this->setCount($count);
-    $this->setCost_($cost, $factory('cad'));
+    $this->getMinimalCount($minimalCount);
+    $this->setCost_($cost, $factory(self::currencyUnit));
   }
 
   protected function setCost_(Scalar $value, $dimensions) {

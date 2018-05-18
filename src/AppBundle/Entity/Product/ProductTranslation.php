@@ -3,6 +3,7 @@ namespace AppBundle\Entity\Product;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 use Knp\DoctrineBehaviors\Model\Translatable\Translation;
 
 /**
@@ -17,6 +18,8 @@ class ProductTranslation {
 
   /**
    * @ORM\Column(type="string", length=ProductTranslation::name_length)
+   * @Assert\Length(max=ProductTranslation::name_length, maxMessage="product.name.toolong", groups={ "App" })
+   * @Assert\NotBlank(message="product.name.blank", groups={ "App" })
    */
   protected $name;
 

@@ -4,11 +4,20 @@ namespace AppBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use AppBundle\Entity\Item;
 use AppBundle\Entity\Product\Product;
+use AppBundle\Entity\Product\Memory;
+use AppBundle\Service\Factory\DimensionsFactory;
 use AppBundle\Type\UUID;
 
 final class ItemRepository extends EntityRepository {
   const pagesize = 30;
+
+  private $factory;
+
+  public function setFactory(DimensionsFactory $factory) {
+    $this->factory = $factory;
+  }
 
   public function __construct(EntityManagerInterface $manager, ClassMetadata $class){
     parent::__construct($manager, $class);
@@ -122,5 +131,32 @@ final class ItemRepository extends EntityRepository {
         'keys',
         array_map(function (UUID $key) { return $key->toHex(); }, $keys))
       ->getQuery()->getResult();
+  }
+
+  public function findBackorder() {
+    return $this->createQueryBuilder('i')
+      ->where('i.minimalCount > i.count')
+      ->getQuery()->getResult();
+  }
+
+  public function getDefaultMemory() {
+    if ($factory == null) {
+      $this->setFactory();
+    }
+    
+    return new Item(
+      new Memory(
+        '',
+        [],
+        [],
+        null,
+        $this->getEntityManager()->getRepository(MemoryArchitecture::class)->findOneById(1),
+        new Scalar(4000, $this->getEntityManager()->getRepository(Unit::class)->findByKey('megabyte')),
+        new Scalar(2333, $this->getEntityManager()->getRepository(Unit::class)->findByKey('megahertz')),
+        $this->factory),
+      new Scalar(0, $this->getEntityManager()->getRepository(Unit::class)->findByKey('CAD')),
+      0,
+      0,
+      $this->factory);
   }
 }

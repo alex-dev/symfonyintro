@@ -12,17 +12,24 @@
 {% endblock -%}
 
 {% block heading -%}
-  {%- include 'snippets/heading.html.twig' with {
-    current: 'order.listing',
-    items: { }
-  } only -%}
+  {%- if admin -%}
+    {%- include 'snippets/heading.html.twig' with {
+      current: 'order.listing.admin',
+      items: { 'admin': path('show_admin_menu') }
+    } only -%}
+  {%- else -%}
+    {%- include 'snippets/heading.html.twig' with {
+      current: 'order.listing',
+      items: { }
+    } only -%}
+  {%- endif -%}
 {%- endblock %}
 
 {% block body -%}
   <div class="container">
     <div class="row bar">
       <div class="col">
-        {%- include 'snippets/orders-listing.html.twig' with { orders: orders } only -%}
+        {%- include 'snippets/orders-listing.html.twig' with { orders: orders, admin: admin } only -%}
       </div>
     </div>
   </div>

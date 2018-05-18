@@ -2,6 +2,7 @@
 namespace AppBundle\Entity\Product;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Exception\UnitException;
 use AppBundle\Entity\Architecture\MemoryArchitecture;
 use AppBundle\Entity\Product\Product;
@@ -13,8 +14,8 @@ use AppBundle\Service\Factory\DimensionsFactory;
  * @ORM\Table
  */
 class Memory extends Product {
-  private $size_dimensions;
-  private $frequancy_dimensions;
+  const frequencyUnit = 'hertz';
+  const sizeUnit = 'byte';
 
   /**
    * @ORM\OneToOne(
@@ -55,6 +56,7 @@ class Memory extends Product {
    *   targetEntity="AppBundle\Entity\Architecture\MemoryArchitecture",
    *   cascade={ "persist", "refresh" })
    * @ORM\JoinColumn(nullable=false)
+   * @Assert\NotNull(message="product.architecture.null")
    */
   protected $architecture;
 
@@ -65,7 +67,7 @@ class Memory extends Product {
   public function setArchitecture(MemoryArchitecture $architecture) {
     $this->architecture = $architecture;
   }
-
+  
   public function __construct(
     $code,
     array $names,
@@ -77,8 +79,8 @@ class Memory extends Product {
     DimensionsFactory $factory) {
     parent::__construct($code, $names, $images, $manufacturer);
     $this->setArchitecture($architecture);
-    $this->setSize_($size, $factory('byte'));
-    $this->setFrequency_($frequency, $factory('hertz'));
+    $this->setSize_($size, $factory(self::sizeUnit));
+    $this->setFrequency_($frequency, $factory(self::frequencyUnit));
   }
 
   protected function setSize_(Scalar $value, $dimensions) {

@@ -25,7 +25,7 @@ services:
 
     DefaultData\PriceUnit:
         factory:
-            - '@AppBundle\Repository\UnitRepository'
+            - '@AppBundle\Repository\QuantityPattern\UnitRepository'
             - 'findOneByKey'
         arguments:
             - 'CAD'
@@ -57,6 +57,18 @@ services:
         tags:
             - { name: form.type }
 
+    AppBundle\Form\MemoryType:
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: form.type }
+
+    AppBundle\Form\ScalarType:
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: form.type }
+
     AppBundle\Form\RegistrationType:
         tags:
             - { name: form.type, alias: app_user_registration }
@@ -67,6 +79,14 @@ services:
             - getRepository
         arguments:
             - 'AppBundle\Entity\Item'
+        calls:
+            - [setFactory, ['@AppBundle\Service\Factory\DimensionsFactory']]
+    AppBundle\Repository\ManufacturerRepository:
+        factory: 
+            - '@Doctrine\ORM\EntityManagerInterface'
+            - getRepository
+        arguments:
+            - 'AppBundle\Entity\Manufacturer'
 
     AppBundle\Repository\OrderRepository:
         factory: 
@@ -75,7 +95,7 @@ services:
         arguments:
             - 'AppBundle\Entity\Order\Order'
 
-    AppBundle\Repository\UnitRepository:
+    AppBundle\Repository\QuantityPattern\UnitRepository:
         factory: 
             - '@Doctrine\ORM\EntityManagerInterface'
             - getRepository

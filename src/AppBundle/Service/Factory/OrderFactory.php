@@ -23,6 +23,12 @@ final class OrderFactory extends AbstractFactory {
 
   public function __invoke(array $keys, $client) { return $this->createFromSession($keys, $client); }
 
+  public function getAllFromRepository() {
+    $data = $this->orderRepository->findAll([], ['date' => 'DESC']);
+    array_walk($data, function ($item) { $item->setCalculator($this->calculator); });
+    return $data;
+  }
+
   public function getFromRepositoryByKey($key) {
     $data = $this->orderRepository->findOneByKey($key);
     $data->setCalculator($this->calculator);
@@ -54,7 +60,7 @@ final class OrderFactory extends AbstractFactory {
         $client,
         $this->calculator);
     } else {
-      return new Order([], $this->calculator);
+      return new Order([], null, $this->calculator);
     }
   }
 }
