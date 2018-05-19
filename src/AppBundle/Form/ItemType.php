@@ -4,19 +4,20 @@ namespace AppBundle\Form;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Architecture\MemoryArchitecture;
 use AppBundle\Entity\Item;
 use AppBundle\Form\MemoryType;
+use AppBundle\Service\Factory\DimensionsFactory;
 
 class ItemType extends AbstractType
 {
   private $locale;
   private $dimensions;
 
-  public function __construct(RequestStack $request, DimensionFactory $factory) {
+  public function __construct(RequestStack $request, DimensionsFactory $factory) {
     $this->locale = $request->getCurrentRequest()->getLocale();
     $this->dimensions = $factory;
   }
@@ -25,13 +26,13 @@ class ItemType extends AbstractType
   {
     $temp = $this->dimensions;
     $builder->add('product', $options['product_class'], [
-        'label' => 'product',
+        'label' => false,
         'translation_domain' => 'userforms',
         'required' => true])
       ->add('cost', ScalarType::class, [
         'label' => 'product.cost',
         'translation_domain' => 'userforms',
-        'dimensions' => $temp(Item::sizeUnit),
+        'dimensions' => $temp(Item::currencyUnit),
         'constraints' => [
           new Assert\GreaterThanOrEqual(['value' => 0, 'message' => 'product.cost.toosmall'])
         ],
@@ -46,20 +47,15 @@ class ItemType extends AbstractType
         'required' => true]);
   }
 
-  public function getParent()
-  {
-    return ProductType::class;
-  }
-
   public function getBlockPrefix()
   {
-    return 'product';
+    return 'item';
   }
 
   public function configureOptions(OptionsResolver $resolver) {
     $resolver->setRequired('product_class');
     $resolver->setDefaults([
-      'data_class' => Memory::class,
+      'data_class' => Item::class,
       'validation_groups' => ['App']
     ]);
   }

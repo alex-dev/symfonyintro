@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use AppBundle\Entity\Product\Memory;
 use AppBundle\Form\ItemType;
 use AppBundle\Form\MemoryType;
 use AppBundle\Repository\ItemRepository;
@@ -39,46 +40,7 @@ class InventoryController extends Controller {
   }
 
   /**
-   * @Route("/{key}/", name="show_product_admin")
-   * @Method({ "GET" })
-   */
-  public function showProduct($key, ItemRepository $repo) {
-    return $this->render('product-form.html.twig', [
-      'form' => $this->createForm_($repo->findByKey(UUID::createFromString($key)))->createView()
-    ]);
-  }
-
-  /**
-   * @Route("/{key}/", name="update_product")
-   * @Method({ "PUT" })
-   */
-  public function updateProduct($key, Request $request, ItemRepository $repo, Manager $manager) {
-    $form = $this->createForm_($repo->findByKey(UUID::createFromString($key)))->createView();
-    $form->handleRequest($request);
-    
-    if ($form->isValid()) {
-      $product = $form->getData();
-
-      foreach($product->getImages() as $image) {
-        $file = $image->getFilename();
-        $name = md5(uniqid());
-        $file->move($this->getParameter('databasemedia'), $name.'.png');
-        $image->setFilename($name);
-      }
-
-      $manager->persist($product);
-      $manager->flush();
-
-      return $this->redirectToRoute('show_product_admin', $product->getKey()->toString());
-    } else {
-      return $this->render('product-form.html.twig', [
-        'form' => $form->createView()
-      ]);
-    }
-  }
-
-  /**
-   * @Route("/create/{type}", name="show_create_admin", requirements={ "type"="%app.routes.types%" })
+   * @Route("/{type}/create/", name="show_create_admin", requirements={ "type"="%app.routes.types%" })
    * @Method({ "GET" })
    */
   public function showCreateProduct($type, ItemRepository $repo) {
@@ -88,27 +50,24 @@ class InventoryController extends Controller {
   }
 
   /**
-   * @Route("/create/{type}/", name="create_product", requirements={ "type"="%app.routes.types%" })
+   * @Route("/{type}/create/", name="create_product", requirements={ "type"="%app.routes.types%" })
    * @Method({ "POST" })
    */
   public function createProduct($type, Request $request, ItemRepository $repo, Manager $manager) {
-    $form = $this->createForm_($this->createDefault($type, $repo))->createView();
+    $form = $this->createForm_($this->createDefault($type, $repo));
     $form->handleRequest($request);
     
     if ($form->isValid()) {
       $product = $form->getData();
-
-      foreach($product->getImages() as $image) {
-        $file = $image->getFilename();
-        $name = md5(uniqid());
-        $file->move($this->getParameter('databasemedia'), $name.'.png');
-        $image->setFilename($name);
-      }
-
+      $manager->persist($product->getProduct());
+      $manager->flush(); // Ce flush crée l'id du produit, puis le flush suivant crée l'item.
       $manager->persist($product);
       $manager->flush();
 
-      return $this->redirectToRoute('show_product_admin', $product->getKey()->toString());
+      return $this->redirectToRoute('show_product_admin', [
+        'key' => $product->getProduct()->getKey()->toString(),
+        'type' => $type
+      ]);
     } else {
       return $this->render('product-form.html.twig', [
         'form' => $form->createView()
@@ -116,8 +75,55 @@ class InventoryController extends Controller {
     }
   }
 
+  /**
+   * @Route("/{type}/{key}/", name="show_product_admin")
+   * @Method({ "GET" })
+   */
+  public function showProduct($key, ItemRepository $repo) {
+    $product = $repo->findByKey(UUID::createFromString($key));
+    return $this->render('product-form.html.twig', [
+      'form' => $this->createForm_($product)->createView(),
+      'product' => $product
+    ]);
+  }
+
+  /**
+   * @Route("/{type}/{key}/", name="update_product")
+   * @Method({ "POST" })
+   */
+  public function updateProduct($key, $type, Request $request, ItemRepository $repo, Manager $manager) {
+    $product = $repo->findByKey(UUID::createFromString($key));
+    $filenames = array_map(
+      function ($file) { return $file->getFilename(); },
+      $product->getProduct()->getImages());
+    $form = $this->createForm_($product);
+    $form->handleRequest($request);
+    
+    if ($form->isValid()) {
+      $product = $form->getData();
+      foreach ($product->getProduct()->getImages() as $index => $image) {
+        if ($image->getFilename() == null) {
+          $image->setFilename($filenames[$index]);
+        }
+      }
+
+      $manager->persist($product);
+      $manager->flush();
+
+      return $this->redirectToRoute('show_product_admin', [
+        'key' => $key,
+        'type' => $type
+      ]);
+    } else {
+      return $this->render('product-form.html.twig', [
+        'form' => $form->createView(),
+        'product' => $product
+      ]);
+    }
+  }
+
   private function createForm_($product) {
-    if ($product instanceof Memory) {
+    if ($product->getProduct() instanceof Memory) {
       return $this->createForm(ItemType::class, $product, ['product_class' => MemoryType::class]);
     }
   }

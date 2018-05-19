@@ -1,11 +1,11 @@
 <?php
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Architecture\MemoryArchitecture;
 use AppBundle\Entity\Product\Memory;
@@ -57,7 +57,7 @@ class MemoryType extends AbstractType
 
   public function getBlockPrefix()
   {
-    return 'product';
+    return 'memory';
   }
 
   public function configureOptions(OptionsResolver $resolver) {

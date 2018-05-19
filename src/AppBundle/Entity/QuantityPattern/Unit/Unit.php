@@ -58,8 +58,12 @@ class Unit {
    */
   private $dimensions;
 
+  public function getTrueDimensions() {
+    return $this->dimensions->toArray();
+  }
+
   public function getDimensions() {
-    return array_reduce($this->dimensions, function ($carry, $item) {
+    return array_reduce($this->dimensions->toArray(), function ($carry, $item) {
       return $carry.' '.$item;
     }, '');
   }

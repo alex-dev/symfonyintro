@@ -9,3 +9,4 @@ parameters:
     app.locale: fr_CA
     api.param.timeout: 2.0
     api.fixer.uri: http://api.fixer.io/latest
+    app.databasemedia: '%kernel.project_dir%/web/databasemedia'

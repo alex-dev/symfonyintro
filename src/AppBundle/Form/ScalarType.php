@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\HttpFoundation\RequestStack;
 use AppBundle\Entity\QuantityPattern\Unit\Unit;
 use AppBundle\Entity\QuantityPattern\Value\Scalar;
 use AppBundle\Repository\QuantityPattern\UnitRepository;

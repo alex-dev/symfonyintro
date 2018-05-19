@@ -15,7 +15,7 @@ final class UnitRepository extends EntityRepository {
   public function findByKey($key) {
     return $this->createQueryBuilder('u')
       ->where('u.key = :key')
-      ->setParameters('key', $key)
+      ->setParameter('key', $key)
       ->getQuery()->getResult();
   }
 
@@ -28,12 +28,12 @@ final class UnitRepository extends EntityRepository {
   public function findSimilar($dimensions) {
     return array_filter(
       $this->createQueryBuilder('u')
-        ->join('u.dimensions', 'd', 'WITH', 'd IN :dimensions')
-        ->setParameters('dimensions', $dimensions)
+        ->join('u.dimensions', 'd', 'WITH', 'd IN (:dimensions)')
+        ->setParameter('dimensions', $dimensions)
         ->getQuery()->getResult(),
       function ($unit) use ($dimensions) {
-        return count(array_diff($dimensions, $unit->getDimensions())) <= 0
-          && count(array_diff($unit->getDimensions(), $dimensions)) <= 0;
+        return count(array_diff($dimensions, $unit->getTrueDimensions())) <= 0
+          && count(array_diff($unit->getTrueDimensions(), $dimensions)) <= 0;
       });
   }
 }

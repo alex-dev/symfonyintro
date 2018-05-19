@@ -28,6 +28,10 @@ class Scalar extends Value {
     return $this->value;
   }
 
+  public function setValue($value) {
+    $this->value = $value;
+  }
+
   public function __construct(Unit $unit, $value) {
     parent::__construct($unit);
     $this->value = $value;

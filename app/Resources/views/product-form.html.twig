@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title -%}
+  {{- product is defined ? product.product.translate(currentlocale).name : 'create' -}}
+{%- endblock %}
+
+{% block scripts -%}
+  <script defer src="{{ asset('js/collection-type-add.js') }}"></script>
+{%- endblock %}
+
+{% block heading -%}
+  {%- include 'snippets/heading.html.twig' with {
+    current: product is defined ? product.product.translate(currentlocale).name : 'create',
+    items: {
+      'inventory': path('show_inventory_full'),
+      'admin': path('show_admin_menu')
+    }
+  } only -%}
+{%- endblock %}
+
+{% block body -%}
+  <div id="product" class="container">
+    <div id="productMain" class="row">
+      {{- form_start(form) -}}
+      {{- form_row(form.product.code) -}}
+      {{- form_row(form.product.manufacturer) -}}
+      {{- form_errors(form.product.translations) -}}
+      {{- form_widget(form.product.translations) -}}
+      <button type="button" onclick="add('#item_product_translations');" class="btn btn-secondary">
+        product.translations.add
+      </button>
+      {{- form_errors(form.product.images) -}}
+      {{- form_widget(form.product.images) -}}
+      <button type="button" onclick="add('#item_product_images');" class="btn btn-secondary">
+        product.images.add
+      </button>
+      {{- form_widget(form) -}}
+      <button type="submit" class="btn btn-template-outlined">
+        submit
+      </button>
+      {{- form_end(form) -}}
+    </div>
+  </div>
+{%- endblock %}

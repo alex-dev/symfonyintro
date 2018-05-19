@@ -6,9 +6,5 @@ function add(tag) {
     .replace(/__name__/g, index);
   
   collection.data('index', index + 1);
-  collection.append(`
-    <li>
-      ${prototype}
-    </li>
-  `);
+  collection.append(prototype);
 }

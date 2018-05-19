@@ -22,7 +22,7 @@
     <div class="row bar">
       <div class="box mt-0 pb-0 no-horizontal-padding">
         <form action="{{ path('update_manufacturers') }}" method="POST">
-          <ul id="collection" data-index="0" data-prototype="{{ '<input type="text" name="manufacturers[__name__]" class="form-control" />' | escape }}">
+          <ul id="collection" data-index="0" data-prototype="{{ '<li><input type="text" name="manufacturers[__name__]" class="form-control" /></li>' | escape }}">
             {%- for manufacturer in manufacturers -%}
               <li>
                 <input type="text" name="manufacturers[{{ manufacturer.key }}]" value="{{ manufacturer.name }}" class="form-control" />

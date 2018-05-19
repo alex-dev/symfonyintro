@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title -%}
+  {%- trans from 'menus' into currentlocale -%}
+    inventory
+  {%- endtrans -%}
+{%- endblock %}
+
+{% block heading -%}
+  {%- include 'snippets/heading.html.twig' with {
+    current: 'inventory',
+    items: { 'admin': path('show_admin_menu') }
+  } only -%}
+{%- endblock %}
+
+{% block body -%}
+  <div class="container">
+    <div class="row bar">
+      <div class="col">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>
+                  product.name
+                </th>
+                <th>
+                  product.cost
+                </th>
+                <th>
+                  product.count
+                </th>
+                <th>
+                  product.count.minimal
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for product in products -%}
+                <tr>
+                  <td>
+                    <a href="{{ path('update_product', {
+                        'type': product.product | product_kind,
+                        'key': product.product.key
+                      }) }}">
+                      {{- product.product.translate(currentlocale).name -}}
+                    </a>
+                  </td>
+                  <td>
+                    {{- product.cost.write(currentlocale) -}}
+                  </td>
+                  <td>
+                    {{- product.count -}}
+                  </td>
+                  <td>
+                    {{- product.minimalCount -}}
+                  </td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+        <div class="box-footer d-flex justify-content-between align-items-center">
+          <a href="{{ path('show_create_admin', { type: route_memory }) }}" class="btn btn-secondary">
+            product.memory.add
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endblock %}

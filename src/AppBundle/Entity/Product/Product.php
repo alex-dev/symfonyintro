@@ -48,7 +48,7 @@ abstract class Product extends UrlKey {
     return $this->code;
   }
 
-  private function setCode($value) {
+  public function setCode($value) {
     $this->code = $value;
   }
 
@@ -65,14 +65,15 @@ abstract class Product extends UrlKey {
     return $this->manufacturer;
   }
 
-  public function setManufacturer(Manufacturer $manufacturer) {
+  public function setManufacturer(Manufacturer $manufacturer = null) {
     $this->manufacturer = $manufacturer;
   }
 
   /**
    * @ORM\OneToMany(
    *   targetEntity="AppBundle\Entity\Image",
-   *   mappedBy="product")
+   *   mappedBy="product",
+   *   cascade={ "persist", "refresh" })
    */
   protected $images;
   
@@ -107,10 +108,10 @@ abstract class Product extends UrlKey {
     return $this->translate($locale)->setName($value);
   }
 
-  public function __construct($code, array $names, array $images, Manufacturer $manufacturer) {
+  public function __construct($code, array $names, array $images, Manufacturer $manufacturer = null) {
     parent::__construct();
     $this->setImages($images);
-    $this-­­­­>setManufacturer($manufacturer);
+    $this->setManufacturer($manufacturer);
     $this->setCode($code);
 
     foreach ($names as $locale=>$name) {

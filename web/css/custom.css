@@ -19,3 +19,7 @@
 tr.total {
   font-size: 1rem !important;
 }
+
+#productMain input {
+  display: inline-block !important;
+}

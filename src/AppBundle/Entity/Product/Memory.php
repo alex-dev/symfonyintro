@@ -72,7 +72,7 @@ class Memory extends Product {
     $code,
     array $names,
     array $images,
-    Manufacturer $manufacturer,
+    Manufacturer $manufacturer = null,
     MemoryArchitecture $architecture,
     Scalar $size,
     Scalar $frequency,
@@ -84,7 +84,7 @@ class Memory extends Product {
   }
 
   protected function setSize_(Scalar $value, $dimensions) {
-    if ($value->getUnit()->getDimensions() != $dimensions) {
+    if ($value->getUnit()->getTrueDimensions() != $dimensions) {
       throw new UnitException($value->getUnit()->getDimensions()." is not $dimensions.");
     } else {
       $this->size = $value;
@@ -92,7 +92,7 @@ class Memory extends Product {
   }
 
   protected function setFrequency_(Scalar $value, $dimensions) {
-    if ($value->getUnit()->getDimensions() != $dimensions) {
+    if ($value->getUnit()->getTrueDimensions() != $dimensions) {
       throw new UnitException($value->getUnit()->getDimensions()." is not $dimensions.");
     } else {
       $this->frequency = $value;

@@ -48,6 +48,6 @@ class UnitDimension {
   }
 
   public function __toString() {
-    return "$this->getDimension()^$this->getExponent()";
+    return $this->getDimension().'^'.$this->getExponent();
   }
 }

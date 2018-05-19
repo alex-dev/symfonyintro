@@ -16,7 +16,7 @@ use AppBundle\Entity\Product\Product;
  * @UniqueEntity(fields={ "product", "main" })
  */
 class Image {
-  const filename_length = 25;
+  const filename_length = 50;
 
   /**
    * @ORM\Id
@@ -48,11 +48,7 @@ class Image {
   }
 
   public function setFilename($value) {
-    if (mb_strlen($value) > self::filename_length) {
-      throw new LengthException("$value must be less then ".self::filename_length." characters long.");
-    } else {
-      $this->filename = $value;
-    }
+    $this->filename = $value;
   }
 
   /**
@@ -72,7 +68,7 @@ class Image {
     $this->main = $value;
   }
 
-  public function __construct($filename, $isMain) {
+  public function __construct($filename = '', $isMain = false) {
     $this->setFilename($filename);
     $this->setIsMain($isMain);
   }

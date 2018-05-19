@@ -4,30 +4,38 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\ImageType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Image;
+use AppBundle\Form\Transformer\FileToFilenameTransformer;
 
-class ImageType_ extends AbstractType
+class ImageType extends AbstractType
 {
+  private $transformer;
+
+  public function __construct(FileToFilenameTransformer $transformer)
+  {
+      $this->transformer = $transformer;
+  }
+
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
-    $builder->add('image', ImageType::class, [
+    $builder->add('filename', FileType::class, [
         'label' => 'image',
         'translation_domain' => 'userforms',
-        'required' => true,
-        'constraints' => [
-          new Assert\File(['mimeTypes' => 'image/png', 'maxSize' => '75k', 'groups' => ['App']])
-        ]])
+        'invalid_message' => 'file.must.be.png',
+        'required' => false])
       ->add('isMain', ChoiceType::class, [
         'label' => 'image.isMain',
         'translation_domain' => 'userforms',
         'choice_translation_domain' => true,
-        'choice' => ['yes' => true, 'no' => false],
+        'choices' => ['yes' => true, 'no' => false],
         'expanded' => true,
         'required' => true]);
+
+    $builder->get('filename')->addModelTransformer($this->transformer);
   }
 
   public function getBlockPrefix()

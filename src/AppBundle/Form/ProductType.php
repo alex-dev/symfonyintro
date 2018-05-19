@@ -1,15 +1,15 @@
 <?php
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use AppBundle\Entity\Manufacturer;
 use AppBundle\Entity\Product\Product;
-use AppBundle\Form\ImageType_ as ImageType;
+use AppBundle\Form\ImageType;
 use AppBundle\Form\ProductTranslationType;
 
 class ProductType extends AbstractType
@@ -17,6 +17,7 @@ class ProductType extends AbstractType
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder->add('translations', CollectionType::class, [
+        'entry_options' => array('label' => false),
         'entry_type' => ProductTranslationType::class,
         'label' => 'product.translations',
         'translation_domain' => 'userforms',
@@ -33,6 +34,7 @@ class ProductType extends AbstractType
         'choice_label' => 'name',
         'required' => true])
       ->add('images', CollectionType::class, [
+        'entry_options' => array('label' => false),
         'entry_type' => ImageType::class,
         'label' => 'product.images',
         'translation_domain' => 'userforms',

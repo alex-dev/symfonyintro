@@ -5,8 +5,11 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use AppBundle\Entity\Item;
+use AppBundle\Entity\Architecture\MemoryArchitecture;
 use AppBundle\Entity\Product\Product;
 use AppBundle\Entity\Product\Memory;
+use AppBundle\Entity\QuantityPattern\Unit\Unit;
+use AppBundle\Entity\QuantityPattern\Value\Scalar;
 use AppBundle\Service\Factory\DimensionsFactory;
 use AppBundle\Type\UUID;
 
@@ -140,7 +143,7 @@ final class ItemRepository extends EntityRepository {
   }
 
   public function getDefaultMemory() {
-    if ($factory == null) {
+    if ($this->factory == null) {
       $this->setFactory();
     }
     
@@ -151,10 +154,10 @@ final class ItemRepository extends EntityRepository {
         [],
         null,
         $this->getEntityManager()->getRepository(MemoryArchitecture::class)->findOneById(1),
-        new Scalar(4000, $this->getEntityManager()->getRepository(Unit::class)->findByKey('megabyte')),
-        new Scalar(2333, $this->getEntityManager()->getRepository(Unit::class)->findByKey('megahertz')),
+        new Scalar($this->getEntityManager()->getRepository(Unit::class)->findOneByKey('megabyte'), 4000),
+        new Scalar($this->getEntityManager()->getRepository(Unit::class)->findOneByKey('megahertz'), 2333),
         $this->factory),
-      new Scalar(0, $this->getEntityManager()->getRepository(Unit::class)->findByKey('CAD')),
+      new Scalar($this->getEntityManager()->getRepository(Unit::class)->findOneByKey('CAD'), 0),
       0,
       0,
       $this->factory);

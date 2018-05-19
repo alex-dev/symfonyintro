@@ -29,7 +29,7 @@ class Item {
     return $this->product;
   }
 
-  protected function setProduct(Product $value) {
+  public function setProduct(Product $value) {
     $this->product = $value;
   }
 
@@ -51,7 +51,7 @@ class Item {
   }
 
   /**
-   * @ORM\Column(type="integer")
+   * @ORM\Column(type="integer", options={ "default": 0 })
    */
   protected $count;
 
@@ -64,7 +64,7 @@ class Item {
   }
 
   /**
-   * @ORM\Column(type="integer")
+   * @ORM\Column(type="integer", options={ "default": 0 })
    */
   protected $minimalCount;
 
@@ -84,7 +84,7 @@ class Item {
   }
 
   protected function setCost_(Scalar $value, $dimensions) {
-    if ($value->getUnit()->getDimensions() != $dimensions) {
+    if ($value->getUnit()->getTrueDimensions() != $dimensions) {
       throw new UnitException($value->getUnit()->getDimensions()." is not $dimensions.");
     } else {
       $this->cost = $value;

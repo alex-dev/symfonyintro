@@ -21,6 +21,10 @@ abstract class Value {
     return $this->unit;
   }
   
+  public function setUnit($value) {
+    $this->unit = $value;
+  }
+
   public function __construct(Unit $unit) {
     $this->unit = $unit;
   }

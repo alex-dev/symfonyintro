@@ -1,7 +1,5 @@
 # Learn more about services, parameters and containers at
 # https://symfony.com/doc/current/service_container.html
-parameters:
-    #parameter_name: value
 
 services:
     # default configuration for services in *this* file
@@ -57,6 +55,16 @@ services:
         tags:
             - { name: form.type }
 
+    AppBundle\Form\ImageType:
+        tags:
+            - { name: form.type }
+
+    AppBundle\Form\ItemType:
+        arguments:
+            - '@request_stack'
+        tags:
+            - { name: form.type }
+
     AppBundle\Form\MemoryType:
         arguments:
             - '@request_stack'
@@ -73,6 +81,10 @@ services:
         tags:
             - { name: form.type, alias: app_user_registration }
 
+    AppBundle\Form\Transformer\FileToFilenameTransformer:
+        arguments:
+            $databasemediapath: '%app.databasemedia%'
+
     AppBundle\Repository\ItemRepository:
         factory: 
             - '@Doctrine\ORM\EntityManagerInterface'
@@ -81,6 +93,7 @@ services:
             - 'AppBundle\Entity\Item'
         calls:
             - [setFactory, ['@AppBundle\Service\Factory\DimensionsFactory']]
+
     AppBundle\Repository\ManufacturerRepository:
         factory: 
             - '@Doctrine\ORM\EntityManagerInterface'
