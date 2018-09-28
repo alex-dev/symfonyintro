@@ -45,6 +45,3 @@
 
 # Vendor packages
 /vendor/
-
-# Original template (HTML, CSS, JS)
-/templates/
